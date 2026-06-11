@@ -1,0 +1,521 @@
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header {
+  background: #0b3c5d;
+  color: white;
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  margin-left: 24px;
+  font-weight: bold;
+}
+
+.hero {
+  background: #f2f6f8;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.section {
+  padding: 60px 40px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 24px;
+  background: white;
+}
+
+.news li {
+  margin-bottom: 12px;
+}
+
+footer {
+  background: #0b3c5d;
+  color: white;
+  text-align: center;
+  padding: 24px;
+}
+
+
+/* === Contact Form === */
+.contact-form {
+  margin-top: 40px;
+  max-width: 600px;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.contact-form input,
+.contact-form textarea {
+  margin-top: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #0b3c5d;
+  box-shadow: 0 0 0 3px rgba(11, 60, 93, 0.15);
+}
+
+.contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Button */
+.contact-form button {
+  align-self: flex-end;
+  padding: 12px 32px;
+
+  background: #0b3c5d;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.1s;
+}
+
+.contact-form button:hover {
+  background: #145c8a;
+  box-shadow: 0 6px 16px rgba(11, 60, 93, 0.25);
+  transform: translateY(-1px);
+}
+
+.contact-form button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(11, 60, 93, 0.2);
+}
+
+/* Status message */
+.contact-form p {
+  font-size: 14px;
+  color: #555;
+}
+
+
+/* === Responsive (Mobile) === */
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 20px;
+  }
+
+  .contact-form {
+    padding: 24px 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .contact-form textarea {
+    min-height: 160px;
+  }
+
+  .contact-form button {
+    width: 100%;
+    align-self: stretch;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .contact-form label {
+    font-size: 13px;
+  }
+}
+
+
+/* === Header base === */
+
+/* === Header base === */
+header {
+  position: relative; /* mobile-nav を header 基準で出す */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===== PC ナビ ===== */
+.pc-nav {
+  display: flex;
+  gap: 24px;
+}
+
+.pc-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ===== ハンバーガーボタン ===== */
+.menu-button {
+  display: none; /* PCでは非表示 */
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* ===== モバイルナビ（Reactで表示制御） ===== */
+
+.mobile-nav {
+  position: absolute;
+  top: calc(100% + 8px);   /* ヘッダー下、少し余白 */
+  right: 16px;            /* ハンバーガーボタン寄り */
+  left: auto;
+  transform: none;
+
+  width: 180px;           /* ← 小さく */
+  max-width: none;
+
+  background: #0b3c5d;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+}
+
+
+.mobile-nav a {
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.mobile-nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== スマホ対応 ===== */
+@media (max-width: 768px) {
+  /* PC用ナビだけ隠す */
+  .pc-nav {
+    display: none;
+  }
+
+  /* ハンバーガーボタン表示 */
+  .menu-button {
+    display: block;
+  }
+
+  header {
+    padding: 16px 20px;
+  }
+}
+
+
+/* セクション全体 */
+#company {
+  padding: 80px 16px;
+}
+
+/* 見出し */
+/* #company h2 {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 32px;
+} */
+
+/* 企業情報カード */
+.company-box {
+  max-width: 720px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* dlを2カラムで整列 */
+.company-box dl {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  row-gap: 16px;
+  column-gap: 16px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* 見出し側（dt） */
+.company-box dt {
+  color: #666;
+  font-weight: 500;
+}
+
+/* 内容側（dd） */
+.company-box dd {
+  margin: 0;
+  color: #222;
+}
+
+/* 住所の改行を自然に */
+.company-box dd br {
+  content: "";
+}
+
+/* 地図エリア */
+.company-map {
+  margin-top: 24px;
+}
+
+/* Google Map */
+.company-map iframe {
+  width: 100%;
+  height: 220px;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* スマホ対応 */
+@media (max-width: 600px) {
+  .company-box {
+    padding: 24px 20px;
+  }
+
+  .company-box dl {
+    grid-template-columns: 1fr;
+  }
+
+  .company-box dt {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+}
+
+.site-footer{
+color:#fff;
+/* 背景：複数レイヤーでグラデ＋ノイズ画像を重ねられます */
+background-image:
+radial-gradient(circle at 80% 10%, rgba(255,255,255,0.06), rgba(255,255,255,0) 25%),
+linear-gradient(135deg,#3b55b6 0%, #2bb0d6 60%, #13b6dd 100%);
+background-size: cover;
+}
+
+/* 上部の大きな部分（多カラム） */
+.footer-top{
+padding:60px 16px 40px;
+}
+.footer-container{
+max-width:var(--max-width);
+margin:0 auto;
+display:grid;
+grid-template-columns: 1.5fr repeat(4,1fr); /* 左にブランド広め */
+gap:32px;
+align-items:start;
+}
+.col h3{
+margin-bottom:14px;
+font-size:16px;
+font-weight:700;
+color:rgba(255,255,255,0.95);
+}
+.col ul{
+list-style:none;
+padding:0;
+margin:0;
+}
+.col li{
+margin-bottom:10px;
+}
+.col a{
+color:rgba(255,255,255,0.9);
+text-decoration:none;
+font-size:13px;
+}
+.brand{
+font-size:22px;
+font-weight:800;
+margin-bottom:18px;
+}
+
+/* 下部白バー */
+.footer-bottom{
+background:#fff;
+color:#6b6b6b;
+border-top:1px solid #eee;
+padding:12px 16px;
+}
+.bottom-container{
+max-width:var(--max-width);
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:16px;
+flex-wrap:wrap;
+}
+.bottom-links a{
+margin-right:18px;
+color:#6b6b6b;
+font-size:13px;
+text-decoration:none;
+}
+.social .icon{
+display:inline-block;
+width:36px;
+height:36px;
+line-height:36px;
+text-align:center;
+border-radius:50%;
+background:#0f3a56;
+color:#fff;
+margin-left:8px;
+text-decoration:none;
+}
+
+/* copyright smaller line */
+.copyright{
+max-width:var(--max-width);
+margin:6px auto 16px;
+text-align:center;
+color:#9a9a9a;
+font-size:12px;
+}
+
+/* レスポンシブ */
+@media (max-width:900px){
+.footer-container{
+grid-template-columns: repeat(2,1fr);
+}
+.brand{ font-size:18px; }
+}
+@media (max-width:520px){
+.footer-container{ grid-template-columns: 1fr; }
+.bottom-container{ flex-direction:column; align-items:center; text-align:center; }
+.bottom-links{ margin-bottom:8px; }
+}
+
+.news-section { padding: 40px 16px; }
+.news-heading { text-align:center; font-size:28px; color:#0d4f86; margin-bottom:24px; }
+
+.news-list { list-style:none; margin:0; padding:0; max-width:1100px; margin-left:auto; margin-right:auto; }
+
+.news-item {
+  display: grid;
+  grid-template-columns: 140px 1fr 56px;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 0;
+  border-top: 1px solid #e6eef6;
+}
+
+.news-item:first-child { border-top: none; }
+
+.news-time {
+  color:#0d5a8f;
+  font-size:14px;
+  white-space:nowrap;
+}
+
+.news-main { display:flex; align-items:center; gap:12px; }
+
+.news-badge {
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:4px;
+  color:#fff;
+  background:#0d8bd6;
+}
+.news-badge--組織 { background:#b674d2; } /* 例：カテゴリごとに色を変える */
+
+.news-title {
+  color:#134367;
+  text-decoration:none;
+  line-height:1.4;
+  display:block;
+}
+
+.news-action {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  background:#0b4f86;
+  color:#fff;
+  border-radius:999px;
+  text-decoration:none;
+}
+
+.news-action:focus { outline: 3px solid rgba(11,79,134,0.2); }
+
+/* レスポンシブ */
+@media (max-width:700px) {
+  .news-item { grid-template-columns: 1fr; gap:8px; padding:12px 0; }
+  .news-time { order:2; font-size:13px; color:#6b7c8d; }
+  .news-action { justify-self:end; }
+  .news-main { flex-direction:column; align-items:flex-start; gap:6px; }
+}
+
+.Proof {
+display: block;
+margin: 0 auto;      /* 横中央 */
+max-width: 100%;     /* 親幅を超えない */
+margin: 0 auto 40px;  /* 下に 40px の余白 */
+height: auto;
+}
