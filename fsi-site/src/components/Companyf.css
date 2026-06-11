@@ -1,0 +1,209 @@
+/* CompanyOverview.css */
+
+/* ベース */
+:root{
+  --container-width: 1100px;
+  --accent-blue: #0b66d0;
+  --text-color: #2b3b4a;
+  --muted: #718096;
+  --border: #e6e9ec;
+}
+
+body {
+  font-family: "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text-color);
+  margin: 0;
+  background: #fff;
+}
+
+/* small breadcrumb at very top */
+.top-breadcrumbs {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  padding: 8px 0;
+  font-size: 13px;
+}
+.top-breadcrumbs .container,
+.top-breadcrumbs #breadcrumb {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.top-breadcrumbs ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  gap: 8px;
+}
+.top-breadcrumbs a{
+  color: rgba(255,255,255,0.95);
+  text-decoration: underline;
+}
+
+/* hero/header */
+.page-hero {
+  background: linear-gradient(135deg, #1e7adf 0%, #3bb0ff 100%);
+  color: #fff;
+  padding: 42px 0 56px;
+  background-image: linear-gradient(135deg,#1b66c2 0%, #2fa5e8 100%);
+  position: relative;
+}
+/* .page-hero {
+  background: #f2f6f8;
+  padding: 80px 40px;
+  text-align: center;
+}
+.page-hero h1 {
+  font-size: 36px;
+  margin-bottom: 16px;
+} */
+.page-hero .container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.page-title {
+  margin: 18px 0 0;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+/* main container */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* article header breadcrumbs (under hero) */
+.article-header .breadcrumbs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px 0;
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.article-header .breadcrumbs a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.article-header .breadcrumbs li[aria-current="page"] {
+  color: #4a5568;
+  font-weight: 600;
+}
+
+/* section title with icon */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 24px;
+  font-size: 20px;
+  color: #1b4463;
+  position: relative;
+  font-weight: 700;
+}
+.section-title::before{
+  content: "";
+  width: 28px;
+  height: 20px;
+  background: linear-gradient(135deg,#7fb2ff 0%,#a86bff 100%);
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+}
+
+/* table wrapper */
+.table-wrapper {
+  background: #fff;
+  border-radius: 4px;
+  padding: 0;
+}
+.tablebox {
+  overflow: hidden;
+}
+
+/* company table */
+.company-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 14px;
+  color: #344354;
+}
+.company-table tbody tr {
+  border-top: 1px solid var(--border);
+}
+.company-table th,
+.company-table td {
+  padding: 22px 16px;
+  vertical-align: top;
+}
+.company-table th {
+  width: 200px;
+  color: #718096;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: left;
+}
+.company-table td {
+  color: #3b4956;
+  line-height: 1.6;
+}
+
+/* links inside table */
+.text-link {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+.text-link .icon-arrow::after {
+  content: "→";
+  margin-left: 6px;
+  font-size: 12px;
+  color: var(--accent-blue);
+}
+
+/* external icon small */
+.icon-external {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+}
+
+/* visually hidden utility */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* small helper */
+.sep {
+  display: inline-block;
+  width: 10px;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .page-title { font-size: 26px; }
+  .company-table th { width: 140px; padding: 14px 8px; }
+  .company-table td { padding: 14px 8px; }
+  .container { padding: 20px; }
+  .page-hero { padding: 30px 0 36px; }
+}
