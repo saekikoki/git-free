@@ -11,9 +11,7 @@ export default function Header() {
       {/* PCナビ */}
       <nav className="pc-nav">
         <a href="/#services">事業内容</a>
-        <a href="/#news">ニュース</a>
         <Link to="/page1">企業情報</Link>
-        <a href="/#contact">お問い合わせ</a>
       </nav>
 
       {/* ハンバーガーボタン */}
@@ -30,9 +28,7 @@ export default function Header() {
       {isOpen && (
         <nav className="mobile-nav">
           <a href="#services" onClick={() => setIsOpen(false)}>事業内容</a>
-          <a href="#news" onClick={() => setIsOpen(false)}>ニュース</a>
           <Link to="/page1" onClick={() => setIsOpen(false)}>企業情報</Link>
-          <a href="#contact" onClick={() => setIsOpen(false)}>お問い合わせ</a>
         </nav>
       )}
     </header>

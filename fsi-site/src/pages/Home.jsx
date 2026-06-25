@@ -17,7 +17,6 @@ return (
 <Hero />
 <Services />
 <News />
-<Contact />
 </>
 );
 }
