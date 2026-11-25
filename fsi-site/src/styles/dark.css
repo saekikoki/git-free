@@ -1,0 +1,221 @@
+/* === ダークモード（廉価版: ヘッダーの ☾ ボタン、または端末の設定）===
+ * <html data-theme="dark"> のときだけ効く。
+ * 色の変数（base.css の :root）を暗い色に切り替え、
+ * 個別に白背景・紺文字を指定している部品はここで上書きする。
+ * 新しい画面を作って白い背景が残るときは、このファイルに追加する。
+ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-text: #d3dde6;
+  --color-text-muted: #9fb0bf;
+  --color-heading: #e9f0f6;
+  --color-bg: #0e1722;
+  --color-bg-soft: #142233;
+  --color-border: #263a4f;
+
+  /* このファイルの中だけで使う色 */
+  --dm-surface: #16263a;      /* カードの背景 */
+  --dm-surface-2: #1c2f46;    /* 少し明るいカード・入力欄 */
+  --dm-heading: #e9f0f6;      /* 見出し */
+  --dm-text: #c4d0db;         /* 本文 */
+  --dm-muted: #93a6b7;        /* 補足 */
+  --dm-accent: #6fd0ec;       /* リンク・強調 */
+}
+
+[data-theme="dark"] body { background: var(--color-bg); color: var(--color-text); }
+
+/* ---- 背景: 白 → 暗い面 ---- */
+[data-theme="dark"] .services-v2,
+[data-theme="dark"] .achievements,
+[data-theme="dark"] .corp-breadcrumb {
+  background: var(--color-bg);
+}
+[data-theme="dark"] .corp-section--gray,
+[data-theme="dark"] .home-news-wrap {
+  background: var(--color-bg-soft);
+}
+[data-theme="dark"] .service-v2-card,
+[data-theme="dark"] .showcase-card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .corp-phil-card,
+[data-theme="dark"] .corp-exec-card,
+[data-theme="dark"] .corp-access-info,
+[data-theme="dark"] .recruit-job-card,
+[data-theme="dark"] .recruit-flow-item,
+[data-theme="dark"] .recruit-interview,
+[data-theme="dark"] .newsx-list--home,
+[data-theme="dark"] .contact-mail-card,
+[data-theme="dark"] .faq-item {
+  background: var(--dm-surface);
+  border-color: var(--color-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+[data-theme="dark"] .recruit-benefit,
+[data-theme="dark"] .contact-other,
+[data-theme="dark"] .static-page-contact,
+[data-theme="dark"] .faq-contact,
+[data-theme="dark"] .corp-profile-row dt,
+[data-theme="dark"] .newsx-lang-notice,
+[data-theme="dark"] .corp-access-map,
+[data-theme="dark"] .corp-access-placeholder {
+  background: var(--dm-surface-2);
+}
+
+/* ---- 見出し: 紺 → 明るい色 ---- */
+[data-theme="dark"] .corp-h2,
+[data-theme="dark"] .services-v2-title,
+[data-theme="dark"] .section-heading,
+[data-theme="dark"] .news-heading,
+[data-theme="dark"] .service-v2-name,
+[data-theme="dark"] .showcase-title,
+[data-theme="dark"] .corp-phil-title,
+[data-theme="dark"] .corp-exec-name,
+[data-theme="dark"] .corp-timeline-year,
+[data-theme="dark"] .corp-profile-row dt,
+[data-theme="dark"] .corp-access-office,
+[data-theme="dark"] .recruit-job-title,
+[data-theme="dark"] .recruit-flow-title,
+[data-theme="dark"] .recruit-interview-name,
+[data-theme="dark"] .recruit-interview-quote,
+[data-theme="dark"] .newsx-card-md,
+[data-theme="dark"] .newsx-card-title,
+[data-theme="dark"] .newsx-related-title,
+[data-theme="dark"] .newsx-prevnext-title,
+[data-theme="dark"] .newsx-markdown h2,
+[data-theme="dark"] .newsx-markdown h3,
+[data-theme="dark"] .newsx-markdown strong,
+[data-theme="dark"] .static-page-title,
+[data-theme="dark"] .static-page-content h3,
+[data-theme="dark"] .static-page-content .static-page-h,
+[data-theme="dark"] .sitemap-group .static-page-h,
+[data-theme="dark"] .contact-page-title,
+[data-theme="dark"] .contact-other .contact-other-h,
+[data-theme="dark"] .contact-phone-number,
+[data-theme="dark"] .contact-mail-address,
+[data-theme="dark"] .faq-q,
+[data-theme="dark"] .search-count,
+[data-theme="dark"] .search-result-title,
+[data-theme="dark"] .notfound-title,
+[data-theme="dark"] .stat-value {
+  color: var(--dm-heading);
+}
+[data-theme="dark"] .static-page-title { border-bottom-color: var(--dm-accent); }
+
+/* ---- 本文・補足 ---- */
+[data-theme="dark"] .service-v2-text,
+[data-theme="dark"] .showcase-desc,
+[data-theme="dark"] .corp-phil-text,
+[data-theme="dark"] .corp-profile-row dd,
+[data-theme="dark"] .corp-timeline-event,
+[data-theme="dark"] .corp-access-address,
+[data-theme="dark"] .recruit-job-desc,
+[data-theme="dark"] .recruit-benefit-title,
+[data-theme="dark"] .recruit-interview-body,
+[data-theme="dark"] .newsx-article,
+[data-theme="dark"] .newsx-lang-notice,
+[data-theme="dark"] .static-page-content p,
+[data-theme="dark"] .static-page-content ul,
+[data-theme="dark"] .sitemap-group ul li a,
+[data-theme="dark"] .contact-page-desc,
+[data-theme="dark"] .faq-a p,
+[data-theme="dark"] .faq-contact p {
+  color: var(--dm-text);
+}
+[data-theme="dark"] .services-v2-sub,
+[data-theme="dark"] .section-subheading,
+[data-theme="dark"] .stat-label,
+[data-theme="dark"] .corp-exec-role,
+[data-theme="dark"] .corp-access-routes,
+[data-theme="dark"] .corp-access-notice,
+[data-theme="dark"] .corp-section-sub,
+[data-theme="dark"] .corp-breadcrumb,
+[data-theme="dark"] .recruit-job-type,
+[data-theme="dark"] .recruit-job-count,
+[data-theme="dark"] .recruit-filter-label,
+[data-theme="dark"] .recruit-interview-role,
+[data-theme="dark"] .newsx-count,
+[data-theme="dark"] .newsx-empty,
+[data-theme="dark"] .newsx-card-summary,
+[data-theme="dark"] .newsx-share-label,
+[data-theme="dark"] .contact-mail-label,
+[data-theme="dark"] .contact-mail-hint,
+[data-theme="dark"] .contact-phone-hours,
+[data-theme="dark"] .contact-faq,
+[data-theme="dark"] .search-hint,
+[data-theme="dark"] .search-result-snippet,
+[data-theme="dark"] .notfound-text {
+  color: var(--dm-muted);
+}
+
+/* ---- リンク ---- */
+[data-theme="dark"] .corp-breadcrumb a,
+[data-theme="dark"] .recruit-job-link,
+[data-theme="dark"] .recruit-interview-toggle,
+[data-theme="dark"] .corp-access-open,
+[data-theme="dark"] .newsx-markdown a,
+[data-theme="dark"] .notfound-alt a {
+  color: var(--dm-accent);
+}
+
+/* ---- 線 ---- */
+[data-theme="dark"] .newsx-card,
+[data-theme="dark"] .corp-profile-row,
+[data-theme="dark"] .recruit-job-footer,
+[data-theme="dark"] .newsx-share,
+[data-theme="dark"] .newsx-detail-footer,
+[data-theme="dark"] .newsx-prevnext-link,
+[data-theme="dark"] .search-result,
+[data-theme="dark"] .newsx-markdown th,
+[data-theme="dark"] .newsx-markdown td {
+  border-color: var(--color-border);
+}
+[data-theme="dark"] .newsx-list,
+[data-theme="dark"] .corp-profile,
+[data-theme="dark"] .search-results {
+  border-top-color: var(--dm-accent);
+}
+[data-theme="dark"] .newsx-card:hover { background: var(--dm-surface-2); }
+[data-theme="dark"] .corp-timeline-dot { background: var(--color-bg); }
+[data-theme="dark"] .newsx-markdown th { background: var(--dm-surface-2); color: var(--dm-heading); }
+[data-theme="dark"] .newsx-markdown code { background: var(--dm-surface-2); }
+
+/* ---- ボタン・入力欄（白地 → 暗い面）---- */
+[data-theme="dark"] .newsx-tab,
+[data-theme="dark"] .newsx-search-input,
+[data-theme="dark"] .newsx-year-select,
+[data-theme="dark"] .newsx-pagination button,
+[data-theme="dark"] .newsx-share-btn,
+[data-theme="dark"] .recruit-filter-btn,
+[data-theme="dark"] .showcase-nav,
+[data-theme="dark"] .contact-mail-btn,
+[data-theme="dark"] .newsx-back-btn,
+[data-theme="dark"] .news-more-btn,
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .notfound-actions a {
+  background-color: var(--dm-surface-2);
+  border-color: var(--color-border);
+  color: var(--dm-text);
+}
+[data-theme="dark"] .newsx-tab.is-active,
+[data-theme="dark"] .recruit-filter-btn.is-active,
+[data-theme="dark"] .newsx-pagination button.is-active,
+[data-theme="dark"] .contact-mail-btn-primary,
+[data-theme="dark"] .notfound-actions a:first-child {
+  background-color: #2b8fb3;
+  border-color: #2b8fb3;
+  color: #fff;
+}
+[data-theme="dark"] .service-v2-tag,
+[data-theme="dark"] .faq-cat,
+[data-theme="dark"] .recruit-job-cat,
+[data-theme="dark"] .recruit-flow-duration {
+  background: rgba(111, 208, 236, 0.12);
+  color: var(--dm-accent);
+}
+[data-theme="dark"] .search-results mark { background: #6b5b12; color: #fff; }
+[data-theme="dark"] ::placeholder { color: #7f93a5; }
+
+/* 画像は少しだけ暗くして、まぶしさを抑える */
+[data-theme="dark"] .newsx-article-image,
+[data-theme="dark"] .newsx-markdown img { filter: brightness(0.9); }

@@ -1,0 +1,261 @@
+{
+  "version": "54.0.0",
+  "files": {
+    "dbe7dde64f83ce076732b3edb94153307682fe3b467a8454968a6a88ccfa5ace": {
+      "displayName": "GonHpLogin/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-96c673a8": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "dbe7dde64f83ce076732b3edb94153307682fe3b467a8454968a6a88ccfa5ace.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "b536336a42cd618e562f6f593ad5b0d5a6c562a5649a073c43273cc0333c4dbd": {
+      "displayName": "GonHpNewsList/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-054ec6b9": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "b536336a42cd618e562f6f593ad5b0d5a6c562a5649a073c43273cc0333c4dbd.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "687527bc726f505be46db973a9956ac527bdd31a6e6b4c963f0027384d766650": {
+      "displayName": "GonHpNewsGet/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-949797c3": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "687527bc726f505be46db973a9956ac527bdd31a6e6b4c963f0027384d766650.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "e321392ffd274e59aadb9b21c13c11764c65afb57a233d8f146074364051f770": {
+      "displayName": "GonHpNewsCreate/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-3a91ac4e": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "e321392ffd274e59aadb9b21c13c11764c65afb57a233d8f146074364051f770.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "4b5e37a4b895e84bd82e154d066789b053ef793229b5c5a7de339aab1ac328a2": {
+      "displayName": "GonHpNewsDelete/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-0f2385e8": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "4b5e37a4b895e84bd82e154d066789b053ef793229b5c5a7de339aab1ac328a2.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "3e4b6e77765aaf80754e7dc64d4286b2fb19fd9e4bc79859a514566ef922e6b4": {
+      "displayName": "GonHpContact/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-63ce78be": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "3e4b6e77765aaf80754e7dc64d4286b2fb19fd9e4bc79859a514566ef922e6b4.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "46888c883acea15f0e17bb166eadfbdc69c3e1bd3176ca732506af2096398098": {
+      "displayName": "GonHpBoardList/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-14a2d527": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "46888c883acea15f0e17bb166eadfbdc69c3e1bd3176ca732506af2096398098.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "f0d565f529fe63fc426f99956ecd3c8fbc8b80bc77e7da7fe457b5b1648d90af": {
+      "displayName": "GonHpBoardGet/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-5015ab0e": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "f0d565f529fe63fc426f99956ecd3c8fbc8b80bc77e7da7fe457b5b1648d90af.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "6c5e82ef905230165e1b726550877257501e94c00308eb1664d6a15518c5b210": {
+      "displayName": "GonHpBoardCreate/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-3f865774": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "6c5e82ef905230165e1b726550877257501e94c00308eb1664d6a15518c5b210.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "bd0cf9c1309d16ea1e719286b22b4793604a78931c5cce76fe5ef0b66161ade6": {
+      "displayName": "GonHpBoardRes/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-0efb2e5f": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "bd0cf9c1309d16ea1e719286b22b4793604a78931c5cce76fe5ef0b66161ade6.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "b76ec660375a8a94e1a666a22df9fa12e39973222eb2391a0e387ea5f63d9ee2": {
+      "displayName": "GonHpBoardDelete/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-6e538bc4": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "b76ec660375a8a94e1a666a22df9fa12e39973222eb2391a0e387ea5f63d9ee2.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "5f7a4c9bc8ffe237d04a32ca4774a84cb397de616a6438202087bef539c5e490": {
+      "displayName": "GonHpBoardResDelete/Code",
+      "source": {
+        "path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-329c3404": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "5f7a4c9bc8ffe237d04a32ca4774a84cb397de616a6438202087bef539c5e490.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6": {
+      "displayName": "GonHpStack/Custom::S3AutoDeleteObjectsCustomResourceProvider Code",
+      "source": {
+        "path": "asset.faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-6f3d99ec": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec": {
+      "displayName": "GonHpDeploy/AwsCliLayer/Code",
+      "source": {
+        "path": "asset.98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip",
+        "packaging": "file"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-acd10339": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "97e9ebf0b174a5c8f7faa505739022b7f509edddffcab9211dcd08b759944c4f": {
+      "displayName": "Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code",
+      "source": {
+        "path": "asset.97e9ebf0b174a5c8f7faa505739022b7f509edddffcab9211dcd08b759944c4f",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-5d87706a": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "97e9ebf0b174a5c8f7faa505739022b7f509edddffcab9211dcd08b759944c4f.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "997b50e81741cb5abf719fe67a3ee39614143883b77f384698987ffd908f1cfd": {
+      "displayName": "GonHpDeploy/Asset1",
+      "source": {
+        "path": "asset.997b50e81741cb5abf719fe67a3ee39614143883b77f384698987ffd908f1cfd",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-7b387de2": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "997b50e81741cb5abf719fe67a3ee39614143883b77f384698987ffd908f1cfd.zip",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    },
+    "f3aec165a7bea6fd9559ed56e0de0f5ed3622bc6648f292910a30e30a4480a61": {
+      "displayName": "GonHpStack Template",
+      "source": {
+        "path": "GonHpStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "412381769521-ap-northeast-3-5ceef12a": {
+          "bucketName": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+          "objectKey": "f3aec165a7bea6fd9559ed56e0de0f5ed3622bc6648f292910a30e30a4480a61.json",
+          "region": "ap-northeast-3",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::412381769521:role/cdk-hnb659fds-file-publishing-role-412381769521-ap-northeast-3"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

@@ -1,0 +1,389 @@
+{
+  "/GonHpLiteStack": [
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+    {
+      "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+      "data": true
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteDistribution": [
+    {
+      "type": "aws:cdk:warning",
+      "data": "Ignoring 'minimumProtocolVersion': it has no effect without a custom 'certificate'. The distribution uses the CloudFront default certificate, whose security policy is fixed at TLSv1. [ack: @aws-cdk/aws-cloudfront:minimumProtocolVersionWithoutCertificate]",
+      "trace": [
+        "Annotations.addMessage (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/aws-cdk-lib/core/lib/annotations.js:1:3506)",
+        "Annotations.addWarningV2 (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2194)",
+        "new Distribution2 (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/aws-cdk-lib/aws-cloudfront/lib/distribution.js:1:14567)",
+        "new Distribution2 (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/aws-cdk-lib/core/lib/no-box-stack-traces.js:1:345)",
+        "new Distribution2 (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:855)",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:91:26)",
+        "Object.<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "Module._compile (node:internal/modules/cjs/loader:1830:14)",
+        "Module.m._compile (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/ts-node/src/index.ts:1618:23)",
+        "node:internal/modules/cjs/loader:1961:10",
+        "Object.require.extensions.<computed> [as .ts] (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/ts-node/src/index.ts:1621:12)",
+        "Module.load (node:internal/modules/cjs/loader:1553:32)",
+        "Module._load (node:internal/modules/cjs/loader:1355:12)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "phase4 (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/ts-node/src/bin.ts:649:14)",
+        "bootstrap (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/ts-node/src/bin.ts:95:10)",
+        "main (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/ts-node/src/bin.ts:55:10)",
+        "Object.<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/node_modules/ts-node/src/bin.ts:800:3)",
+        "Module._compile (node:internal/modules/cjs/loader:1830:14)",
+        "Object.<anonymous> (node:internal/modules/cjs/loader:1961:10)",
+        "Module.load (node:internal/modules/cjs/loader:1553:32)",
+        "Module._load (node:internal/modules/cjs/loader:1355:12)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "node:internal/main/run_main_module:33:47"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/SiteUrl": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SiteUrl"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:120:5)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/DistributionDomainName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "DistributionDomainName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:121:5)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/DistributionId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "DistributionId"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:125:5)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/BucketName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BucketName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:126:5)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB": [
+    {
+      "type": "aws:cdk:is-custom-resource-handler-singleton",
+      "data": true
+    },
+    {
+      "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+      "data": 2
+    },
+    {
+      "type": "aws:cdk:is-custom-resource-handler-singleton",
+      "data": true
+    },
+    {
+      "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+      "data": 2
+    }
+  ],
+  "/GonHpLiteStack/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteBucket/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteBucketA3FDAD33"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:67:20)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    },
+    {
+      "type": "aws:cdk:analytics:mixin",
+      "data": {
+        "mixin": "aws-cdk-lib.aws_s3.mixins.BucketAutoDeleteObjects"
+      }
+    }
+  ],
+  "/GonHpLiteStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteRewrite/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteRewrite94F6C2BD"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Function2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:77:21)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteDistribution/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteDistribution04D60761"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Distribution2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:91:26)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB6723FB92"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new BucketDeployment2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:132:20)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/CDKMetadata/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDKMetadata"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib, node internals...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteBucket/Policy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteBucketPolicy0CCF6B40"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:67:20)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)"
+      ]
+    },
+    {
+      "type": "aws:cdk:analytics:mixin",
+      "data": {
+        "mixin": "aws-cdk-lib.aws_s3.mixins.BucketPolicyStatements"
+      }
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteBucket/AutoDeleteObjectsCustomResource/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteBucketAutoDeleteObjectsCustomResource588DF84B"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteDeployAssets/AwsCliLayer/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteDeployAssetsAwsCliLayerC3908CCB"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new BucketDeployment2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:132:20)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteDeployAssets/CustomResource-512MiB/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteDeployAssetsCustomResource512MiBC35549D9"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new BucketDeployment2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:132:20)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleBA21DBC1"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteDeployPages/AwsCliLayer/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteDeployPagesAwsCliLayerB183E7B9"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new BucketDeployment2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:141:19)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteDeployPages/CustomResource-512MiB/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteDeployPagesCustomResource512MiB6BD073F3"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new BucketDeployment2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:141:19)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/GonHpLiteDistribution/Origin1/S3OriginAccessControl/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GonHpLiteDistributionOrigin1S3OriginAccessControl0E60A074"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Distribution2 in aws-cdk-lib...",
+        "new GonHpLiteStack (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/lib/lite-cdn-stack.ts:91:26)",
+        "<anonymous> (/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/infra/bin/app.ts:24:3)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/GonHpLiteStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleDefaultPolicy96C3E726"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ]
+}

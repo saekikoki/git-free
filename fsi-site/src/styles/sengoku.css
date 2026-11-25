@@ -1,0 +1,332 @@
+/* === Sengoku Simulation Game === */
+.sengoku {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* 大名選択画面 */
+.sengoku-select {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.sengoku-title {
+  font-size: 28px;
+  color: #2c3e50;
+  margin: 0 0 8px;
+}
+
+.sengoku-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 32px;
+}
+
+.sengoku-daimyo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.sengoku-daimyo-card {
+  background: #fff;
+  border: 3px solid;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sengoku-daimyo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.sengoku-daimyo-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sengoku-daimyo-stats {
+  font-size: 11px;
+  color: #888;
+}
+
+/* メイン画面 */
+.sengoku-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: #2c3e50;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.sengoku-turn {
+  font-weight: 700;
+  background: rgba(255,255,255,0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.sengoku-player-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.sengoku-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+}
+
+/* 勢力図 */
+.sengoku-map h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.sengoku-provinces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.sengoku-province {
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  cursor: default;
+  transition: transform 0.1s;
+}
+
+.sengoku-province-own {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.3);
+}
+
+.sengoku-province:hover {
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+.sengoku-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #555;
+}
+
+.sengoku-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sengoku-legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* コマンドパネル */
+.sengoku-commands {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e8ecf0;
+}
+
+.sengoku-commands h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.sengoku-commands h4 {
+  margin: 12px 0 8px;
+  font-size: 13px;
+  color: #555;
+}
+
+.sengoku-cmd-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 6px;
+  transition: background 0.2s;
+}
+
+.sengoku-cmd-naisei {
+  background: #27ae60;
+  color: #fff;
+}
+.sengoku-cmd-naisei:hover:not(:disabled) { background: #219a52; }
+
+.sengoku-cmd-attack {
+  background: #e74c3c;
+  color: #fff;
+  font-size: 12px;
+  padding: 8px 10px;
+}
+.sengoku-cmd-attack:hover:not(:disabled) { background: #c0392b; }
+
+.sengoku-cmd-end {
+  background: #2c3e50;
+  color: #fff;
+  margin-top: 12px;
+}
+.sengoku-cmd-end:hover:not(:disabled) { background: #1a252f; }
+
+.sengoku-cmd-reset {
+  background: #8e44ad;
+  color: #fff;
+  margin-top: 8px;
+}
+.sengoku-cmd-reset:hover { background: #7d3c98; }
+
+.sengoku-cmd-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sengoku-attack-section {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.sengoku-attack-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ログ */
+.sengoku-log {
+  margin-top: 16px;
+  background: #1a1a2e;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.sengoku-log h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.sengoku-log-content {
+  max-height: 150px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 12px;
+  color: #0f0;
+  line-height: 1.6;
+}
+
+.sengoku-log-content p {
+  margin: 0;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .sengoku-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sengoku-status-bar {
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .sengoku-daimyo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* 城カウント表示 */
+.sengoku-castle-count {
+  display: block;
+  font-size: 9px;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+
+
+/* 城カウント表示 */
+.sengoku-castle-count {
+  display: block;
+  font-size: 9px;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+
+/* 選択中の国 */
+.sengoku-province-selected {
+  outline: 3px solid #fff;
+  outline-offset: -1px;
+  box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.7) !important;
+}
+
+/* 城情報パネル */
+.sengoku-castle-info {
+  margin-top: 16px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+
+.sengoku-castle-info h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.sengoku-castle-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  color: #444;
+}
+
+.sengoku-castle-list li {
+  padding: 4px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sengoku-castle-list li:last-child {
+  border-bottom: none;
+}
+
+.sengoku-no-castle {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}

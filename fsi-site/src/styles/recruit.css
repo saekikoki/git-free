@@ -1,0 +1,262 @@
+/* === 採用情報ページ === */
+
+/* ---- ヒーロー ---- */
+.recruit-hero {
+  position: relative;
+  min-height: 66vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0b2942 0%, #123a5c 55%, #1a7a8c 100%);
+}
+.recruit-hero-bg { position: absolute; inset: 0; overflow: hidden; }
+.recruit-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding: 60px 24px;
+  max-width: 760px;
+  animation: corpFadeUp 0.9s ease both;
+}
+.recruit-hero-title {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin: 0 0 24px;
+  letter-spacing: 0.02em;
+}
+.recruit-hero-lead {
+  font-size: 16px;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 36px;
+}
+
+/* ---- 職種一覧 ---- */
+.recruit-jobs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.recruit-job-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.recruit-job-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(11, 60, 93, 0.14);
+}
+.recruit-job-cat {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2bb0d6;
+  background: #eaf6fb;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.recruit-job-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1b3a4b;
+  margin: 0 0 10px;
+}
+.recruit-job-desc {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #55707f;
+  margin: 0 0 20px;
+  flex: 1;
+}
+.recruit-job-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #eef2f5;
+  padding-top: 16px;
+}
+.recruit-job-type { font-size: 12px; color: #6b7c8d; font-weight: 600; }
+.recruit-job-link { font-size: 13px; color: #0b3c5d; font-weight: 700; text-decoration: none; }
+.recruit-job-link:hover { text-decoration: underline; }
+
+/* ---- 福利厚生 ---- */
+.recruit-benefits {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.recruit-benefit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 16px;
+  background: #f7fafc;
+  border-radius: 12px;
+  text-align: center;
+  transition: background 0.2s, transform 0.2s;
+}
+.recruit-benefit:hover { background: #eef5fa; transform: translateY(-3px); }
+.recruit-benefit-icon { font-size: 34px; }
+.recruit-benefit-title { font-size: 13px; font-weight: 600; color: #3b4956; }
+
+/* ---- 選考フロー ---- */
+.recruit-flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  counter-reset: none;
+}
+.recruit-flow-item {
+  position: relative;
+  background: #fff;
+  border-radius: 14px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.06);
+}
+/* ステップ間の矢印 */
+.recruit-flow-item:not(:last-child)::after {
+  content: "›";
+  position: absolute;
+  right: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  color: #b7cad6;
+  z-index: 1;
+}
+.recruit-flow-step {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0b3c5d, #2bb0d6);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.recruit-flow-title { font-size: 16px; font-weight: 700; color: #1b3a4b; margin: 0 0 8px; }
+.recruit-flow-desc { font-size: 12px; color: #6b7c8d; line-height: 1.7; margin: 0; }
+
+/* ---- エントリーCTA ---- */
+.recruit-cta {
+  padding: 80px 0;
+  text-align: center;
+  color: #fff;
+  background:
+    radial-gradient(circle at 80% 30%, rgba(43,176,214,0.3), transparent 45%),
+    linear-gradient(135deg, #0b2942 0%, #0b3c5d 100%);
+}
+.recruit-cta-title { font-size: 30px; font-weight: 800; margin: 0 0 12px; }
+.recruit-cta-text { font-size: 15px; color: rgba(255,255,255,0.8); margin: 0 0 32px; }
+
+/* ---- レスポンシブ ---- */
+@media (max-width: 768px) {
+  .recruit-hero-title { font-size: 28px; }
+  .recruit-hero-lead { font-size: 14px; }
+  .recruit-jobs { grid-template-columns: 1fr; }
+  .recruit-benefits { grid-template-columns: repeat(2, 1fr); }
+  .recruit-flow { grid-template-columns: 1fr; gap: 28px; }
+  .recruit-flow-item:not(:last-child)::after {
+    content: "⌄";
+    right: 50%;
+    top: auto;
+    bottom: -22px;
+    transform: translateX(50%);
+  }
+  .recruit-cta-title { font-size: 24px; }
+}
+
+/* ---- 職種の絞り込み ---- */
+.recruit-filters { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.recruit-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.recruit-filter-label { min-width: 72px; font-size: 13px; font-weight: 700; color: #55707f; }
+.recruit-filter-btn {
+  padding: 7px 18px;
+  border-radius: 999px;
+  border: 1px solid #d5e0e8;
+  background: #fff;
+  color: #55707f;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.recruit-filter-btn:hover { border-color: #2bb0d6; color: #0b3c5d; }
+.recruit-filter-btn.is-active { background: #0b3c5d; border-color: #0b3c5d; color: #fff; }
+.recruit-job-count { font-size: 13px; color: #6b7c8d; margin: 0 0 20px; }
+
+/* ---- 社員インタビュー ---- */
+.recruit-interviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+.recruit-interview {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e6edf2;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.06);
+}
+.recruit-interview-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.recruit-interview-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.recruit-interview-name { margin: 0; font-weight: 800; color: #1b3a4b; font-family: var(--font-heading); }
+.recruit-interview-role { margin: 2px 0 0; font-size: 12px; color: #6b7c8d; line-height: 1.6; }
+.recruit-interview-quote { margin: 0 0 14px; font-size: 15px; font-weight: 700; line-height: 1.8; color: #0b3c5d; }
+.recruit-interview-body { margin: 0 0 14px; font-size: 14px; line-height: 1.9; color: #3b4956; }
+.recruit-interview-toggle {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #2874a6;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.recruit-interview-toggle:hover { text-decoration: underline; }
+
+/* ---- 選考フローの目安期間 ---- */
+.recruit-flow-duration {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #eaf6fb;
+  color: #1a7a8c;
+  font-size: 12px;
+  font-weight: 700;
+}
+.corp-section-sub { margin: 16px 0 0; font-size: 14px; color: #6b7c8d; }
+
+.recruit-cta-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 900px) {
+  .recruit-interviews { grid-template-columns: 1fr; }
+}

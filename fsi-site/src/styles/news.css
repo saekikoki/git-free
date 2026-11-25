@@ -1,0 +1,122 @@
+/* === News === */
+/* トップページのニュースを薄グレー背景で区切る */
+.home-news-wrap { background: #f5f8fa; padding: 80px 0; }
+.home-news-wrap .news-section { padding: 0 16px; }
+
+.news-section { padding: 40px 16px; }
+.news-heading {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  color: #0b3c5d;
+  margin: 0 auto 40px;
+  position: relative;
+  display: block;
+  width: fit-content;
+  padding-bottom: 14px;
+}
+.news-heading::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 48px; height: 3px;
+  background: linear-gradient(90deg, #0b3c5d, #2bb0d6);
+  border-radius: 2px;
+}
+
+.news-list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(11, 60, 93, 0.07);
+  overflow: hidden;
+}
+
+.news-item {
+  display: grid;
+  grid-template-columns: 140px 1fr 56px;
+  gap: 16px;
+  align-items: center;
+  padding: 22px 28px;
+  border-top: 1px solid #eef2f5;
+  transition: background 0.2s;
+}
+.news-item:hover { background: #f7fafc; }
+
+.news-item:first-child { border-top: none; }
+
+.news-time { color: #0d5a8f; font-size: 14px; white-space: nowrap; }
+.news-main { display: flex; align-items: center; gap: 12px; }
+
+.news-badge { font-size: 12px; padding: 6px 10px; border-radius: 4px; color: #fff; background: #0d8bd6; }
+.news-badge--組織 { background: #b674d2; }
+
+.news-title { color: #134367; text-decoration: none; line-height: 1.4; display: block; }
+
+.news-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #0b4f86;
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.news-action:focus { outline: 3px solid rgba(11,79,134,0.2); }
+
+/* News More Button */
+.news-more { text-align: center; margin-top: 24px; }
+
+.news-more-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: transparent;
+  border: 2px solid #0b3c5d;
+  color: #0b3c5d;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.news-more-btn:hover { background: #0b3c5d; color: #fff; }
+
+/* News Detail */
+.news-detail { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+.news-detail-breadcrumb { font-size: 13px; color: #718096; margin-bottom: 32px; }
+.news-detail-breadcrumb a { color: #0b3c5d; text-decoration: none; }
+.news-detail-breadcrumb a:hover { text-decoration: underline; }
+.news-detail-sep { margin: 0 8px; color: #ccc; }
+.news-detail-article { background: #fff; border-radius: 12px; padding: 40px 32px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); }
+.news-detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.news-detail-date { color: #0d5a8f; font-size: 14px; }
+.news-detail-category { font-size: 12px; padding: 4px 10px; border-radius: 4px; background: #0d8bd6; color: #fff; }
+.news-detail-title { font-size: 24px; color: #1b4463; margin: 0 0 24px; line-height: 1.5; }
+.news-detail-body { font-size: 15px; line-height: 1.8; color: #333; }
+.news-detail-body p { margin: 0 0 16px; }
+.news-detail-footer { margin-top: 32px; text-align: center; }
+.news-detail-back { display: inline-block; padding: 10px 24px; background: #0b3c5d; color: #fff; border-radius: 999px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+.news-detail-back:hover { background: #145c8a; }
+.news-detail-error { text-align: center; color: #c0392b; font-size: 16px; margin-bottom: 20px; }
+.news-detail-loading { text-align: center; color: #888; font-size: 16px; }
+
+@media (max-width: 700px) {
+  .news-item { grid-template-columns: 1fr; gap: 8px; padding: 12px 0; }
+  .news-time { order: 2; font-size: 13px; color: #6b7c8d; }
+  .news-action { justify-self: end; }
+  .news-main { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+@media (max-width: 768px) {
+  .news-detail-article { padding: 24px 20px; }
+  .news-detail-title { font-size: 20px; }
+}

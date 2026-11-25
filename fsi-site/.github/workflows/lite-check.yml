@@ -1,0 +1,36 @@
+# 廉価版の公開前チェック（プルリクエストのたびに自動で実行）
+#
+# ビルドが通るか、リンク切れ・画像の付け忘れ・ニュースの書き方の間違いがないかを確認する。
+# AWS には接続しない（デプロイはしない）。
+name: lite-check
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "public/**"
+      - "scripts/lite/**"
+      - "index.html"
+      - "package.json"
+      - "package-lock.json"
+      - "vite.config.js"
+      - ".env.lite"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: ビルド（事前HTML化・sitemap・RSS まで）
+        run: npm run build:lite
+      - name: 公開前チェック
+        run: npm run check:lite

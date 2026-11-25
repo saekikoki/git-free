@@ -1,0 +1,30 @@
+/* === Admin === */
+.admin-section { padding: 40px 16px; max-width: 900px; margin: 0 auto; }
+.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+.admin-header h2 { color: #0b3c5d; margin: 0; }
+.admin-user-info { display: flex; align-items: center; gap: 12px; font-size: 14px; color: #555; }
+
+.btn-logout { padding: 6px 16px; background: transparent; border: 1px solid #c0392b; color: #c0392b; border-radius: 4px; cursor: pointer; font-size: 13px; }
+.btn-logout:hover { background: #c0392b; color: #fff; }
+
+.admin-card { background: #fff; padding: 32px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); margin-bottom: 32px; }
+.admin-card h3 { margin-top: 0; color: #0b3c5d; margin-bottom: 20px; }
+
+.admin-form { display: flex; flex-direction: column; gap: 16px; }
+.admin-form label { display: flex; flex-direction: column; font-size: 14px; font-weight: 600; color: #333; }
+.admin-form input, .admin-form textarea { margin-top: 6px; padding: 10px 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; }
+.admin-form input:focus, .admin-form textarea:focus { outline: none; border-color: #0b3c5d; box-shadow: 0 0 0 3px rgba(11, 60, 93, 0.15); }
+.admin-form textarea { min-height: 100px; resize: vertical; }
+.admin-form button { align-self: flex-start; padding: 10px 28px; background: #0b3c5d; color: #fff; border: none; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer; }
+.admin-form button:hover { background: #145c8a; }
+
+.admin-status { margin-top: 12px; font-size: 14px; color: #0b3c5d; }
+.admin-news-list { list-style: none; margin: 0; padding: 0; }
+.admin-news-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #eee; gap: 12px; }
+.admin-news-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 14px; }
+.admin-news-info time { color: #888; white-space: nowrap; }
+.admin-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; background: #0d8bd6; color: #fff; }
+.admin-news-title { color: #222; }
+.btn-delete { padding: 6px 14px; background: transparent; border: 1px solid #e74c3c; color: #e74c3c; border-radius: 4px; cursor: pointer; font-size: 13px; white-space: nowrap; }
+.btn-delete:hover { background: #e74c3c; color: #fff; }
+.admin-empty { color: #888; font-size: 14px; }

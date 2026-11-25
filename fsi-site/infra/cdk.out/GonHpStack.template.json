@@ -1,0 +1,4332 @@
+{
+ "Description": "gon-hp Website Infrastructure",
+ "Resources": {
+  "GonHpUsersTableDE64BC3C": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "email",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "email",
+      "KeyType": "HASH"
+     }
+    ],
+    "TableName": "gon-hp-users"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpUsersTable/Resource"
+   }
+  },
+  "GonHpNewsTable38773818": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "PK",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "SK",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "PK",
+      "KeyType": "HASH"
+     },
+     {
+      "AttributeName": "SK",
+      "KeyType": "RANGE"
+     }
+    ],
+    "TableName": "gon-hp-news"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsTable/Resource"
+   }
+  },
+  "GonHpBoardTableF8D777C4": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "PK",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "SK",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "PK",
+      "KeyType": "HASH"
+     },
+     {
+      "AttributeName": "SK",
+      "KeyType": "RANGE"
+     }
+    ],
+    "TableName": "gon-hp-board"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardTable/Resource"
+   }
+  },
+  "GonHpContactTable4B3FCD43": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "PK",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "SK",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "PK",
+      "KeyType": "HASH"
+     },
+     {
+      "AttributeName": "SK",
+      "KeyType": "RANGE"
+     }
+    ],
+    "TableName": "gon-hp-contact"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpContactTable/Resource"
+   }
+  },
+  "GonHpLoginServiceRoleB39B2BC8": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpLogin/ServiceRole/Resource"
+   }
+  },
+  "GonHpLoginServiceRoleDefaultPolicyD49D99E5": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpUsersTableDE64BC3C",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpUsersTableDE64BC3C",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpLoginServiceRoleDefaultPolicyD49D99E5",
+    "Roles": [
+     {
+      "Ref": "GonHpLoginServiceRoleB39B2BC8"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpLogin/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpLogin38EFED91": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "dbe7dde64f83ce076732b3edb94153307682fe3b467a8454968a6a88ccfa5ace.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-users"
+     }
+    },
+    "FunctionName": "gon-hp-login",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpLoginServiceRoleB39B2BC8",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpLoginServiceRoleDefaultPolicyD49D99E5",
+    "GonHpLoginServiceRoleB39B2BC8"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpLogin/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpNewsListServiceRole7D14A9EF": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsList/ServiceRole/Resource"
+   }
+  },
+  "GonHpNewsListServiceRoleDefaultPolicy08CD3985": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsTable38773818",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsTable38773818",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpNewsListServiceRoleDefaultPolicy08CD3985",
+    "Roles": [
+     {
+      "Ref": "GonHpNewsListServiceRole7D14A9EF"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsList/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpNewsList37165738": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "b536336a42cd618e562f6f593ad5b0d5a6c562a5649a073c43273cc0333c4dbd.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-news"
+     }
+    },
+    "FunctionName": "gon-hp-news-list",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpNewsListServiceRole7D14A9EF",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpNewsListServiceRoleDefaultPolicy08CD3985",
+    "GonHpNewsListServiceRole7D14A9EF"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsList/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpNewsGetServiceRoleFC357DBB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsGet/ServiceRole/Resource"
+   }
+  },
+  "GonHpNewsGetServiceRoleDefaultPolicy35359E67": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsTable38773818",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsTable38773818",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpNewsGetServiceRoleDefaultPolicy35359E67",
+    "Roles": [
+     {
+      "Ref": "GonHpNewsGetServiceRoleFC357DBB"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsGet/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpNewsGet7DEF0AED": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "687527bc726f505be46db973a9956ac527bdd31a6e6b4c963f0027384d766650.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-news"
+     }
+    },
+    "FunctionName": "gon-hp-news-get",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpNewsGetServiceRoleFC357DBB",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpNewsGetServiceRoleDefaultPolicy35359E67",
+    "GonHpNewsGetServiceRoleFC357DBB"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsGet/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpNewsCreateServiceRole6DAB7B8B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsCreate/ServiceRole/Resource"
+   }
+  },
+  "GonHpNewsCreateServiceRoleDefaultPolicy1BC92747": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsTable38773818",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsTable38773818",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpNewsCreateServiceRoleDefaultPolicy1BC92747",
+    "Roles": [
+     {
+      "Ref": "GonHpNewsCreateServiceRole6DAB7B8B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsCreate/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpNewsCreate2268714C": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "e321392ffd274e59aadb9b21c13c11764c65afb57a233d8f146074364051f770.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-news"
+     }
+    },
+    "FunctionName": "gon-hp-news-create",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpNewsCreateServiceRole6DAB7B8B",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpNewsCreateServiceRoleDefaultPolicy1BC92747",
+    "GonHpNewsCreateServiceRole6DAB7B8B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsCreate/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpNewsDeleteServiceRoleC2100E9B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsDelete/ServiceRole/Resource"
+   }
+  },
+  "GonHpNewsDeleteServiceRoleDefaultPolicy3B8BDD20": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsTable38773818",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsTable38773818",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpNewsDeleteServiceRoleDefaultPolicy3B8BDD20",
+    "Roles": [
+     {
+      "Ref": "GonHpNewsDeleteServiceRoleC2100E9B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsDelete/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpNewsDeleteE883E767": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "4b5e37a4b895e84bd82e154d066789b053ef793229b5c5a7de339aab1ac328a2.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-news"
+     }
+    },
+    "FunctionName": "gon-hp-news-delete",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpNewsDeleteServiceRoleC2100E9B",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpNewsDeleteServiceRoleDefaultPolicy3B8BDD20",
+    "GonHpNewsDeleteServiceRoleC2100E9B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpNewsDelete/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpContactServiceRole6DEC30E9": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpContact/ServiceRole/Resource"
+   }
+  },
+  "GonHpContactServiceRoleDefaultPolicyB1A95AA1": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpContactTable4B3FCD43",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpContactTable4B3FCD43",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpContactServiceRoleDefaultPolicyB1A95AA1",
+    "Roles": [
+     {
+      "Ref": "GonHpContactServiceRole6DEC30E9"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpContact/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpContact45C2C2D8": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "3e4b6e77765aaf80754e7dc64d4286b2fb19fd9e4bc79859a514566ef922e6b4.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-contact"
+     }
+    },
+    "FunctionName": "gon-hp-contact",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpContactServiceRole6DEC30E9",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpContactServiceRoleDefaultPolicyB1A95AA1",
+    "GonHpContactServiceRole6DEC30E9"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpContact/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpBoardListServiceRole15EDE053": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardList/ServiceRole/Resource"
+   }
+  },
+  "GonHpBoardListServiceRoleDefaultPolicyFAFFAD44": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpBoardListServiceRoleDefaultPolicyFAFFAD44",
+    "Roles": [
+     {
+      "Ref": "GonHpBoardListServiceRole15EDE053"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardList/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpBoardListC4165CB9": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "46888c883acea15f0e17bb166eadfbdc69c3e1bd3176ca732506af2096398098.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-board"
+     }
+    },
+    "FunctionName": "gon-hp-board-list",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpBoardListServiceRole15EDE053",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpBoardListServiceRoleDefaultPolicyFAFFAD44",
+    "GonHpBoardListServiceRole15EDE053"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardList/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpBoardGetServiceRole546932FA": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardGet/ServiceRole/Resource"
+   }
+  },
+  "GonHpBoardGetServiceRoleDefaultPolicy05379538": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpBoardGetServiceRoleDefaultPolicy05379538",
+    "Roles": [
+     {
+      "Ref": "GonHpBoardGetServiceRole546932FA"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardGet/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpBoardGetE076A4BA": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "f0d565f529fe63fc426f99956ecd3c8fbc8b80bc77e7da7fe457b5b1648d90af.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-board"
+     }
+    },
+    "FunctionName": "gon-hp-board-get",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpBoardGetServiceRole546932FA",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpBoardGetServiceRoleDefaultPolicy05379538",
+    "GonHpBoardGetServiceRole546932FA"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardGet/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpBoardCreateServiceRole2309EDD1": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardCreate/ServiceRole/Resource"
+   }
+  },
+  "GonHpBoardCreateServiceRoleDefaultPolicyBC0DB886": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpBoardCreateServiceRoleDefaultPolicyBC0DB886",
+    "Roles": [
+     {
+      "Ref": "GonHpBoardCreateServiceRole2309EDD1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardCreate/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpBoardCreateCE2B7C96": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "6c5e82ef905230165e1b726550877257501e94c00308eb1664d6a15518c5b210.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-board"
+     }
+    },
+    "FunctionName": "gon-hp-board-create",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpBoardCreateServiceRole2309EDD1",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpBoardCreateServiceRoleDefaultPolicyBC0DB886",
+    "GonHpBoardCreateServiceRole2309EDD1"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardCreate/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpBoardResServiceRole76B851D9": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardRes/ServiceRole/Resource"
+   }
+  },
+  "GonHpBoardResServiceRoleDefaultPolicy1634238F": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpBoardResServiceRoleDefaultPolicy1634238F",
+    "Roles": [
+     {
+      "Ref": "GonHpBoardResServiceRole76B851D9"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardRes/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpBoardRes0A2B8E0E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "bd0cf9c1309d16ea1e719286b22b4793604a78931c5cce76fe5ef0b66161ade6.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-board"
+     }
+    },
+    "FunctionName": "gon-hp-board-res",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpBoardResServiceRole76B851D9",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpBoardResServiceRoleDefaultPolicy1634238F",
+    "GonHpBoardResServiceRole76B851D9"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardRes/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpBoardDeleteServiceRole5F48226D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardDelete/ServiceRole/Resource"
+   }
+  },
+  "GonHpBoardDeleteServiceRoleDefaultPolicyB5A3B15C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpBoardDeleteServiceRoleDefaultPolicyB5A3B15C",
+    "Roles": [
+     {
+      "Ref": "GonHpBoardDeleteServiceRole5F48226D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardDelete/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpBoardDelete6704A0E5": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "b76ec660375a8a94e1a666a22df9fa12e39973222eb2391a0e387ea5f63d9ee2.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-board"
+     }
+    },
+    "FunctionName": "gon-hp-board-delete",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpBoardDeleteServiceRole5F48226D",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpBoardDeleteServiceRoleDefaultPolicyB5A3B15C",
+    "GonHpBoardDeleteServiceRole5F48226D"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardDelete/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpBoardResDeleteServiceRoleB168A61C": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardResDelete/ServiceRole/Resource"
+   }
+  },
+  "GonHpBoardResDeleteServiceRoleDefaultPolicy80617847": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardTableF8D777C4",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GonHpBoardResDeleteServiceRoleDefaultPolicy80617847",
+    "Roles": [
+     {
+      "Ref": "GonHpBoardResDeleteServiceRoleB168A61C"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardResDelete/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GonHpBoardResDeleteF0C49EEC": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "5f7a4c9bc8ffe237d04a32ca4774a84cb397de616a6438202087bef539c5e490.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": "gon-hp-board"
+     }
+    },
+    "FunctionName": "gon-hp-board-res-delete",
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GonHpBoardResDeleteServiceRoleB168A61C",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GonHpBoardResDeleteServiceRoleDefaultPolicy80617847",
+    "GonHpBoardResDeleteServiceRoleB168A61C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBoardResDelete/Resource",
+    "aws:asset:path": "/mnt/c/Users/saekikok/OneDrive - FUJISOFT INCORPORATED/ドキュメント/Azure/test/git-free/fsi-site/backend/lambdas",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpApi9097A333": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Description": "gon-hp Backend API",
+    "Name": "gon-hp-api"
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Resource"
+   }
+  },
+  "GonHpApiCloudWatchRole00A8B60F": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/CloudWatchRole/Resource"
+   }
+  },
+  "GonHpApiAccount17FC344C": {
+   "Type": "AWS::ApiGateway::Account",
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "GonHpApiCloudWatchRole00A8B60F",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "GonHpApi9097A333"
+   ],
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Account"
+   }
+  },
+  "GonHpApiDeployment4424ED8215f84eb660f4654df1f4830368884762": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "Description": "gon-hp Backend API",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "DependsOn": [
+    "GonHpApiapiboardidDELETE65E2DA1B",
+    "GonHpApiapiboardidGETB7DB70F8",
+    "GonHpApiapiboardidOPTIONS2905547F",
+    "GonHpApiapiboardidresnumDELETED450F390",
+    "GonHpApiapiboardidresnumOPTIONS5EA9E3BF",
+    "GonHpApiapiboardidresnumCB91EFAD",
+    "GonHpApiapiboardidresOPTIONS52778C5C",
+    "GonHpApiapiboardidresPOSTE84801FB",
+    "GonHpApiapiboardidres6753EEBC",
+    "GonHpApiapiboardid8F697AF1",
+    "GonHpApiapiboardGET8B6E0075",
+    "GonHpApiapiboardOPTIONS6CF10935",
+    "GonHpApiapiboardPOST1E2D89B8",
+    "GonHpApiapiboard24726824",
+    "GonHpApiapicontactOPTIONS0EF7AF0E",
+    "GonHpApiapicontactPOSTF22D97E2",
+    "GonHpApiapicontact467D8BD6",
+    "GonHpApiapiloginOPTIONS60EE519E",
+    "GonHpApiapiloginPOSTC00DDCBF",
+    "GonHpApiapiloginE182F885",
+    "GonHpApiapinewsskDELETEEB89BAF1",
+    "GonHpApiapinewsskGET8EE3309C",
+    "GonHpApiapinewsskOPTIONS2E597F69",
+    "GonHpApiapinewssk33950BCC",
+    "GonHpApiapinewsGET1FA62BDC",
+    "GonHpApiapinewsOPTIONSF980648A",
+    "GonHpApiapinewsPOST51B5F7FD",
+    "GonHpApiapinews5D228A71",
+    "GonHpApiapiOPTIONSB8E2E4FD",
+    "GonHpApiapiFFD8C543",
+    "GonHpApiOPTIONS36470870"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Deployment/Resource",
+    "aws:cdk:do-not-refactor": true
+   }
+  },
+  "GonHpApiDeploymentStageprod7C7FACEE": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "DeploymentId": {
+     "Ref": "GonHpApiDeployment4424ED8215f84eb660f4654df1f4830368884762"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    },
+    "StageName": "prod"
+   },
+   "DependsOn": [
+    "GonHpApiAccount17FC344C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/DeploymentStage.prod/Resource"
+   }
+  },
+  "GonHpApiOPTIONS36470870": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Fn::GetAtt": [
+      "GonHpApi9097A333",
+      "RootResourceId"
+     ]
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapiFFD8C543": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "GonHpApi9097A333",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "api",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/Resource"
+   }
+  },
+  "GonHpApiapiOPTIONSB8E2E4FD": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapiFFD8C543"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapiloginE182F885": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "GonHpApiapiFFD8C543"
+    },
+    "PathPart": "login",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/login/Resource"
+   }
+  },
+  "GonHpApiapiloginOPTIONS60EE519E": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapiloginE182F885"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/login/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapiloginPOSTApiPermissionGonHpStackGonHpApi859D9E3DPOSTapilogin870A3682": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpLogin38EFED91",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/POST/api/login"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/login/POST/ApiPermission.GonHpStackGonHpApi859D9E3D.POST..api.login"
+   }
+  },
+  "GonHpApiapiloginPOSTApiPermissionTestGonHpStackGonHpApi859D9E3DPOSTapiloginE70F491A": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpLogin38EFED91",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/POST/api/login"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/login/POST/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.POST..api.login"
+   }
+  },
+  "GonHpApiapiloginPOSTC00DDCBF": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpLogin38EFED91",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapiloginE182F885"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/login/POST/Resource"
+   }
+  },
+  "GonHpApiapinews5D228A71": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "GonHpApiapiFFD8C543"
+    },
+    "PathPart": "news",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/Resource"
+   }
+  },
+  "GonHpApiapinewsOPTIONSF980648A": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapinews5D228A71"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapinewsGETApiPermissionGonHpStackGonHpApi859D9E3DGETapinews5725645E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpNewsList37165738",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/GET/api/news"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/GET/ApiPermission.GonHpStackGonHpApi859D9E3D.GET..api.news"
+   }
+  },
+  "GonHpApiapinewsGETApiPermissionTestGonHpStackGonHpApi859D9E3DGETapinews7299CB8C": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpNewsList37165738",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/GET/api/news"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/GET/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.GET..api.news"
+   }
+  },
+  "GonHpApiapinewsGET1FA62BDC": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsList37165738",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapinews5D228A71"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/GET/Resource"
+   }
+  },
+  "GonHpApiapinewsPOSTApiPermissionGonHpStackGonHpApi859D9E3DPOSTapinewsBF31EEA3": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpNewsCreate2268714C",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/POST/api/news"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/POST/ApiPermission.GonHpStackGonHpApi859D9E3D.POST..api.news"
+   }
+  },
+  "GonHpApiapinewsPOSTApiPermissionTestGonHpStackGonHpApi859D9E3DPOSTapinews9FB597DD": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpNewsCreate2268714C",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/POST/api/news"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/POST/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.POST..api.news"
+   }
+  },
+  "GonHpApiapinewsPOST51B5F7FD": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsCreate2268714C",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapinews5D228A71"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/POST/Resource"
+   }
+  },
+  "GonHpApiapinewssk33950BCC": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "GonHpApiapinews5D228A71"
+    },
+    "PathPart": "{sk}",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/{sk}/Resource"
+   }
+  },
+  "GonHpApiapinewsskOPTIONS2E597F69": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapinewssk33950BCC"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/{sk}/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapinewsskGETApiPermissionGonHpStackGonHpApi859D9E3DGETapinewssk725A4315": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpNewsGet7DEF0AED",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/GET/api/news/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/{sk}/GET/ApiPermission.GonHpStackGonHpApi859D9E3D.GET..api.news.{sk}"
+   }
+  },
+  "GonHpApiapinewsskGETApiPermissionTestGonHpStackGonHpApi859D9E3DGETapinewssk16F644EA": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpNewsGet7DEF0AED",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/GET/api/news/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/{sk}/GET/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.GET..api.news.{sk}"
+   }
+  },
+  "GonHpApiapinewsskGET8EE3309C": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsGet7DEF0AED",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapinewssk33950BCC"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/{sk}/GET/Resource"
+   }
+  },
+  "GonHpApiapinewsskDELETEApiPermissionGonHpStackGonHpApi859D9E3DDELETEapinewssk465E3F8D": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpNewsDeleteE883E767",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/DELETE/api/news/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/{sk}/DELETE/ApiPermission.GonHpStackGonHpApi859D9E3D.DELETE..api.news.{sk}"
+   }
+  },
+  "GonHpApiapinewsskDELETEApiPermissionTestGonHpStackGonHpApi859D9E3DDELETEapinewsskB1316539": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpNewsDeleteE883E767",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/DELETE/api/news/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/{sk}/DELETE/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.DELETE..api.news.{sk}"
+   }
+  },
+  "GonHpApiapinewsskDELETEEB89BAF1": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "DELETE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpNewsDeleteE883E767",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapinewssk33950BCC"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/news/{sk}/DELETE/Resource"
+   }
+  },
+  "GonHpApiapicontact467D8BD6": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "GonHpApiapiFFD8C543"
+    },
+    "PathPart": "contact",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/contact/Resource"
+   }
+  },
+  "GonHpApiapicontactOPTIONS0EF7AF0E": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapicontact467D8BD6"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/contact/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapicontactPOSTApiPermissionGonHpStackGonHpApi859D9E3DPOSTapicontact3EBF4B3C": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpContact45C2C2D8",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/POST/api/contact"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/contact/POST/ApiPermission.GonHpStackGonHpApi859D9E3D.POST..api.contact"
+   }
+  },
+  "GonHpApiapicontactPOSTApiPermissionTestGonHpStackGonHpApi859D9E3DPOSTapicontact8B36A276": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpContact45C2C2D8",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/POST/api/contact"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/contact/POST/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.POST..api.contact"
+   }
+  },
+  "GonHpApiapicontactPOSTF22D97E2": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpContact45C2C2D8",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapicontact467D8BD6"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/contact/POST/Resource"
+   }
+  },
+  "GonHpApiapiboard24726824": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "GonHpApiapiFFD8C543"
+    },
+    "PathPart": "board",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/Resource"
+   }
+  },
+  "GonHpApiapiboardOPTIONS6CF10935": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapiboard24726824"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapiboardGETApiPermissionGonHpStackGonHpApi859D9E3DGETapiboard03DBFA94": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardListC4165CB9",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/GET/api/board"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/GET/ApiPermission.GonHpStackGonHpApi859D9E3D.GET..api.board"
+   }
+  },
+  "GonHpApiapiboardGETApiPermissionTestGonHpStackGonHpApi859D9E3DGETapiboard52B215B6": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardListC4165CB9",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/GET/api/board"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/GET/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.GET..api.board"
+   }
+  },
+  "GonHpApiapiboardGET8B6E0075": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardListC4165CB9",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapiboard24726824"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/GET/Resource"
+   }
+  },
+  "GonHpApiapiboardPOSTApiPermissionGonHpStackGonHpApi859D9E3DPOSTapiboard15E7704E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardCreateCE2B7C96",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/POST/api/board"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/POST/ApiPermission.GonHpStackGonHpApi859D9E3D.POST..api.board"
+   }
+  },
+  "GonHpApiapiboardPOSTApiPermissionTestGonHpStackGonHpApi859D9E3DPOSTapiboard0A1D349C": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardCreateCE2B7C96",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/POST/api/board"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/POST/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.POST..api.board"
+   }
+  },
+  "GonHpApiapiboardPOST1E2D89B8": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardCreateCE2B7C96",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapiboard24726824"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/POST/Resource"
+   }
+  },
+  "GonHpApiapiboardid8F697AF1": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "GonHpApiapiboard24726824"
+    },
+    "PathPart": "{id}",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/Resource"
+   }
+  },
+  "GonHpApiapiboardidOPTIONS2905547F": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapiboardid8F697AF1"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapiboardidGETApiPermissionGonHpStackGonHpApi859D9E3DGETapiboardid4C878B96": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardGetE076A4BA",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/GET/api/board/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/GET/ApiPermission.GonHpStackGonHpApi859D9E3D.GET..api.board.{id}"
+   }
+  },
+  "GonHpApiapiboardidGETApiPermissionTestGonHpStackGonHpApi859D9E3DGETapiboardid241E3A59": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardGetE076A4BA",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/GET/api/board/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/GET/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.GET..api.board.{id}"
+   }
+  },
+  "GonHpApiapiboardidGETB7DB70F8": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardGetE076A4BA",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapiboardid8F697AF1"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/GET/Resource"
+   }
+  },
+  "GonHpApiapiboardidDELETEApiPermissionGonHpStackGonHpApi859D9E3DDELETEapiboardid274C19BA": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardDelete6704A0E5",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/DELETE/api/board/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/DELETE/ApiPermission.GonHpStackGonHpApi859D9E3D.DELETE..api.board.{id}"
+   }
+  },
+  "GonHpApiapiboardidDELETEApiPermissionTestGonHpStackGonHpApi859D9E3DDELETEapiboardid481B747B": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardDelete6704A0E5",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/DELETE/api/board/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/DELETE/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.DELETE..api.board.{id}"
+   }
+  },
+  "GonHpApiapiboardidDELETE65E2DA1B": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "DELETE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardDelete6704A0E5",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapiboardid8F697AF1"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/DELETE/Resource"
+   }
+  },
+  "GonHpApiapiboardidres6753EEBC": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "GonHpApiapiboardid8F697AF1"
+    },
+    "PathPart": "res",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/Resource"
+   }
+  },
+  "GonHpApiapiboardidresOPTIONS52778C5C": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapiboardidres6753EEBC"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapiboardidresPOSTApiPermissionGonHpStackGonHpApi859D9E3DPOSTapiboardidres3E843D83": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardRes0A2B8E0E",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/POST/api/board/*/res"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/POST/ApiPermission.GonHpStackGonHpApi859D9E3D.POST..api.board.{id}.res"
+   }
+  },
+  "GonHpApiapiboardidresPOSTApiPermissionTestGonHpStackGonHpApi859D9E3DPOSTapiboardidres436FDEF5": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardRes0A2B8E0E",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/POST/api/board/*/res"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/POST/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.POST..api.board.{id}.res"
+   }
+  },
+  "GonHpApiapiboardidresPOSTE84801FB": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardRes0A2B8E0E",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapiboardidres6753EEBC"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/POST/Resource"
+   }
+  },
+  "GonHpApiapiboardidresnumCB91EFAD": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "GonHpApiapiboardidres6753EEBC"
+    },
+    "PathPart": "{num}",
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/{num}/Resource"
+   }
+  },
+  "GonHpApiapiboardidresnumOPTIONS5EA9E3BF": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "GonHpApiapiboardidresnumCB91EFAD"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/{num}/OPTIONS/Resource"
+   }
+  },
+  "GonHpApiapiboardidresnumDELETEApiPermissionGonHpStackGonHpApi859D9E3DDELETEapiboardidresnumB1425CDC": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardResDeleteF0C49EEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/",
+       {
+        "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+       },
+       "/DELETE/api/board/*/res/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/{num}/DELETE/ApiPermission.GonHpStackGonHpApi859D9E3D.DELETE..api.board.{id}.res.{num}"
+   }
+  },
+  "GonHpApiapiboardidresnumDELETEApiPermissionTestGonHpStackGonHpApi859D9E3DDELETEapiboardidresnum40BBD4E2": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GonHpBoardResDeleteF0C49EEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-3:412381769521:",
+       {
+        "Ref": "GonHpApi9097A333"
+       },
+       "/test-invoke-stage/DELETE/api/board/*/res/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/{num}/DELETE/ApiPermission.Test.GonHpStackGonHpApi859D9E3D.DELETE..api.board.{id}.res.{num}"
+   }
+  },
+  "GonHpApiapiboardidresnumDELETED450F390": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "DELETE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-3:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GonHpBoardResDeleteF0C49EEC",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "GonHpApiapiboardidresnumCB91EFAD"
+    },
+    "RestApiId": {
+     "Ref": "GonHpApi9097A333"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpApi/Default/api/board/{id}/res/{num}/DELETE/Resource"
+   }
+  },
+  "GonHpBucket497AC474": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketName": "gon-hp-frontend-412381769521",
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "Tags": [
+     {
+      "Key": "aws-cdk:auto-delete-objects",
+      "Value": "true"
+     },
+     {
+      "Key": "aws-cdk:cr-owned:41f8f2e7",
+      "Value": "true"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBucket/Resource"
+   }
+  },
+  "GonHpBucketPolicy0406EA4E": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "GonHpBucket497AC474"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:PutBucketPolicy",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*"
+       ],
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBucket497AC474",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "GonHpBucket497AC474",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringEquals": {
+         "AWS:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":cloudfront::",
+            {
+             "Ref": "AWS::AccountId"
+            },
+            ":distribution/",
+            {
+             "Ref": "GonHpDistributionB0F2373B"
+            }
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "GonHpBucket497AC474",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBucket/Policy/Resource"
+   }
+  },
+  "GonHpBucketAutoDeleteObjectsCustomResource40D3C28A": {
+   "Type": "Custom::S3AutoDeleteObjects",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+      "Arn"
+     ]
+    },
+    "BucketName": {
+     "Ref": "GonHpBucket497AC474"
+    }
+   },
+   "DependsOn": [
+    "GonHpBucketPolicy0406EA4E"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpBucket/AutoDeleteObjectsCustomResource/Default"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs24.x",
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Lambda function for auto-deleting objects in ",
+       {
+        "Ref": "GonHpBucket497AC474"
+       },
+       " S3 bucket."
+      ]
+     ]
+    }
+   },
+   "DependsOn": [
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6",
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpDistributionOrigin1S3OriginAccessControl2EF03496": {
+   "Type": "AWS::CloudFront::OriginAccessControl",
+   "Properties": {
+    "OriginAccessControlConfig": {
+     "Name": "GonHpStackGonHpDistributionOrigin1S3OriginAccessControl20181362",
+     "OriginAccessControlOriginType": "s3",
+     "SigningBehavior": "always",
+     "SigningProtocol": "sigv4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpDistribution/Origin1/S3OriginAccessControl/Resource"
+   }
+  },
+  "GonHpDistributionB0F2373B": {
+   "Type": "AWS::CloudFront::Distribution",
+   "Properties": {
+    "DistributionConfig": {
+     "CacheBehaviors": [
+      {
+       "AllowedMethods": [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "PUT",
+        "PATCH",
+        "POST",
+        "DELETE"
+       ],
+       "CachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+       "Compress": true,
+       "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+       "PathPattern": "/api/*",
+       "TargetOriginId": "GonHpStackGonHpDistributionOrigin2BB304534",
+       "ViewerProtocolPolicy": "https-only"
+      }
+     ],
+     "Comment": "gon-hp Website",
+     "CustomErrorResponses": [
+      {
+       "ErrorCachingMinTTL": 0,
+       "ErrorCode": 403,
+       "ResponseCode": 200,
+       "ResponsePagePath": "/index.html"
+      },
+      {
+       "ErrorCachingMinTTL": 0,
+       "ErrorCode": 404,
+       "ResponseCode": 200,
+       "ResponsePagePath": "/index.html"
+      }
+     ],
+     "DefaultCacheBehavior": {
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true,
+      "TargetOriginId": "GonHpStackGonHpDistributionOrigin1F370B4AB",
+      "ViewerProtocolPolicy": "redirect-to-https"
+     },
+     "DefaultRootObject": "index.html",
+     "Enabled": true,
+     "HttpVersion": "http2",
+     "IPV6Enabled": true,
+     "Origins": [
+      {
+       "DomainName": {
+        "Fn::GetAtt": [
+         "GonHpBucket497AC474",
+         "RegionalDomainName"
+        ]
+       },
+       "Id": "GonHpStackGonHpDistributionOrigin1F370B4AB",
+       "OriginAccessControlId": {
+        "Fn::GetAtt": [
+         "GonHpDistributionOrigin1S3OriginAccessControl2EF03496",
+         "Id"
+        ]
+       },
+       "S3OriginConfig": {
+        "OriginAccessIdentity": ""
+       }
+      },
+      {
+       "CustomOriginConfig": {
+        "OriginProtocolPolicy": "https-only",
+        "OriginSSLProtocols": [
+         "TLSv1.2"
+        ]
+       },
+       "DomainName": {
+        "Fn::Select": [
+         2,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Join": [
+             "",
+             [
+              "https://",
+              {
+               "Ref": "GonHpApi9097A333"
+              },
+              ".execute-api.ap-northeast-3.",
+              {
+               "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+               "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+              },
+              "/"
+             ]
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "Id": "GonHpStackGonHpDistributionOrigin2BB304534",
+       "OriginPath": {
+        "Fn::Join": [
+         "",
+         [
+          "/",
+          {
+           "Fn::Select": [
+            3,
+            {
+             "Fn::Split": [
+              "/",
+              {
+               "Fn::Join": [
+                "",
+                [
+                 "https://",
+                 {
+                  "Ref": "GonHpApi9097A333"
+                 },
+                 ".execute-api.ap-northeast-3.",
+                 {
+                  "Ref": "AWS::URLSuffix"
+                 },
+                 "/",
+                 {
+                  "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+                 },
+                 "/"
+                ]
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpDistribution/Resource"
+   }
+  },
+  "GonHpDeployAwsCliLayerCFFF1243": {
+   "Type": "AWS::Lambda::LayerVersion",
+   "Properties": {
+    "Content": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip"
+    },
+    "Description": "/opt/awscli/aws"
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpDeploy/AwsCliLayer/Resource",
+    "aws:asset:path": "asset.98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
+   }
+  },
+  "GonHpDeployCustomResource1CAFC1C7": {
+   "Type": "Custom::CDKBucketDeployment",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+      "Arn"
+     ]
+    },
+    "SourceBucketNames": [
+     "cdk-hnb659fds-assets-412381769521-ap-northeast-3"
+    ],
+    "SourceObjectKeys": [
+     "997b50e81741cb5abf719fe67a3ee39614143883b77f384698987ffd908f1cfd.zip"
+    ],
+    "DestinationBucketName": {
+     "Ref": "GonHpBucket497AC474"
+    },
+    "WaitForDistributionInvalidation": true,
+    "Prune": true,
+    "DistributionId": {
+     "Ref": "GonHpDistributionB0F2373B"
+    },
+    "DistributionPaths": [
+     "/*"
+    ],
+    "OutputObjectKeys": true
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/GonHpDeploy/CustomResource/Default"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::cdk-hnb659fds-assets-412381769521-ap-northeast-3"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::cdk-hnb659fds-assets-412381769521-ap-northeast-3/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpBucket497AC474",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "GonHpBucket497AC474",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "cloudfront:GetInvalidation",
+        "cloudfront:CreateInvalidation"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+    "Roles": [
+     {
+      "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "97e9ebf0b174a5c8f7faa505739022b7f509edddffcab9211dcd08b759944c4f.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_CA_BUNDLE": "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"
+     }
+    },
+    "Handler": "index.handler",
+    "Layers": [
+     {
+      "Ref": "GonHpDeployAwsCliLayerCFFF1243"
+     }
+    ],
+    "MemorySize": 1024,
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.13",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource",
+    "aws:asset:path": "asset.97e9ebf0b174a5c8f7faa505739022b7f509edddffcab9211dcd08b759944c4f",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/5VSTY8TMQz9LdtzGpaWD4nbbCtOoK06iAtCVSbxDm4zSRU7O4yi+e8omWE7QnDg5Gc7fn52vJGbd+/l/Z3qaa3NZW2xkalmpS9C9XRKZnCq86aR6YtqLIjdkytgFFZ1jVEyfYxOM3qXU0t8gNAh0ex9UgOErxCKX6NrLbB/eT8KVJ1MRz91KPbgLeqhMBU0CtqekiICJlllIwxcrR86cCwfor4A718C+bVMU/RBEYgJZroJfUurDn+iW31YLWfPQ9NWlhTNrFVkvwcLDI/NGTTTavw+891ELv3/4J4KalYMWXamHoW6YqsYejXIdATi6oplLTdYae2jY3EbOEcXXs2qLbucwBHIx6ChrOIz8A9vcnJGv7Nzk4JHoa2P5il4xzLtkThgE8vn1tvHgC1mEUC0846Dt7n2H+Fl8TjeupVPzPrQtaU88jWy2EVi3/1N0x+pQ/DPaCCUoaZzPNl8ZyfVk7Yoq552FsvpjcJ5A/JMr543b+Trt/L+7kyI6xAdYwfyONlfeSLUoA8DAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "GonHpApiEndpoint04F2729C": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "GonHpApi9097A333"
+      },
+      ".execute-api.ap-northeast-3.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+      },
+      "/"
+     ]
+    ]
+   }
+  },
+  "ApiUrl": {
+   "Description": "API Gateway URL",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "GonHpApi9097A333"
+      },
+      ".execute-api.ap-northeast-3.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "GonHpApiDeploymentStageprod7C7FACEE"
+      },
+      "/"
+     ]
+    ]
+   }
+  },
+  "CloudFrontUrl": {
+   "Description": "CloudFront Distribution URL (Website)",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Fn::GetAtt": [
+        "GonHpDistributionB0F2373B",
+        "DomainName"
+       ]
+      }
+     ]
+    ]
+   }
+  },
+  "S3BucketName": {
+   "Description": "S3 Bucket for frontend files",
+   "Value": {
+    "Ref": "GonHpBucket497AC474"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

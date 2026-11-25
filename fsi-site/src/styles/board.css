@@ -1,0 +1,74 @@
+/* === BBS (2ch style) === */
+.bbs { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+.bbs-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.bbs-title { font-size: 22px; color: #0b3c5d; margin: 0; }
+.bbs-new-btn { padding: 8px 18px; background: #0b3c5d; color: #fff; border: none; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.bbs-new-btn:hover { background: #145c8a; }
+
+.bbs-new-form { background: #f0f4f7; padding: 20px; border-radius: 6px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
+.bbs-input, .bbs-textarea { padding: 8px 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
+.bbs-input-sm { max-width: 220px; }
+.bbs-textarea { resize: vertical; min-height: 60px; }
+.bbs-input:focus, .bbs-textarea:focus { outline: none; border-color: #0b3c5d; }
+.bbs-form-actions { display: flex; gap: 10px; }
+.bbs-submit { padding: 8px 20px; background: #0b3c5d; color: #fff; border: none; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.bbs-submit:hover { background: #145c8a; }
+.bbs-status { font-size: 13px; color: #c0392b; margin: 4px 0 0; }
+
+.bbs-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.bbs-table thead { background: #0b3c5d; color: #fff; }
+.bbs-table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 13px; }
+.bbs-table td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+.bbs-table tbody tr:hover { background: #f5f9fc; }
+.bbs-col-num { width: 40px; text-align: center; }
+.bbs-col-res { width: 60px; text-align: center; }
+.bbs-col-date { width: 120px; white-space: nowrap; color: #888; font-size: 13px; }
+.bbs-thread-link { color: #0b3c5d; text-decoration: none; font-weight: 600; }
+.bbs-thread-link:hover { text-decoration: underline; }
+.bbs-empty { text-align: center; color: #999; padding: 24px; }
+
+.bbs-back { display: inline-block; font-size: 13px; color: #0b3c5d; text-decoration: none; margin-bottom: 12px; }
+.bbs-back:hover { text-decoration: underline; }
+.bbs-thread-title { font-size: 20px; color: #1b4463; margin: 0 0 4px; padding-bottom: 8px; border-bottom: 2px solid #0b3c5d; }
+.bbs-thread-meta { font-size: 13px; color: #888; margin: 0 0 20px; }
+.bbs-responses { display: flex; flex-direction: column; gap: 0; }
+.bbs-res { padding: 12px 0; border-bottom: 1px solid #eee; }
+.bbs-res:last-of-type { border-bottom: none; }
+.bbs-res-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; font-size: 13px; }
+.bbs-res-num { font-weight: 700; color: #0b3c5d; }
+.bbs-res-name { font-weight: 700; color: #2a6b2a; }
+.bbs-res-date { color: #999; font-size: 12px; }
+.bbs-res-body { font-size: 14px; line-height: 1.7; color: #333; padding-left: 4px; }
+.bbs-res-anchor { color: #0066cc; font-weight: 600; }
+
+.bbs-write-form { margin-top: 24px; padding: 16px 20px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; display: flex; flex-direction: column; gap: 10px; }
+.bbs-write-name { padding: 6px 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; max-width: 200px; }
+.bbs-write-message { padding: 8px 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; resize: vertical; min-height: 60px; }
+.bbs-write-name:focus, .bbs-write-message:focus { outline: none; border-color: #0b3c5d; }
+.bbs-write-submit { align-self: flex-end; padding: 8px 24px; background: #0b3c5d; color: #fff; border: none; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.bbs-write-submit:hover { background: #145c8a; }
+.bbs-write-submit:disabled { background: #999; cursor: not-allowed; }
+.bbs-error { text-align: center; color: #c0392b; }
+.bbs-loading { text-align: center; color: #888; }
+
+/* Admin Controls */
+.bbs-col-action { width: 60px; text-align: center; }
+.bbs-delete-btn { padding: 4px 10px; background: transparent; border: 1px solid #e74c3c; color: #e74c3c; border-radius: 4px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.bbs-delete-btn:hover { background: #e74c3c; color: #fff; }
+.bbs-thread-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.bbs-res-delete { margin-left: auto; padding: 2px 8px; background: transparent; border: 1px solid #ddd; color: #999; border-radius: 3px; font-size: 11px; cursor: pointer; }
+.bbs-res-delete:hover { border-color: #e74c3c; color: #e74c3c; }
+
+/* Search */
+.bbs-search { position: relative; margin-bottom: 16px; }
+.bbs-search-input { width: 100%; padding: 10px 36px 10px 14px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; transition: border-color 0.2s; }
+.bbs-search-input:focus { outline: none; border-color: #0b3c5d; box-shadow: 0 0 0 2px rgba(11, 60, 93, 0.1); }
+.bbs-search-clear { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 18px; color: #999; cursor: pointer; line-height: 1; padding: 2px 6px; }
+.bbs-search-clear:hover { color: #333; }
+.bbs-search-result { font-size: 13px; color: #666; margin: 0 0 8px; }
+
+@media (max-width: 768px) {
+  .bbs-table th:nth-child(4), .bbs-table td:nth-child(4) { display: none; }
+  .bbs-col-num { width: 30px; }
+  .bbs-write-name { max-width: 100%; }
+}

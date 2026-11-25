@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FSI-STYLE CORP News</title>
+    <link>https://www.example.com/en/news/</link>
+    <description>News releases from FSI-STYLE CORP.</description>
+    <language>en</language>
+    <atom:link href="https://www.example.com/en/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Jul 2025 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Establishment of the AI Solutions Division</title>
+      <link>https://www.example.com/en/news/2025-07-01-ai-solution-division/</link>
+      <guid isPermaLink="true">https://www.example.com/en/news/2025-07-01-ai-solution-division/</guid>
+      <pubDate>Tue, 01 Jul 2025 00:00:00 GMT</pubDate>
+      <category>Organization</category>
+      <description>We have established the AI Solutions Division, a dedicated organization that supports the business use of generative AI.</description>
+    </item>
+    <item>
+      <title>Launch of Cloud Migration Support Service</title>
+      <link>https://www.example.com/en/news/2025-06-20-cloud-migration-service/</link>
+      <guid isPermaLink="true">https://www.example.com/en/news/2025-06-20-cloud-migration-service/</guid>
+      <pubDate>Fri, 20 Jun 2025 00:00:00 GMT</pubDate>
+      <category>Products</category>
+      <description>We have launched a support service that migrates on premises environments to AWS in a short period. We provide end to end support, from current state analysis and migration planning to migration work </description>
+    </item>
+    <item>
+      <title>夏季休業のお知らせ</title>
+      <link>https://www.example.com/en/news/2025-06-10-summer-holidays/</link>
+      <guid isPermaLink="true">https://www.example.com/en/news/2025-06-10-summer-holidays/</guid>
+      <pubDate>Tue, 10 Jun 2025 00:00:00 GMT</pubDate>
+      <category>Notice</category>
+      <description>誠に勝手ながら、以下の期間を夏季休業とさせていただきます。 休業期間: 8月13日（水）〜 8月16日（土） 休業期間中にいただいたお問い合わせは、8月18日（月）以降に順次ご返信いたします。</description>
+    </item>
+    <item>
+      <title>情報セキュリティ認証を更新しました</title>
+      <link>https://www.example.com/en/news/2025-06-05-isms-renewal/</link>
+      <guid isPermaLink="true">https://www.example.com/en/news/2025-06-05-isms-renewal/</guid>
+      <pubDate>Thu, 05 Jun 2025 00:00:00 GMT</pubDate>
+      <category>Notice</category>
+      <description>ISMS（ISO/IEC 27001）認証を更新しました。引き続き情報資産の適切な管理に努めます。</description>
+    </item>
+    <item>
+      <title>新サービスをリリースしました</title>
+      <link>https://www.example.com/en/news/2025-06-01-new-service-release/</link>
+      <guid isPermaLink="true">https://www.example.com/en/news/2025-06-01-new-service-release/</guid>
+      <pubDate>Sun, 01 Jun 2025 00:00:00 GMT</pubDate>
+      <category>Products</category>
+      <description>新しいクラウドサービスの提供を開始しました。</description>
+    </item>
+    <item>
+      <title>オフィス移転のお知らせ</title>
+      <link>https://www.example.com/en/news/2025-05-15-office-relocation/</link>
+      <guid isPermaLink="true">https://www.example.com/en/news/2025-05-15-office-relocation/</guid>
+      <pubDate>Thu, 15 May 2025 00:00:00 GMT</pubDate>
+      <category>Organization</category>
+      <description>本社オフィスを移転いたします。新しい所在地は企業情報ページをご覧ください。</description>
+    </item>
+    <item>
+      <title>Notice of FY2024 Financial Results</title>
+      <link>https://www.example.com/en/news/2025-05-12-fy2024-results/</link>
+      <guid isPermaLink="true">https://www.example.com/en/news/2025-05-12-fy2024-results/</guid>
+      <pubDate>Mon, 12 May 2025 00:00:00 GMT</pubDate>
+      <category>IR</category>
+      <description>We have announced our consolidated results for FY2024. Both net sales and operating income reached record highs.</description>
+    </item>
+  </channel>
+</rss>

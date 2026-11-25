@@ -1,0 +1,261 @@
+/* === チャット（ビジネスチャット風）=== */
+
+/* 名前入力ゲート */
+.chatx-gate {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: var(--color-bg-soft);
+}
+.chatx-gate-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--shadow-md);
+  padding: 48px 40px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+.chatx-gate-icon { font-size: 48px; margin-bottom: 8px; }
+.chatx-gate-card h2 { color: var(--color-primary); margin: 0 0 8px; }
+.chatx-gate-card p { color: var(--color-text-muted); font-size: 14px; margin: 0 0 24px; }
+.chatx-gate-card form { display: flex; flex-direction: column; gap: 14px; }
+.chatx-gate-card input {
+  padding: 13px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 15px;
+}
+.chatx-gate-card input:focus {
+  outline: none; border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(43,176,214,0.15);
+}
+
+/* チャット本体 */
+.chatx {
+  max-width: 860px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+.chatx-window {
+  display: flex;
+  flex-direction: column;
+  height: 72vh;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+/* ヘッダー */
+.chatx-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--color-primary);
+  color: #fff;
+  flex-shrink: 0;
+}
+.chatx-header-title { font-weight: 700; font-size: 16px; }
+.chatx-hash { opacity: 0.6; margin-right: 2px; }
+.chatx-presence { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.chatx-dot { width: 9px; height: 9px; border-radius: 50%; }
+.chatx-dot.on { background: #2ecc71; box-shadow: 0 0 6px rgba(46,204,113,0.6); }
+.chatx-dot.off { background: #95a5a6; }
+.chatx-avatars { display: flex; }
+.chatx-avatar-sm {
+  width: 26px; height: 26px; font-size: 12px;
+  margin-left: -8px; border: 2px solid var(--color-primary);
+}
+.chatx-count { opacity: 0.85; }
+
+/* アバター共通 */
+.chatx-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* メッセージ本体 */
+.chatx-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: var(--color-bg-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.chatx-empty {
+  margin: auto;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* 日付セパレータ */
+.chatx-datesep {
+  text-align: center;
+  margin: 16px 0 8px;
+  position: relative;
+}
+.chatx-datesep span {
+  background: var(--color-bg-soft);
+  padding: 2px 14px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+/* メッセージ行 */
+.chatx-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+.chatx-row.grouped { margin-top: 2px; }
+.chatx-row.mine { flex-direction: row-reverse; }
+.chatx-avatar-col { width: 38px; flex-shrink: 0; }
+.chatx-msg-col { max-width: 70%; display: flex; flex-direction: column; }
+.chatx-row.mine .chatx-msg-col { align-items: flex-end; }
+
+.chatx-msg-meta { display: flex; gap: 8px; align-items: baseline; margin-bottom: 4px; }
+.chatx-msg-name { font-size: 13px; font-weight: 700; color: var(--color-heading); }
+.chatx-msg-time { font-size: 11px; color: #aab5bd; }
+
+/* 吹き出し */
+.chatx-bubble {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 4px 14px 14px 14px;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-text);
+  word-break: break-word;
+}
+.chatx-row.mine .chatx-bubble {
+  background: linear-gradient(135deg, #0b3c5d, #145c8a);
+  color: #fff;
+  border: none;
+  border-radius: 14px 4px 14px 14px;
+}
+.chatx-bubble br:last-child { display: none; }
+
+/* リアクションピッカー（ホバーで出る）*/
+.chatx-react-picker {
+  position: absolute;
+  top: -34px;
+  right: 0;
+  display: none;
+  gap: 2px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 4px 6px;
+  box-shadow: var(--shadow-sm);
+  z-index: 5;
+}
+.chatx-bubble:hover .chatx-react-picker { display: flex; }
+.chatx-react-picker button {
+  border: none; background: none; cursor: pointer;
+  font-size: 16px; padding: 2px 4px; border-radius: 50%;
+  transition: transform 0.15s;
+}
+.chatx-react-picker button:hover { transform: scale(1.3); }
+
+/* 付いたリアクション */
+.chatx-reactions { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.chatx-reaction {
+  background: #eef5fa;
+  border: 1px solid #d5e6f0;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.chatx-reaction:hover { background: #dcecf5; }
+
+/* 入力中 */
+.chatx-typing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  padding: 6px 4px;
+}
+.chatx-typing-dots { display: inline-flex; gap: 3px; }
+.chatx-typing-dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-accent);
+  animation: chatxBounce 1.2s infinite;
+}
+.chatx-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.chatx-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes chatxBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* 入力エリア */
+.chatx-input {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 14px 16px;
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+.chatx-input textarea {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  max-height: 120px;
+  line-height: 1.5;
+}
+.chatx-input textarea:focus {
+  outline: none; border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(43,176,214,0.12);
+}
+.chatx-send {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--color-accent), #1a8cb0);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s, opacity 0.2s;
+}
+.chatx-send:hover:not(:disabled) { transform: scale(1.08); }
+.chatx-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .chatx { margin: 16px auto; }
+  .chatx-window { height: 78vh; }
+  .chatx-msg-col { max-width: 82%; }
+}

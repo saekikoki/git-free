@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.example.com/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/news/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/company/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/company/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/company/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/company/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/recruit/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/recruit/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/recruit/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/recruit/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/contact/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/contact/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/contact/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/faq/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/faq/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/faq/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/privacy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/privacy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/privacy/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/terms/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/terms/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/terms/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/sitemap/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/sitemap/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/sitemap/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/sitemap/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/news/2025-07-01-ai-solution-division/</loc>
+    <lastmod>2025-07-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-07-01-ai-solution-division/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-07-01-ai-solution-division/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-07-01-ai-solution-division/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/news/2025-06-20-cloud-migration-service/</loc>
+    <lastmod>2025-06-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-06-20-cloud-migration-service/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-06-20-cloud-migration-service/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-06-20-cloud-migration-service/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/news/2025-06-10-summer-holidays/</loc>
+    <lastmod>2025-06-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-06-10-summer-holidays/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-06-10-summer-holidays/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-06-10-summer-holidays/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/news/2025-06-05-isms-renewal/</loc>
+    <lastmod>2025-06-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-06-05-isms-renewal/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-06-05-isms-renewal/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-06-05-isms-renewal/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/news/2025-06-01-new-service-release/</loc>
+    <lastmod>2025-06-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-06-01-new-service-release/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-06-01-new-service-release/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-06-01-new-service-release/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/news/2025-05-15-office-relocation/</loc>
+    <lastmod>2025-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-05-15-office-relocation/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-05-15-office-relocation/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-05-15-office-relocation/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/news/2025-05-12-fy2024-results/</loc>
+    <lastmod>2025-05-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-05-12-fy2024-results/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-05-12-fy2024-results/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-05-12-fy2024-results/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/news/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/company/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/company/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/company/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/company/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/recruit/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/recruit/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/recruit/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/recruit/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/contact/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/contact/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/contact/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/faq/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/faq/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/faq/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/privacy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/privacy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/privacy/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/terms/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/terms/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/terms/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/sitemap/</loc>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/sitemap/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/sitemap/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/sitemap/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/news/2025-07-01-ai-solution-division/</loc>
+    <lastmod>2025-07-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-07-01-ai-solution-division/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-07-01-ai-solution-division/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-07-01-ai-solution-division/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/news/2025-06-20-cloud-migration-service/</loc>
+    <lastmod>2025-06-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-06-20-cloud-migration-service/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-06-20-cloud-migration-service/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-06-20-cloud-migration-service/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/news/2025-06-10-summer-holidays/</loc>
+    <lastmod>2025-06-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-06-10-summer-holidays/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-06-10-summer-holidays/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-06-10-summer-holidays/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/news/2025-06-05-isms-renewal/</loc>
+    <lastmod>2025-06-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-06-05-isms-renewal/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-06-05-isms-renewal/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-06-05-isms-renewal/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/news/2025-06-01-new-service-release/</loc>
+    <lastmod>2025-06-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-06-01-new-service-release/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-06-01-new-service-release/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-06-01-new-service-release/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/news/2025-05-15-office-relocation/</loc>
+    <lastmod>2025-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-05-15-office-relocation/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-05-15-office-relocation/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-05-15-office-relocation/" />
+  </url>
+  <url>
+    <loc>https://www.example.com/en/news/2025-05-12-fy2024-results/</loc>
+    <lastmod>2025-05-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.example.com/news/2025-05-12-fy2024-results/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.example.com/en/news/2025-05-12-fy2024-results/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.example.com/news/2025-05-12-fy2024-results/" />
+  </url>
+</urlset>

@@ -1,0 +1,70 @@
+# 廉価版の自動デプロイ（main ブランチに push したら自動で公開）
+#
+# 事前準備（GitHub のリポジトリ設定 → Secrets and variables → Actions）:
+#   Secrets:
+#     AWS_ROLE_ARN   … GitHub Actions が使う IAM ロールの ARN（OIDC で認証。アクセスキーは不要）
+#   Variables（任意）:
+#     LITE_DEPLOY_MODE … "s3"（既定。deploy-lite.sh）または "cdn"（deploy-lite-cdn.sh）
+#     AWS_REGION       … 既定は ap-northeast-3
+#     VITE_SITE_URL    … 独自ドメインなどで公開URLを固定したい場合
+#     LITE_DOMAIN / LITE_CERT_ARN … CloudFront 版で独自ドメインを使う場合
+#
+# IAM ロールの作り方は docs/EDITING_LITE.md の「自動デプロイ」を参照。
+name: lite-deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "scripts/lite/**"
+      - "index.html"
+      - "package.json"
+      - "package-lock.json"
+      - "vite.config.js"
+      - ".env.lite"
+      - "infra/scripts/deploy-lite*.sh"
+      - "infra/lib/lite-cdn-stack.ts"
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # OIDC で AWS に認証するため
+  contents: read
+
+# 同時に2つのデプロイが走らないようにする
+concurrency:
+  group: lite-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'ap-northeast-3' }}
+      VITE_SITE_URL: ${{ vars.VITE_SITE_URL }}
+      LITE_DOMAIN: ${{ vars.LITE_DOMAIN }}
+      LITE_CERT_ARN: ${{ vars.LITE_CERT_ARN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      - name: AWS に接続（OIDC）
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+      - name: デプロイ（S3 版）
+        if: ${{ vars.LITE_DEPLOY_MODE != 'cdn' }}
+        run: bash infra/scripts/deploy-lite.sh
+
+      - name: デプロイ（CloudFront 版）
+        if: ${{ vars.LITE_DEPLOY_MODE == 'cdn' }}
+        run: |
+          (cd infra && npm ci)
+          bash infra/scripts/deploy-lite-cdn.sh

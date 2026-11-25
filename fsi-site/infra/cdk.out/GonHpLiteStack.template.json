@@ -1,0 +1,725 @@
+{
+ "Description": "gon-hp lite website (S3 + CloudFront, no server)",
+ "Resources": {
+  "GonHpLiteBucketA3FDAD33": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+       }
+      }
+     ]
+    },
+    "BucketName": "gon-hp-lite-cdn-412381769521",
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "Tags": [
+     {
+      "Key": "aws-cdk:auto-delete-objects",
+      "Value": "true"
+     },
+     {
+      "Key": "aws-cdk:cr-owned:assets/:f0a453f2",
+      "Value": "true"
+     },
+     {
+      "Key": "aws-cdk:cr-owned:d15c05e1",
+      "Value": "true"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteBucket/Resource"
+   }
+  },
+  "GonHpLiteBucketPolicy0CCF6B40": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "GonHpLiteBucketA3FDAD33"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpLiteBucketA3FDAD33",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "GonHpLiteBucketA3FDAD33",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "s3:PutBucketPolicy",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*"
+       ],
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpLiteBucketA3FDAD33",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "GonHpLiteBucketA3FDAD33",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringEquals": {
+         "AWS:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":cloudfront::",
+            {
+             "Ref": "AWS::AccountId"
+            },
+            ":distribution/",
+            {
+             "Ref": "GonHpLiteDistribution04D60761"
+            }
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "GonHpLiteBucketA3FDAD33",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteBucket/Policy/Resource"
+   }
+  },
+  "GonHpLiteBucketAutoDeleteObjectsCustomResource588DF84B": {
+   "Type": "Custom::S3AutoDeleteObjects",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+      "Arn"
+     ]
+    },
+    "BucketName": {
+     "Ref": "GonHpLiteBucketA3FDAD33"
+    }
+   },
+   "DependsOn": [
+    "GonHpLiteBucketPolicy0CCF6B40"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteBucket/AutoDeleteObjectsCustomResource/Default"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs24.x",
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Lambda function for auto-deleting objects in ",
+       {
+        "Ref": "GonHpLiteBucketA3FDAD33"
+       },
+       " S3 bucket."
+      ]
+     ]
+    }
+   },
+   "DependsOn": [
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6",
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpLiteRewrite94F6C2BD": {
+   "Type": "AWS::CloudFront::Function",
+   "Properties": {
+    "AutoPublish": true,
+    "FunctionCode": "\nfunction handler(event) {\n  var request = event.request;\n  var uri = request.uri;\n  if (uri.endsWith(\"/\")) {\n    request.uri = uri + \"index.html\";\n  } else if (uri.split(\"/\").pop().indexOf(\".\") === -1) {\n    request.uri = uri + \"/index.html\";\n  }\n  return request;\n}\n",
+    "FunctionConfig": {
+     "Comment": "gon-hp lite: /path -> /path/index.html",
+     "Runtime": "cloudfront-js-2.0"
+    },
+    "Name": "gon-hp-lite-rewrite"
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteRewrite/Resource"
+   }
+  },
+  "GonHpLiteDistributionOrigin1S3OriginAccessControl0E60A074": {
+   "Type": "AWS::CloudFront::OriginAccessControl",
+   "Properties": {
+    "OriginAccessControlConfig": {
+     "Name": "GonHpLiteStackGonHpLiteDistrOrigin1S3OriginAccessControlEB30F202",
+     "OriginAccessControlOriginType": "s3",
+     "SigningBehavior": "always",
+     "SigningProtocol": "sigv4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteDistribution/Origin1/S3OriginAccessControl/Resource"
+   }
+  },
+  "GonHpLiteDistribution04D60761": {
+   "Type": "AWS::CloudFront::Distribution",
+   "Properties": {
+    "DistributionConfig": {
+     "Comment": "gon-hp lite website",
+     "CustomErrorResponses": [
+      {
+       "ErrorCachingMinTTL": 60,
+       "ErrorCode": 403,
+       "ResponseCode": 404,
+       "ResponsePagePath": "/404.html"
+      },
+      {
+       "ErrorCachingMinTTL": 60,
+       "ErrorCode": 404,
+       "ResponseCode": 404,
+       "ResponsePagePath": "/404.html"
+      }
+     ],
+     "DefaultCacheBehavior": {
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true,
+      "FunctionAssociations": [
+       {
+        "EventType": "viewer-request",
+        "FunctionARN": {
+         "Fn::GetAtt": [
+          "GonHpLiteRewrite94F6C2BD",
+          "FunctionARN"
+         ]
+        }
+       }
+      ],
+      "ResponseHeadersPolicyId": "67f7725c-6f97-4210-82d7-5512b31e9d03",
+      "TargetOriginId": "GonHpLiteStackGonHpLiteDistributionOrigin1E63B0FC6",
+      "ViewerProtocolPolicy": "redirect-to-https"
+     },
+     "DefaultRootObject": "index.html",
+     "Enabled": true,
+     "HttpVersion": "http2and3",
+     "IPV6Enabled": true,
+     "Origins": [
+      {
+       "DomainName": {
+        "Fn::GetAtt": [
+         "GonHpLiteBucketA3FDAD33",
+         "RegionalDomainName"
+        ]
+       },
+       "Id": "GonHpLiteStackGonHpLiteDistributionOrigin1E63B0FC6",
+       "OriginAccessControlId": {
+        "Fn::GetAtt": [
+         "GonHpLiteDistributionOrigin1S3OriginAccessControl0E60A074",
+         "Id"
+        ]
+       },
+       "S3OriginConfig": {
+        "OriginAccessIdentity": ""
+       }
+      }
+     ],
+     "PriceClass": "PriceClass_200"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteDistribution/Resource"
+   }
+  },
+  "GonHpLiteDeployAssetsAwsCliLayerC3908CCB": {
+   "Type": "AWS::Lambda::LayerVersion",
+   "Properties": {
+    "Content": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip"
+    },
+    "Description": "/opt/awscli/aws"
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteDeployAssets/AwsCliLayer/Resource",
+    "aws:asset:path": "asset.98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
+   }
+  },
+  "GonHpLiteDeployAssetsCustomResource512MiBC35549D9": {
+   "Type": "Custom::CDKBucketDeployment",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB6723FB92",
+      "Arn"
+     ]
+    },
+    "SourceBucketNames": [
+     "cdk-hnb659fds-assets-412381769521-ap-northeast-3"
+    ],
+    "SourceObjectKeys": [
+     "fa7687c859ab027b66f6846bd89c9041a7bfeb3ab62d5ecebf8010a392ac50fa.zip"
+    ],
+    "DestinationBucketName": {
+     "Ref": "GonHpLiteBucketA3FDAD33"
+    },
+    "DestinationBucketKeyPrefix": "assets/",
+    "WaitForDistributionInvalidation": true,
+    "Prune": true,
+    "SystemMetadata": {
+     "cache-control": "public, max-age=31536000, immutable"
+    },
+    "OutputObjectKeys": true
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteDeployAssets/CustomResource-512MiB/Default"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleBA21DBC1": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB/ServiceRole/Resource"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleDefaultPolicy96C3E726": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::cdk-hnb659fds-assets-412381769521-ap-northeast-3"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::cdk-hnb659fds-assets-412381769521-ap-northeast-3/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "GonHpLiteBucketA3FDAD33",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "GonHpLiteBucketA3FDAD33",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "cloudfront:GetInvalidation",
+        "cloudfront:CreateInvalidation"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleDefaultPolicy96C3E726",
+    "Roles": [
+     {
+      "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleBA21DBC1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB6723FB92": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "97e9ebf0b174a5c8f7faa505739022b7f509edddffcab9211dcd08b759944c4f.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_CA_BUNDLE": "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"
+     }
+    },
+    "Handler": "index.handler",
+    "Layers": [
+     {
+      "Ref": "GonHpLiteDeployAssetsAwsCliLayerC3908CCB"
+     }
+    ],
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleBA21DBC1",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.13",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleDefaultPolicy96C3E726",
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiBServiceRoleBA21DBC1"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB/Resource",
+    "aws:asset:path": "asset.97e9ebf0b174a5c8f7faa505739022b7f509edddffcab9211dcd08b759944c4f",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "GonHpLiteDeployPagesAwsCliLayerB183E7B9": {
+   "Type": "AWS::Lambda::LayerVersion",
+   "Properties": {
+    "Content": {
+     "S3Bucket": "cdk-hnb659fds-assets-412381769521-ap-northeast-3",
+     "S3Key": "98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip"
+    },
+    "Description": "/opt/awscli/aws"
+   },
+   "DependsOn": [
+    "GonHpLiteDeployAssetsAwsCliLayerC3908CCB",
+    "GonHpLiteDeployAssetsCustomResource512MiBC35549D9"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteDeployPages/AwsCliLayer/Resource",
+    "aws:asset:path": "asset.98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
+   }
+  },
+  "GonHpLiteDeployPagesCustomResource512MiB6BD073F3": {
+   "Type": "Custom::CDKBucketDeployment",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C512MiB6723FB92",
+      "Arn"
+     ]
+    },
+    "SourceBucketNames": [
+     "cdk-hnb659fds-assets-412381769521-ap-northeast-3"
+    ],
+    "SourceObjectKeys": [
+     "e259ed8e1b71f923dc014d59687ae98d149331bdcd8eef274443093df8d67fa7.zip"
+    ],
+    "DestinationBucketName": {
+     "Ref": "GonHpLiteBucketA3FDAD33"
+    },
+    "WaitForDistributionInvalidation": true,
+    "Prune": true,
+    "Exclude": [
+     "assets/*"
+    ],
+    "SystemMetadata": {
+     "cache-control": "no-cache"
+    },
+    "DistributionId": {
+     "Ref": "GonHpLiteDistribution04D60761"
+    },
+    "DistributionPaths": [
+     "/*"
+    ],
+    "OutputObjectKeys": true
+   },
+   "DependsOn": [
+    "GonHpLiteDeployAssetsAwsCliLayerC3908CCB",
+    "GonHpLiteDeployAssetsCustomResource512MiBC35549D9"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/GonHpLiteDeployPages/CustomResource-512MiB/Default"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/5WQTW/CMAyGfws9h4zRfUi7laKdJoGotMs0VWlqKkOaoNihQ1X/+9QWAZO2w05+Y792Hnsu50/PcjZRDU11uZ8aLGSbsdJ7oRrKW4pluwh6DyzSrR3VRxvV+IU2eolu23o/xXIokRytSWC3BAMMq2IHminqPsVYWjuD+nSdOr7/MXtsyFgx1GBvRy8UQSe0caHcemdZtq/BakZn++8ueonEHoswPLJ45bFCm2gNRKmz7J3p7X+kb5s7QXHelnAw7tSjnAGXl4RQRMAkkz50wqi6KJVs0619Uyfw7+BpYEBbGWB3RfyNuxOoatlunIE+PcTrMUfVdSINxK7eALng9ei86B+ltXdHLMH3VxMDYcaqQlsN2wc+BD4T56anzVVD2qBMGkoNDgt0wroS5I7ujvMHef8oZ5MdIU59sIw1yM0YvwGFvm9XbQIAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "GonHpLiteStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "SiteUrl": {
+   "Description": "廉価版の公開URL",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Fn::GetAtt": [
+        "GonHpLiteDistribution04D60761",
+        "DomainName"
+       ]
+      }
+     ]
+    ]
+   }
+  },
+  "DistributionDomainName": {
+   "Description": "CloudFront のドメイン名（独自ドメインの CNAME 先）",
+   "Value": {
+    "Fn::GetAtt": [
+     "GonHpLiteDistribution04D60761",
+     "DomainName"
+    ]
+   }
+  },
+  "DistributionId": {
+   "Value": {
+    "Ref": "GonHpLiteDistribution04D60761"
+   }
+  },
+  "BucketName": {
+   "Value": {
+    "Ref": "GonHpLiteBucketA3FDAD33"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

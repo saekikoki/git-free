@@ -1,0 +1,50 @@
+/* === ヘッダー右端の部品（廉価版: 検索・ダークモード・言語切り替え）=== */
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+.header-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.pc-nav .header-tool { padding: 0 10px; }
+.pc-nav .header-tool::after { display: none; }
+.header-tool:hover { background: rgba(255, 255, 255, 0.15); border-color: #fff; }
+.header-tool:focus-visible { outline: 2px solid var(--color-accent-light); outline-offset: 2px; }
+.header-tool-theme span { font-size: 16px; line-height: 1; }
+
+/* モバイルメニューの中では横一列に並べる */
+.mobile-nav .header-tools {
+  margin: 8px 16px 4px;
+  padding: 12px 8px 0;
+  border-left: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  justify-content: flex-start;
+}
+.mobile-nav .header-tool {
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  text-align: center;
+}
+
+/* キーボード操作時に本文へ飛ぶためのフォーカス表示（全体） */
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }

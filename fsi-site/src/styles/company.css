@@ -1,0 +1,66 @@
+/* === Company Overview (page1, entry) === */
+.company-page {
+  --container-width: 1100px;
+  --accent-blue: #0b66d0;
+  --text-color: #2b3b4a;
+  --muted: #718096;
+  --border: #e6e9ec;
+}
+
+.top-breadcrumbs { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); padding: 8px 0; font-size: 13px; }
+.top-breadcrumbs .container, .top-breadcrumbs #breadcrumb { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; }
+.top-breadcrumbs ul { list-style: none; margin: 0; padding: 0; color: rgba(255,255,255,0.9); display: flex; gap: 8px; }
+.top-breadcrumbs a { color: rgba(255,255,255,0.95); text-decoration: underline; }
+
+.page-hero { background: #f5f7fa; color: #0b3c5d; padding: 48px 0 40px; position: relative; border-bottom: 1px solid #e0e6ec; }
+.page-hero .container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; }
+.page-title { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: .02em; position: relative; display: inline-block; padding-bottom: 12px; }
+.page-title::after { content: ""; position: absolute; bottom: 0; left: 0; width: 48px; height: 3px; background: #0b3c5d; border-radius: 2px; }
+
+.company-page .container { max-width: var(--container-width); margin: 0 auto; padding: 40px 20px; }
+
+.article-header .breadcrumbs ul { list-style: none; padding: 0; margin: 0 0 18px 0; font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+.article-header .breadcrumbs a { color: var(--muted); text-decoration: none; }
+.article-header .breadcrumbs li[aria-current="page"] { color: #4a5568; font-weight: 600; }
+
+.section-title { display: flex; align-items: center; gap: 12px; margin: 28px 0 24px; font-size: 20px; color: #1b4463; position: relative; font-weight: 700; }
+.section-title::before { content: ""; width: 28px; height: 20px; background: linear-gradient(135deg,#7fb2ff 0%,#a86bff 100%); border-radius: 3px; display: inline-block; margin-right: 6px; box-shadow: 0 1px 0 rgba(0,0,0,0.08); }
+
+.table-wrapper { background: #fff; border-radius: 4px; padding: 0; }
+.tablebox { overflow: hidden; }
+.company-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; color: #344354; }
+.company-table tbody tr { border-top: 1px solid var(--border); }
+.company-table th, .company-table td { padding: 22px 16px; vertical-align: top; }
+.company-table th { width: 200px; color: #718096; font-weight: 600; white-space: nowrap; text-align: left; }
+.company-table td { color: #3b4956; line-height: 1.6; }
+
+.text-link { color: var(--accent-blue); text-decoration: none; font-weight: 600; }
+.text-link .icon-arrow::after { content: "→"; margin-left: 6px; font-size: 12px; color: var(--accent-blue); }
+.icon-external { display: inline-block; width: 16px; height: 16px; margin-left: 6px; background: rgba(0,0,0,0.08); border-radius: 2px; }
+.sep { display: inline-block; width: 10px; }
+
+/* Company section (simple) */
+#company { padding: 80px 16px; }
+.company-box { max-width: 720px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 32px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08); }
+.company-box dl { display: grid; grid-template-columns: 100px 1fr; row-gap: 16px; column-gap: 16px; font-size: 14px; line-height: 1.7; }
+.company-box dt { color: #666; font-weight: 500; }
+.company-box dd { margin: 0; color: #222; }
+.company-box dd br { content: ""; }
+.company-map { margin-top: 24px; }
+.company-map iframe { width: 100%; height: 220px; border: 0; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05); }
+
+.Proof { display: block; margin: 0 auto 40px; max-width: 100%; height: auto; }
+
+@media (max-width: 900px) {
+  .page-title { font-size: 26px; }
+  .company-table th { width: 140px; padding: 14px 8px; }
+  .company-table td { padding: 14px 8px; }
+  .company-page .container { padding: 20px; }
+  .page-hero { padding: 30px 0 36px; }
+}
+
+@media (max-width: 600px) {
+  .company-box { padding: 24px 20px; }
+  .company-box dl { grid-template-columns: 1fr; }
+  .company-box dt { font-size: 12px; margin-top: 8px; }
+}

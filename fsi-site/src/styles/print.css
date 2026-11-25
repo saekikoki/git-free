@@ -1,0 +1,81 @@
+/* === 印刷用のスタイル ===
+ * ブラウザの「印刷」や「PDF に保存」のときだけ使われる。
+ * ヘッダーのメニューや装飾を消し、白い紙に黒い文字で読みやすく出す。
+ */
+@media print {
+  @page { margin: 16mm 14mm; }
+
+  html, body { background: #fff !important; color: #000 !important; }
+  body { font-size: 11pt; line-height: 1.7; }
+
+  /* 画面操作用の部品は印刷しない */
+  .site-header .pc-nav,
+  .menu-button,
+  .mobile-nav,
+  .scroll-top-btn,
+  .footer-top,
+  .footer-social,
+  .footer-legal,
+  .no-print,
+  .newsx-toolbar,
+  .newsx-pagination,
+  .newsx-rss,
+  .recruit-filters,
+  .showcase-nav,
+  .showcase-dots,
+  .corp-hero-scroll,
+  .hero-v2-bg,
+  .recruit-hero-bg,
+  .hero-v2-actions,
+  .corp-access-map,
+  .search-form {
+    display: none !important;
+  }
+
+  /* ヘッダーはロゴだけを残す */
+  .site-header {
+    position: static !important;
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0 0 8pt !important;
+    border-bottom: 1pt solid #000;
+  }
+  .site-header .logo a, .logo-accent { color: #000 !important; }
+
+  /* 濃い背景のヒーロー・数値セクションは白地に */
+  .hero-v2, .corp-hero, .recruit-hero, .newsx-hero, .corp-stats-section, .recruit-cta {
+    background: none !important;
+    color: #000 !important;
+    min-height: 0 !important;
+    padding: 12pt 0 !important;
+  }
+  .hero-v2 *, .corp-hero *, .recruit-hero *, .newsx-hero *, .corp-stats-section *, .recruit-cta * {
+    color: #000 !important;
+  }
+
+  /* 影・アニメーションを消して、隠れている要素も表示する */
+  * { box-shadow: none !important; text-shadow: none !important; animation: none !important; transition: none !important; }
+  .reveal-target, .corp-phil-card, .corp-stat, .service-v2-card { opacity: 1 !important; transform: none !important; }
+
+  /* カードは枠線だけにして、ページの途中で切れないようにする */
+  .corp-phil-card, .corp-exec-card, .recruit-job-card, .recruit-flow-item, .recruit-interview,
+  .service-v2-card, .faq-item, .newsx-card, .corp-profile-row, .search-result {
+    background: #fff !important;
+    border: 1px solid #999 !important;
+    break-inside: avoid;
+  }
+  h1, h2, h3 { break-after: avoid; color: #000 !important; }
+
+  /* リンク先の URL を本文の後ろに出す（紙では押せないので） */
+  .newsx-article a[href^="http"]::after,
+  .static-page-content a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #333;
+  }
+
+  /* FAQ は印刷の直前にすべて開く（FaqPage.jsx の beforeprint） */
+
+  .site-footer { background: none !important; color: #000 !important; border-top: 1pt solid #000; }
+  .footer-copyright { color: #000 !important; }
+}

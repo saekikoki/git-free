@@ -1,0 +1,371 @@
+/* === 企業情報ページ（上場企業級コーポレートデザイン）=== */
+
+.corp {
+  color: #1b3a4b;
+}
+
+.corp-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---- ヒーロー ---- */
+.corp-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(43, 176, 214, 0.35), transparent 45%),
+    radial-gradient(circle at 85% 70%, rgba(59, 85, 182, 0.4), transparent 50%),
+    linear-gradient(135deg, #0b2942 0%, #123a5c 55%, #0b3c5d 100%);
+}
+.corp-hero::after {
+  /* うっすらグリッド模様を重ねて先進的な印象に */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.corp-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding: 60px 24px;
+  animation: corpFadeUp 0.9s ease both;
+}
+.corp-hero-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: #7fd2ea;
+  margin: 0 0 16px;
+  font-weight: 600;
+}
+.corp-hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  margin: 0 0 24px;
+  letter-spacing: 0.05em;
+}
+.corp-hero-lead {
+  font-size: 16px;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+.corp-hero-scroll {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 40px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 12px;
+  z-index: 1;
+}
+.corp-hero-scroll span {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  background: #fff;
+  border-radius: 2px;
+  animation: corpScroll 1.6s ease-in-out infinite;
+}
+@keyframes corpScroll {
+  0% { opacity: 0; top: 8px; }
+  50% { opacity: 1; top: 16px; }
+  100% { opacity: 0; top: 24px; }
+}
+@keyframes corpFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- パンくず ---- */
+.corp-breadcrumb {
+  border-bottom: 1px solid #eef2f5;
+  padding: 14px 0;
+  font-size: 13px;
+  color: #6b7c8d;
+}
+.corp-breadcrumb a { color: #0b3c5d; text-decoration: none; }
+.corp-breadcrumb a:hover { text-decoration: underline; }
+.corp-sep { margin: 0 10px; color: #ccc; }
+
+/* ---- セクション共通 ---- */
+.corp-section { padding: 72px 0; }
+.corp-section--gray { background: #f5f8fa; }
+
+.corp-section-head { text-align: center; margin-bottom: 48px; }
+.corp-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: #2bb0d6;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.corp-h2 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0b3c5d;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 14px;
+}
+.corp-h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, #0b3c5d, #2bb0d6);
+  border-radius: 2px;
+}
+.corp-section-head--light .corp-h2 { color: #fff; }
+.corp-section-head--light .corp-eyebrow { color: #7fd2ea; }
+
+/* ---- 企業理念 ---- */
+.corp-philosophy {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.corp-phil-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 28px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(11, 60, 93, 0.07);
+  border-top: 4px solid #2bb0d6;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.corp-philosophy.is-visible .corp-phil-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+.corp-phil-icon { font-size: 44px; display: block; margin-bottom: 16px; }
+.corp-phil-title { font-size: 22px; font-weight: 800; color: #0b3c5d; margin: 0 0 4px; letter-spacing: 0.05em; }
+.corp-phil-sub { font-size: 13px; color: #2bb0d6; font-weight: 700; margin: 0 0 16px; }
+.corp-phil-text { font-size: 14px; line-height: 1.9; color: #55707f; margin: 0; }
+
+/* ---- 数値ハイライト ---- */
+.corp-stats-section {
+  padding: 72px 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(43,176,214,0.2), transparent 40%),
+    linear-gradient(135deg, #0b2942 0%, #0b3c5d 100%);
+}
+.corp-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.corp-stat {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.corp-stats.is-visible .corp-stat { opacity: 1; transform: translateY(0); }
+.corp-stats.is-visible .corp-stat:nth-child(2) { transition-delay: 0.1s; }
+.corp-stats.is-visible .corp-stat:nth-child(3) { transition-delay: 0.2s; }
+.corp-stats.is-visible .corp-stat:nth-child(4) { transition-delay: 0.3s; }
+.corp-stat-value {
+  font-size: 44px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.corp-stat-suffix { font-size: 18px; margin-left: 3px; color: #7fd2ea; }
+.corp-stat-label { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 12px; font-weight: 600; }
+
+/* ---- 会社概要テーブル ---- */
+.corp-profile {
+  margin: 0;
+  border-top: 2px solid #0b3c5d;
+}
+.corp-profile-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  border-bottom: 1px solid #e6edf2;
+}
+.corp-profile-row dt {
+  padding: 22px 24px;
+  background: #f7fafc;
+  font-weight: 700;
+  color: #0b3c5d;
+  font-size: 14px;
+}
+.corp-profile-row dd {
+  padding: 22px 24px;
+  margin: 0;
+  color: #3b4956;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* ---- 役員一覧 ---- */
+.corp-executives {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.corp-exec-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 32px 20px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.corp-exec-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(11, 60, 93, 0.14);
+}
+.corp-exec-avatar {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0b3c5d, #2bb0d6);
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.corp-exec-name { font-size: 17px; font-weight: 700; color: #1b3a4b; margin-bottom: 6px; }
+.corp-exec-role { font-size: 12px; color: #6b7c8d; line-height: 1.6; }
+
+/* ---- 沿革タイムライン ---- */
+.corp-timeline {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 700px;
+  position: relative;
+}
+.corp-timeline::before {
+  content: "";
+  position: absolute;
+  left: 90px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(#0b3c5d, #2bb0d6);
+}
+.corp-timeline-item {
+  display: grid;
+  grid-template-columns: 80px 30px 1fr;
+  align-items: center;
+  gap: 0;
+  padding: 18px 0;
+}
+.corp-timeline-year {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0b3c5d;
+  text-align: right;
+  padding-right: 8px;
+}
+.corp-timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #2bb0d6;
+  justify-self: center;
+  z-index: 1;
+}
+.corp-timeline-event {
+  font-size: 15px;
+  color: #3b4956;
+  padding-left: 12px;
+  line-height: 1.7;
+}
+
+/* ---- レスポンシブ ---- */
+@media (max-width: 768px) {
+  .corp-hero-title { font-size: 34px; }
+  .corp-hero-lead { font-size: 14px; }
+  .corp-h2 { font-size: 24px; }
+
+  .corp-philosophy { grid-template-columns: 1fr; }
+  .corp-stats { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; }
+  .corp-stat-value { font-size: 34px; }
+  .corp-executives { grid-template-columns: repeat(2, 1fr); }
+
+  .corp-profile-row { grid-template-columns: 1fr; }
+  .corp-profile-row dt { padding: 14px 16px; }
+  .corp-profile-row dd { padding: 14px 16px; }
+
+  .corp-timeline::before { left: 70px; }
+  .corp-timeline-item { grid-template-columns: 60px 30px 1fr; }
+  .corp-timeline-year { font-size: 15px; }
+}
+
+/* ---- アクセス（住所・最寄り駅・地図）---- */
+.corp-access {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 32px;
+  align-items: stretch;
+}
+.corp-access-info {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.06);
+}
+.corp-access-office { margin: 0 0 8px; font-size: 18px; color: #0b3c5d; }
+.corp-access-address { margin: 0 0 20px; font-size: 15px; line-height: 1.8; color: #3b4956; }
+.corp-access-routes { margin: 0 0 24px; padding-left: 1.2em; font-size: 14px; line-height: 1.9; color: #55707f; }
+.corp-access-open { font-size: 14px; font-weight: 700; color: #2874a6; }
+.corp-access-open:hover { text-decoration: underline; }
+.corp-access-map {
+  min-height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #e8f0f5;
+}
+.corp-access-map iframe { width: 100%; height: 100%; min-height: 320px; border: 0; display: block; }
+.corp-access-placeholder {
+  height: 100%;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+  background:
+    repeating-linear-gradient(0deg, rgba(11,60,93,0.05) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, rgba(11,60,93,0.05) 0 1px, transparent 1px 40px),
+    #e8f0f5;
+}
+.corp-access-pin { font-size: 40px; }
+.corp-access-notice { margin: 0; font-size: 12px; color: #6b7c8d; }
+
+@media (max-width: 768px) {
+  .corp-access { grid-template-columns: 1fr; }
+}

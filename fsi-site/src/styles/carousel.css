@@ -1,0 +1,226 @@
+/* === Achievements（実績紹介）=== */
+/* 他セクションと同じ白背景・.section の余白に揃える */
+.achievements {
+  background: #fff;
+}
+
+/* セクション共通見出し */
+.section-heading {
+  text-align: center;
+  font-size: 26px;
+  color: #0b3c5d;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+.section-subheading {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7c8d;
+  margin: 0 0 40px;
+}
+
+/* ---- KPIサマリー ---- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 28px 16px;
+  background: linear-gradient(160deg, #f5f9fc 0%, #eef4f9 100%);
+  border-radius: 12px;
+  border-bottom: 3px solid #0b3c5d;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(11, 60, 93, 0.12);
+}
+
+.stat-value {
+  font-size: 40px;
+  font-weight: 800;
+  color: #0b3c5d;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-unit {
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 2px;
+}
+.stat-label {
+  font-size: 13px;
+  color: #55707f;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* ---- 導入事例カルーセル ---- */
+.showcase {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.showcase-viewport {
+  position: relative;
+  min-height: 280px;
+}
+
+.showcase-card {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.10);
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: none;
+}
+.showcase-card.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* 左のビジュアル面 */
+.showcase-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #fff;
+  position: relative;
+}
+.showcase-icon {
+  font-size: 64px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+.showcase-category {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 5px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  backdrop-filter: blur(2px);
+}
+
+/* 右のテキスト面 */
+.showcase-body {
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.showcase-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1b3a4b;
+  margin: 0 0 14px;
+  line-height: 1.4;
+}
+.showcase-desc {
+  font-size: 14px;
+  color: #55707f;
+  line-height: 1.8;
+  margin: 0 0 24px;
+}
+
+/* 数値実績バッジ */
+.showcase-metric {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  align-self: flex-start;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 8%, #fff);
+  border-left: 4px solid var(--accent);
+}
+.showcase-metric-label {
+  font-size: 13px;
+  color: #55707f;
+  font-weight: 600;
+}
+.showcase-metric-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* ナビボタン */
+.showcase-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #e0e6ec;
+  font-size: 24px;
+  color: #0b3c5d;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s, color 0.2s;
+}
+.showcase-nav:hover {
+  background: #0b3c5d;
+  color: #fff;
+}
+.showcase-nav-prev { left: -22px; }
+.showcase-nav-next { right: -22px; }
+
+/* ドット */
+.showcase-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+.showcase-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: none;
+  background: #cdd8e0;
+  cursor: pointer;
+  padding: 0;
+  transition: width 0.3s, background 0.3s;
+}
+.showcase-dot.is-active {
+  width: 28px;
+  background: #0b3c5d;
+}
+
+/* ---- レスポンシブ ---- */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .stat-value { font-size: 32px; }
+
+  .showcase-viewport { min-height: 420px; }
+  .showcase-card { grid-template-columns: 1fr; }
+  .showcase-visual { padding: 28px 0; }
+  .showcase-icon { font-size: 48px; }
+  .showcase-body { padding: 24px; }
+  .showcase-nav-prev { left: 4px; }
+  .showcase-nav-next { right: 4px; }
+}

@@ -5,14 +5,29 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:aws": "vite --mode aws",
+    "dev:lite": "vite --mode lite",
+    "server": "node backend/local-server/index.js",
+    "dev:full": "node backend/local-server/index.js & vite",
     "build": "vite build",
+    "build:aws": "vite build --mode aws",
+    "build:lite": "vite build --mode lite && vite build --mode lite --ssr src/editions/lite/entry-server.jsx --outDir .ssr-lite && node scripts/lite/prerender.mjs",
+    "check:lite": "node scripts/lite/check.mjs",
+    "deploy:lite": "bash infra/scripts/deploy-lite.sh",
+    "deploy:lite:cdn": "bash infra/scripts/deploy-lite-cdn.sh",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:lite": "vite preview --mode lite"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "marked": "^16.4.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-router-dom": "^7.15.1"
+    "react-router-dom": "^7.15.1",
+    "react-router-hash-link": "^2.4.3",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
