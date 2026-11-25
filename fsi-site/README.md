@@ -75,6 +75,7 @@ fsi-site/
 │   ├── bin/app.ts         ←   CDK の起動ファイル
 │   ├── lib/fsi-site-stack.ts ← フル版の AWS 構成（S3・CloudFront・API Gateway・Lambda・DynamoDB）
 │   ├── lib/lite-cdn-stack.ts ← 廉価版の CloudFront 配信（HTTPS・独自ドメイン。任意）
+│   ├── cloudformation/    ←   廉価版の CloudFormation テンプレート（lite-site.yaml）と deploy.sh / destroy.sh
 │   ├── scripts/
 │   │   ├── deploy.sh / destroy.sh / seed-users.sh  ← フル版
 │   │   ├── deploy-lite.sh / destroy-lite.sh        ← 廉価版（S3 のみ・HTTP）
@@ -91,7 +92,9 @@ fsi-site/
 │   ├── DESIGN.md          ←   設計書（画面・API・DB・構成）
 │   ├── API_SPEC.md        ←   API仕様（パス一覧、DynamoDB テーブル設計）
 │   ├── TEARDOWN.md        ←   AWS 環境を安全に削除する手順
-│   └── EDITING_LITE.md    ←   廉価版のニュース・文言の編集方法、自動デプロイの準備
+│   ├── EDITING_LITE.md    ←   廉価版のニュース・文言の編集方法、自動デプロイの準備
+│   ├── CLOUDFORMATION_LITE.md ← 廉価版を CloudFormation で構築する手順（AWS CLI の準備から）
+│   └── GIT_ACCOUNTS.md    ←   複数の GitHub アカウントの使い分け
 │
 ├── package.json           ← フロントエンドとローカルサーバーの依存関係・npm scripts
 ├── vite.config.js         ← ビルド設定（版の切り替え、出力先、API の中継先）
@@ -303,6 +306,18 @@ bash infra/scripts/destroy-lite.sh
 | 独自ドメインの公開URL | `.env.lite` の `VITE_SITE_URL` |
 | ヘッダー・フッターのリンク | `src/editions/lite/config.js` |
 
+### CloudFormation で構築する
+
+CloudFormation テンプレート（`infra/cloudformation/lite-site.yaml`）1枚で、S3 版・CloudFront 版のどちらも作れます。
+
+```bash
+bash infra/cloudformation/deploy.sh                      # S3 版（HTTP）
+USE_CLOUDFRONT=true bash infra/cloudformation/deploy.sh  # CloudFront 版（HTTPS）
+bash infra/cloudformation/destroy.sh                     # 削除
+```
+
+AWS CLI のインストール・認証情報の設定から公開までの手順は [docs/CLOUDFORMATION_LITE.md](docs/CLOUDFORMATION_LITE.md) にまとめています。
+
 ### HTTPS・独自ドメインで公開する（CloudFront 版）
 
 S3 だけの公開は HTTP のみです。HTTPS や独自ドメインが必要な場合、または組織のアカウントで S3 を公開できない場合は、CloudFront 版を使います。サーバー・DB は使いません。
@@ -474,5 +489,17 @@ lsof -ti :5173 | xargs kill
 | `npm run check:lite` | 廉価 | 公開前チェック（`--strict` を付けると注意もエラー扱い） |
 | `npm run preview:lite` | 廉価 | `dist-lite/` をローカルで確認 |
 | `npm run deploy:lite` | 廉価 | ビルド・チェックしてS3にデプロイ（HTTP） |
-| `npm run deploy:lite:cdn` | 廉価 | ビルド・チェックして S3 + CloudFront にデプロイ（HTTPS） |
+| `npm run deploy:lite:cdn` | 廉価 | ビルド・チェックして S3 + CloudFront にデプロイ（HTTPS、CDK） |
+| `npm run deploy:lite:cfn` | 廉価 | CloudFormation でスタックを作り、ビルド・チェック・アップロード |
 | `npm run lint` | 共通 | ESLint実行 |
+
+## GitHub のアカウントを使い分ける
+
+複数の GitHub アカウントを使っていて `git push` が 403 になる場合は、リモートの URL にユーザー名を入れると、このリポジトリでは常にそのアカウントが使われます。
+
+```powershell
+git remote set-url origin https://saekikoki@github.com/saekikoki/git-free.git
+git push   # 初回だけブラウザでログイン画面が出る
+```
+
+詳しくは [docs/GIT_ACCOUNTS.md](docs/GIT_ACCOUNTS.md) を参照してください。

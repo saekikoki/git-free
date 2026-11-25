@@ -15,6 +15,7 @@
     "check:lite": "node scripts/lite/check.mjs",
     "deploy:lite": "bash infra/scripts/deploy-lite.sh",
     "deploy:lite:cdn": "bash infra/scripts/deploy-lite-cdn.sh",
+    "deploy:lite:cfn": "bash infra/cloudformation/deploy.sh",
     "lint": "eslint .",
     "preview": "vite preview",
     "preview:lite": "vite preview --mode lite"

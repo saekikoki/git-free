@@ -1,0 +1,235 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  gon-hp lite website (static hosting only, no server / DB).
+  UseCloudFront=false: S3 static website hosting (HTTP).
+  UseCloudFront=true:  private S3 + CloudFront (HTTPS, optional custom domain).
+
+# ============================================================
+# 廉価版（S3 静的ホスティングのみ）の AWS 環境を作る CloudFormation テンプレート
+#
+# 使い方は docs/CLOUDFORMATION_LITE.md を参照。
+# 通常は infra/cloudformation/deploy.sh から使う（テンプレートの適用 → ビルド → アップロード）。
+#
+# 作るもの:
+#   UseCloudFront=false（既定）… S3 バケット 1 つ（ウェブサイト機能・公開読み取り）。HTTP のみ
+#   UseCloudFront=true          … 非公開の S3 バケット + CloudFront（HTTPS）
+#                                  + URL をファイル名に直す CloudFront Function
+# どちらもサーバー・データベースは作らない。
+# ============================================================
+
+Parameters:
+  UseCloudFront:
+    Type: String
+    Default: "false"
+    AllowedValues: ["true", "false"]
+    Description: "true にすると CloudFront 経由の HTTPS 配信にする（S3 は非公開のまま）"
+  DomainName:
+    Type: String
+    Default: ""
+    Description: "独自ドメイン（例: www.example.co.jp）。UseCloudFront=true のときだけ使う。空なら CloudFront のドメイン"
+  CertificateArn:
+    Type: String
+    Default: ""
+    Description: "独自ドメイン用の ACM 証明書の ARN。CloudFront の決まりで us-east-1 で作成したもの"
+
+Rules:
+  # 独自ドメインを使うなら、CloudFront 版であることと、us-east-1 の証明書が必要
+  DomainNeedsCloudFrontAndCertificate:
+    RuleCondition: !Not [!Equals [!Ref DomainName, ""]]
+    Assertions:
+      - Assert: !Equals [!Ref UseCloudFront, "true"]
+        AssertDescription: "DomainName を使う場合は UseCloudFront=true にしてください"
+      - Assert: !Not [!Equals [!Ref CertificateArn, ""]]
+        AssertDescription: "DomainName を使う場合は CertificateArn（us-east-1 の ACM 証明書）を指定してください"
+
+Conditions:
+  UseCF: !Equals [!Ref UseCloudFront, "true"]
+  UseS3Website: !Not [!Condition UseCF]
+  HasDomain: !And
+    - !Condition UseCF
+    - !Not [!Equals [!Ref DomainName, ""]]
+
+Resources:
+  # ----------------------------------------------------------
+  # S3 バケット（サイトのファイルを置く場所）
+  # ----------------------------------------------------------
+  SiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "gon-hp-lite-cfn-${AWS::AccountId}"
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      # S3 版: ポリシーによる公開だけを許可する（ACL による公開は禁止のまま）
+      # CloudFront 版: すべての公開を禁止する（CloudFront だけが読める）
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: !If [UseCF, true, false]
+        RestrictPublicBuckets: !If [UseCF, true, false]
+      # S3 版だけ、ウェブサイト機能を使う。存在しない URL には 404.html を返す
+      WebsiteConfiguration: !If
+        - UseS3Website
+        - IndexDocument: index.html
+          ErrorDocument: 404.html
+        - !Ref AWS::NoValue
+      Tags:
+        - Key: Project
+          Value: gon-hp-lite
+
+  # ----------------------------------------------------------
+  # バケットポリシー（誰に読ませるか）
+  # ----------------------------------------------------------
+  SiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref SiteBucket
+      PolicyDocument: !If
+        - UseCF
+        # CloudFront 版: この CloudFront ディストリビューションからの読み取りだけを許可
+        - Version: "2012-10-17"
+          Statement:
+            - Sid: AllowCloudFrontRead
+              Effect: Allow
+              Principal:
+                Service: cloudfront.amazonaws.com
+              Action: s3:GetObject
+              Resource: !Sub "${SiteBucket.Arn}/*"
+              Condition:
+                StringEquals:
+                  AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${Distribution}"
+            - Sid: DenyInsecureTransport
+              Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource:
+                - !GetAtt SiteBucket.Arn
+                - !Sub "${SiteBucket.Arn}/*"
+              Condition:
+                Bool:
+                  aws:SecureTransport: "false"
+        # S3 版: 誰でもファイルを読める（書き込み・一覧表示はできない）
+        - Version: "2012-10-17"
+          Statement:
+            - Sid: PublicReadForWebsite
+              Effect: Allow
+              Principal: "*"
+              Action: s3:GetObject
+              Resource: !Sub "${SiteBucket.Arn}/*"
+
+  # ----------------------------------------------------------
+  # 以下は CloudFront 版だけで作る
+  # ----------------------------------------------------------
+
+  # CloudFront が非公開バケットを読むための署名設定（OAC）
+  OriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Condition: UseCF
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub "${AWS::StackName}-oac"
+        Description: gon-hp lite site bucket
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  # /company → /company/index.html のように、URL をファイル名に直す
+  # （S3 のウェブサイト機能を使わないので、index.html を自動では付けてくれないため）
+  RewriteFunction:
+    Type: AWS::CloudFront::Function
+    Condition: UseCF
+    Properties:
+      Name: !Sub "${AWS::StackName}-rewrite"
+      AutoPublish: true
+      FunctionConfig:
+        Comment: "gon-hp lite: /path -> /path/index.html"
+        Runtime: cloudfront-js-2.0
+      FunctionCode: |
+        function handler(event) {
+          var request = event.request;
+          var uri = request.uri;
+          if (uri.endsWith("/")) {
+            request.uri = uri + "index.html";
+          } else if (uri.split("/").pop().indexOf(".") === -1) {
+            request.uri = uri + "/index.html";
+          }
+          return request;
+        }
+
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Condition: UseCF
+    Metadata:
+      cfn-lint:
+        config:
+          # CertificateArn が空のとき（独自ドメインなし）は証明書を使わないので、形式の警告は不要
+          ignore_checks: [W1030]
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: gon-hp lite website (CloudFormation)
+        DefaultRootObject: index.html
+        HttpVersion: http2and3
+        PriceClass: PriceClass_200      # 日本を含む地域（全世界より安い）
+        Aliases: !If [HasDomain, [!Ref DomainName], !Ref AWS::NoValue]
+        ViewerCertificate: !If
+          - HasDomain
+          - AcmCertificateArn: !Ref CertificateArn
+            SslSupportMethod: sni-only
+            MinimumProtocolVersion: TLSv1.2_2021
+          - CloudFrontDefaultCertificate: true
+        Origins:
+          - Id: site-bucket
+            DomainName: !GetAtt SiteBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt OriginAccessControl.Id
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+        DefaultCacheBehavior:
+          TargetOriginId: site-bucket
+          ViewerProtocolPolicy: redirect-to-https   # http:// で来たら https:// に転送
+          Compress: true
+          # AWS が用意しているポリシー（ID は AWS 共通の固定値）
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6            # CachingOptimized
+          ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03  # SecurityHeadersPolicy
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt RewriteFunction.FunctionMetadata.FunctionARN
+        # 非公開バケットは「ない」ファイルに 403 を返すので、403 も 404 と同じ扱いにする
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 404
+            ResponsePagePath: /404.html
+            ErrorCachingMinTTL: 60
+          - ErrorCode: 404
+            ResponseCode: 404
+            ResponsePagePath: /404.html
+            ErrorCachingMinTTL: 60
+      Tags:
+        - Key: Project
+          Value: gon-hp-lite
+
+Outputs:
+  BucketName:
+    Description: サイトのファイルを置く S3 バケット
+    Value: !Ref SiteBucket
+  SiteUrl:
+    Description: 廉価版の公開 URL
+    Value: !If
+      - UseCF
+      - !If
+        - HasDomain
+        - !Sub "https://${DomainName}"
+        - !Sub "https://${Distribution.DomainName}"
+      - !GetAtt SiteBucket.WebsiteURL
+  DistributionId:
+    Condition: UseCF
+    Description: CloudFront ディストリビューション ID（キャッシュ削除に使う）
+    Value: !Ref Distribution
+  DistributionDomainName:
+    Condition: UseCF
+    Description: CloudFront のドメイン名（独自ドメインの CNAME 先）
+    Value: !GetAtt Distribution.DomainName
