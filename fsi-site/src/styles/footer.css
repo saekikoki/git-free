@@ -12,7 +12,8 @@
   max-width: var(--max-width);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.6fr repeat(3, 1fr);
+  /* リンク列の数（--footer-cols）は Footer.jsx が config.js の footerNav の数から設定する */
+  grid-template-columns: 1.6fr repeat(var(--footer-cols, 3), 1fr);
   gap: 40px;
 }
 
@@ -52,7 +53,8 @@
 }
 
 /* ナビ列 */
-.footer-col h3 {
+.footer-col h3,
+.footer-col-title {
   font-size: 14px;
   font-weight: 700;
   color: #fff;
@@ -60,7 +62,8 @@
   position: relative;
   padding-bottom: 10px;
 }
-.footer-col h3::after {
+.footer-col h3::after,
+.footer-col-title::after {
   content: "";
   position: absolute;
   left: 0; bottom: 0;

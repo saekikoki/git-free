@@ -196,13 +196,15 @@ export default function RecruitContent() {
           ) : (
             <div className="recruit-jobs">
               {jobs.map((job) => (
-                <article key={job.title} className="recruit-job-card">
+                <article key={job.slug} className="recruit-job-card">
                   <span className="recruit-job-cat">{job.category}</span>
-                  <h3 className="recruit-job-title">{job.title}</h3>
+                  <h3 className="recruit-job-title">
+                    <Link to={`/recruit/jobs/${job.slug}`}>{job.title}</Link>
+                  </h3>
                   <p className="recruit-job-desc">{job.desc}</p>
                   <div className="recruit-job-footer">
                     <span className="recruit-job-type">{job.types.join(" / ")}</span>
-                    <Link to="/contact" className="recruit-job-link">{t.jobs.apply}</Link>
+                    <span className="recruit-job-link" aria-hidden="true">{t.jobs.apply}</span>
                   </div>
                 </article>
               ))}

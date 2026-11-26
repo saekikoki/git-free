@@ -1,15 +1,18 @@
 /**
  * @file Services.jsx
  * @description 事業内容（サービス紹介）セクション。
- * 3つの主要サービスをアイコン付きカードで紹介する。
+ * 3つの主要サービスをアイコン付きカードで紹介し、それぞれの詳細ページへリンクする。
  * スクロールで画面に入ると順にフェードインする。
- * 文言は src/content/{ja,en}/home.js の services。
+ * 見出しは src/content/{ja,en}/home.js、カードの中身は services.js。
  */
+import Link from "../../i18n/LocalizedLink";
 import useReveal from "../../components/ui/useReveal";
 import { useContent } from "../../content";
 
 export default function Services() {
-  const t = useContent().home.services;
+  const all = useContent();
+  const t = all.home.services;
+  const services = all.services;
   const [ref, visible] = useReveal();
 
   return (
@@ -22,18 +25,25 @@ export default function Services() {
         </div>
 
         <div ref={ref} className={`services-v2-grid ${visible ? "is-visible" : ""}`}>
-          {t.items.map((s, i) => (
-            <article key={s.title} className="service-v2-card" style={{ transitionDelay: `${i * 0.12}s` }}>
+          {services.items.map((s, i) => (
+            <article key={s.slug} className="service-v2-card" style={{ transitionDelay: `${i * 0.12}s` }}>
               <div className="service-v2-icon" aria-hidden="true">{s.icon}</div>
-              <h3 className="service-v2-name">{s.title}</h3>
-              <p className="service-v2-text">{s.text}</p>
+              <h3 className="service-v2-name">
+                <Link to={`/services/${s.slug}`} className="service-v2-link">{s.title}</Link>
+              </h3>
+              <p className="service-v2-text">{s.summary}</p>
               <div className="service-v2-tags">
                 {s.tags.map((tag) => (
                   <span key={tag} className="service-v2-tag">{tag}</span>
                 ))}
               </div>
+              <span className="service-v2-more" aria-hidden="true">{services.more} →</span>
             </article>
           ))}
+        </div>
+
+        <div className="news-more">
+          <Link to="/services" className="news-more-btn">{services.allServices}</Link>
         </div>
       </div>
     </section>

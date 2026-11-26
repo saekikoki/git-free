@@ -30,6 +30,12 @@ const REVEAL_SELECTOR = [
   ".recruit-flow-item",
   ".recruit-cta .corp-container",
   ".faq-contact",
+  ".svc-list-card",
+  ".svc-feature",
+  ".svc-process-step",
+  ".svc-other",
+  ".case-card",
+  ".case-voice",
 ].join(",");
 
 export default function useLitePageEffects() {

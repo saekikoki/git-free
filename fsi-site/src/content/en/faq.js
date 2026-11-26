@@ -1,9 +1,11 @@
 /**
  * よくある質問（FAQ）ページの文言（英語）。キーは ../ja/faq.js とそろえる。
  */
+import P, { formatAddress } from "../company-profile";
+
 export default {
   title: "FAQ",
-  description: "Frequently asked questions about FSI-STYLE CORP.",
+  description: `Frequently asked questions about ${P.siteName}: our company, services, careers and this website.`,
   eyebrow: "FAQ",
   lead: "Please check these answers before contacting us.",
   all: "All",
@@ -17,7 +19,7 @@ export default {
     {
       category: "Company",
       q: "Where is your head office?",
-      a: "Our head office is at 1-1 Sakuragicho, Naka-ku, Yokohama, Kanagawa.\nSee \"Access\" on the Company page for details.",
+      a: `Our head office is at ${formatAddress(P, "en")}.\nSee "Access" on the Company page for details.`,
     },
     {
       category: "Company",

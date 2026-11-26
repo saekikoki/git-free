@@ -140,15 +140,19 @@ aws sts get-caller-identity
 
 ## 手順3: 公開前に変える項目を直す
 
-最低限、お問い合わせ先を実際の値にします（`src/editions/lite/config.js`）。
+社名・住所・連絡先などは `src/content/company-profile.js` にまとめています（今は架空のサンプル）。
 
 ```js
-export const CONTACT_EMAIL = "info@example.com";   // ← 実際のメールアドレス
-export const CONTACT_PHONE = "03-0000-0000";       // ← 実際の電話番号
+export default {
+  siteName: "FSI-STYLE CORP",          // ← サイト名
+  email: "info@example.com",           // ← 実際のメールアドレス
+  phone: "03-0000-0000",               // ← 実際の電話番号
+  ...
+};
 ```
 
-ほかの変更箇所は [README の「公開前に変更する箇所」](../README.md#公開前に変更する箇所) を参照してください。
-そのままでもデプロイはできます（チェックで「注意」が表示されるだけです）。
+ほかの変更箇所は [TODO_LAUNCH.md](TODO_LAUNCH.md) のチェックリストを参照してください。
+サンプルのままでもデプロイはできます（チェックで「注意」が表示されるだけです）。
 
 ## 手順4: シェルを実行してリソースを構築する
 

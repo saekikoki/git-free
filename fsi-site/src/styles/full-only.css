@@ -1,0 +1,8 @@
+/* === フル版だけで使う画面の CSS ===
+ * src/editions/full/App.jsx から読み込む。廉価版には含めない（ページを軽くするため）。
+ */
+@import "./login.css";
+@import "./admin.css";
+@import "./board.css";
+@import "./chat.css";
+@import "./sengoku.css";

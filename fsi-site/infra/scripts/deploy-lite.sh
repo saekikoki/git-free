@@ -68,7 +68,7 @@ npm run build:lite
 
 # ---- 2. 公開前チェック ----
 log "Step 2/6: 公開前チェック中..."
-npm run check:lite || error "公開前チェックでエラーが見つかりました。上の内容を直してから再実行してください。"
+npm run check:lite -- --require-site-url || error "公開前チェックでエラーが見つかりました。上の内容を直してから再実行してください。"
 
 # ---- 3. バケット作成 ----
 log "Step 3/6: S3バケットを確認中..."

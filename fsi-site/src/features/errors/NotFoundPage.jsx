@@ -31,7 +31,7 @@ export default function NotFoundPage() {
       {/* 404.html は1つだけなので、日本語ページには英語の案内も添える */}
       {lang === "ja" && LANGS.includes("en") && (
         <p className="notfound-alt" lang="en">
-          Page not found. <RawLink to="/en">Go to the English home page</RawLink>
+          Page not found. <RawLink to="/en/">Go to the English home page</RawLink>
         </p>
       )}
     </section>

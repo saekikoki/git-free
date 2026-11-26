@@ -41,10 +41,28 @@ const REWRITE_FUNCTION_CODE = `
 function handler(event) {
   var request = event.request;
   var uri = request.uri;
+  // 末尾が / のURLは、そのフォルダの index.html を返す
   if (uri.endsWith("/")) {
     request.uri = uri + "index.html";
-  } else if (uri.split("/").pop().indexOf(".") === -1) {
-    request.uri = uri + "/index.html";
+    return request;
+  }
+  // 拡張子のないURL（/company）は /company/ に 301 で転送する。
+  // 同じページに2つのURLができると、検索エンジンの評価が分散するため
+  if (uri.split("/").pop().indexOf(".") === -1) {
+    var qs = [];
+    for (var key in request.querystring) {
+      var v = request.querystring[key];
+      if (v.multiValue) {
+        v.multiValue.forEach(function (m) { qs.push(key + "=" + m.value); });
+      } else {
+        qs.push(v.value === "" ? key : key + "=" + v.value);
+      }
+    }
+    return {
+      statusCode: 301,
+      statusDescription: "Moved Permanently",
+      headers: { location: { value: uri + "/" + (qs.length ? "?" + qs.join("&") : "") } },
+    };
   }
   return request;
 }

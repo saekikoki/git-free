@@ -1,6 +1,7 @@
 /* === CSS の入口 === */
 /* main.jsx から読み込まれる。各スタイルはこのフォルダに画面ごとに分けて置く */
 /* 新しい CSS ファイルを作ったら、ここに @import を1行足す */
+/* フル版だけの画面（ログイン・管理・掲示板・チャット・ゲーム）の CSS は full-only.css */
 @import "./base.css";
 @import "./header.css";
 @import "./hero.css";
@@ -10,20 +11,17 @@
 @import "./corporate.css";
 @import "./recruit.css";
 @import "./news-page.css";
-@import "./login.css";
-@import "./admin.css";
-@import "./board.css";
 @import "./contact.css";
 @import "./carousel.css";
 @import "./static-pages.css";
-@import "./chat.css";
-@import "./sengoku.css";
-/* 廉価版で追加した機能（フル版でも読み込むが、使わない部品の見た目は影響しない） */
 @import "./header-tools.css";
 @import "./news-extra.css";
 @import "./faq.css";
 @import "./search.css";
+@import "./services.css";
+@import "./cases.css";
 @import "./motion.css";
-/* 以下の3つは上書き用なので、必ず最後に読み込む */
+@import "./a11y.css";
+/* 以下の2つは上書き用なので、必ず最後に読み込む */
 @import "./dark.css";
 @import "./print.css";

@@ -26,16 +26,22 @@ React + Vite で構築したコーポレートサイトです。
 
 | 機能 | 内容 |
 |------|------|
-| 事前HTML化 | ビルド時に全ページを1枚ずつ HTML にする（`dist-lite/company/index.html` など）。検索エンジンや SNS がページごとのタイトル・本文を読め、`/company` を直接開いても HTTP 200 で返る |
-| SEO / SNS | ページごとの canonical・OGP（共有カード画像 `public/ogp.png`）・hreflang（日英の対応）・構造化データ（会社・記事・パンくず・FAQ）。`sitemap.xml` と `robots.txt` を自動生成 |
+| 事前HTML化 | ビルド時に全ページを1枚ずつ HTML にする（`dist-lite/company/index.html` など）。検索エンジンや SNS がページごとのタイトル・本文を読め、`/company/` を直接開いても HTTP 200 で返る |
+| SEO / SNS | ページごとの canonical・OGP（共有カード画像 `public/ogp.png`）・hreflang（日英の対応。英語版のあるページだけ）・構造化データ（会社と住所・サイト・記事・パンくず・サービス・求人・FAQ）。`sitemap.xml`（更新日つき）と `robots.txt` を自動生成。検索エンジンの所有権確認タグも設定できる |
+| 公開URL未設定の保護 | 公開URLが決まっていない確認用ビルドは、全ページ noindex・robots.txt で巡回禁止にする。デプロイスクリプトは確認用ビルドを公開しない |
+| URL の統一 | サイト内リンクは末尾 `/` 付きにそろえる。CloudFront 版は `/company` を `/company/` に 301 転送 |
+| 表示速度 | ページごとのコード分割（開いたページの JS・文言だけを読む）、ページごとの先読み指定、Markdown はビルド時に HTML 化、Web フォントは表示を止めずに読み込む、フル版だけの CSS を除外 |
 | 404 ページ | 存在しない URL には「ページが見つかりません」（`404.html`）を返す |
-| ニュース | Markdown で記事を書く（見出し・表・画像・リンク）。カテゴリ・年・キーワードで絞り込み、10件ごとのページ送り、関連ニュース、前後の記事、SNS シェア・リンクのコピー・印刷。絞り込みは URL に残るので共有できる |
+| 事業内容 | `/services/` と事業ごとの詳細ページ（課題・提供内容・進め方・関連事例・FAQ） |
+| 導入事例 | `/cases/` と事例ごとの詳細ページ（課題・取り組み・成果・お客様の声）。業界で絞り込み |
+| ニュース・コラム | Markdown で記事を書く（見出し・表・画像・リンク）。ニュースは `/news/`、コラムは `/columns/`。カテゴリ・年・キーワードで絞り込み、10件ごとのページ送り、関連記事、前後の記事、SNS シェア・リンクのコピー・印刷 |
 | RSS | `/feed.xml`（日本語）・`/en/feed.xml`（英語）を自動生成 |
-| サイト内検索 | `/search`。ページ本文とニュースを、ブラウザの中だけで検索する |
-| 英語ページ | 全ページに `/en/...` がある。文言は `src/content/en/`。英語版のないニュースは日本語のまま表示 |
+| サイト内検索 | `/search/`。ページ本文・事業・事例・求人・ニュース・コラムを、ブラウザの中だけで検索する |
+| 英語ページ | 全ページに `/en/...` がある。文言は `src/content/en/`。英語版のない記事は英語ページを作らず、英語の一覧から日本語のページへリンクする |
 | ダークモード | ヘッダーの ☾ で切り替え。初回は端末の設定に合わせる |
 | よくある質問 | `/faq`。カテゴリ・キーワードで絞り込み、開閉式 |
-| 採用情報 | 職種・採用区分での絞り込み、社員インタビュー、選考フローの目安期間 |
+| 採用情報 | 職種・採用区分での絞り込み、職種ごとの詳細ページ（Google の求人検索用データつき）、社員インタビュー、選考フローの目安期間 |
+| 会社情報の一元管理 | 社名・住所・連絡先・SNS は `src/content/company-profile.js` の1か所だけを書き換えればよい（今は架空のサンプル） |
 | アクセス | 企業情報ページに住所・最寄り駅・地図。地図はボタンを押したときだけ Google マップを読み込む |
 | 動きの演出 | スクロールでフェードイン、数字のカウントアップ。端末の「視差効果を減らす」設定では動かさない |
 | 印刷 | メニューや装飾を消した印刷用レイアウト |
@@ -122,31 +128,39 @@ src/
 ├── editions/                ← ★ 版ごとの違いはここだけ
 │   ├── full/                ← フル版
 │   │   ├── App.jsx          ←   ルーティング（全ページ）
+│   │   ├── boot.js          ←   表示前の準備（文言の読み込み）
 │   │   ├── config.js        ←   ヘッダー/フッター/サイトマップのリンク
 │   │   └── dataSource.js    ←   ニュース・問い合わせ → API を呼ぶ
 │   └── lite/                ← 廉価版
 │       ├── App.jsx          ←   ルーティング（日本語 / と英語 /en/ の両方）
-│       ├── routes.js        ←   ページの一覧（事前HTML化・sitemap.xml もこれを使う）
+│       ├── routes.js        ←   ★ ページの一覧と、各ページで使う文言（事前HTML化・sitemap.xml もこれを使う）
+│       ├── pageEntries.js   ←   ページごとのプログラムの読み込み口（コード分割）
+│       ├── LazyPage.jsx     ←   ページのプログラムと文言を読み込んでから表示する部品
+│       ├── boot.js          ←   表示前の準備（開いたページの分を先に読み込む）
 │       ├── entry-server.jsx ←   ビルド時にページを HTML にする入口（ブラウザでは使わない）
 │       ├── HeaderTools.jsx  ←   ヘッダー右端の 検索・ダークモード・EN/JP
 │       ├── ContactPage.jsx  ←   お問い合わせページ（メール・電話の案内。フォームなし）
-│       ├── config.js        ←   公開URL、機能のオン/オフ、リンク、メールアドレス、電話番号
-│       ├── dataSource.js    ←   ニュース → Markdown
-│       ├── newsLoader.js    ←   Markdown の読み込みと書き方チェック
+│       ├── config.js        ←   公開URL、検索エンジンの確認コード、機能のオン/オフ、リンク
+│       ├── dataSource.js    ←   ニュース・コラム → Markdown
+│       ├── newsLoader.js    ←   Markdown の読み込み（一覧用の情報は最初に、本文は開いたときに）
 │       ├── useLitePageEffects.js ← ページ切り替え時の処理（<html lang>、フェードイン）
-│       └── news/*.md        ←   ★ 廉価版のニュース記事（1記事1ファイル。英語版は *.en.md）
+│       ├── news/*.md        ←   ★ ニュース記事（1記事1ファイル。英語版は *.en.md）
+│       └── columns/*.md     ←   ★ コラム記事（書き方はニュースと同じ）
 │
 ├── content/                 ← ★ 画面に出る文言（フル版・廉価版で共通）
-│   ├── ja/                  ←   日本語（home / company / recruit / faq / contact / legal / common / search）
+│   ├── company-profile.js   ←   ★ 会社の基本情報（社名・住所・連絡先・SNS。公開前に書き換える）
+│   ├── ja/                  ←   日本語（home / services / cases / company / recruit / faq / contact / legal / common / search）
 │   ├── en/                  ←   英語（ja/ と同じファイル名・同じ項目名）
-│   └── index.js             ←   今の言語の文言を返す useContent()
+│   └── index.js             ←   今の言語の文言を返す useContent()（文言はページごとに分けて読み込む）
 │
 ├── i18n/                    ← 言語の判定（URL が /en で始まれば英語）と言語つきリンク
 │
 ├── features/                ← ★ 機能ごとのフォルダ。1機能 = 1フォルダ
 │   ├── home/                ← トップページ（Hero / Services / Achievements）  … 共通
-│   ├── news/                ← ニュース一覧・詳細                              … 共通
-│   ├── company/             ← 企業情報（アクセス地図を含む）・採用情報        … 共通
+│   ├── services/            ← 事業内容の一覧・詳細                            … 共通
+│   ├── cases/               ← 導入事例の一覧・詳細                            … 共通
+│   ├── news/                ← ニュース（廉価版はコラムも）の一覧・詳細        … 共通
+│   ├── company/             ← 企業情報（アクセス地図）・採用情報・職種の詳細  … 共通
 │   ├── legal/               ← 個人情報保護方針・利用規約・サイトマップ        … 共通
 │   ├── faq/                 ← よくある質問                                    … 廉価版のみ
 │   ├── search/              ← サイト内検索                                    … 廉価版のみ
@@ -296,15 +310,21 @@ bash infra/scripts/destroy-lite.sh
 
 ### 公開前に変更する箇所
 
+公開までの作業（会社情報の差し替え・独自ドメイン・Google Search Console / Bing Webmaster Tools への登録）は、
+チェックリスト [docs/TODO_LAUNCH.md](docs/TODO_LAUNCH.md) にまとめています。主なファイルは次のとおりです。
+
 | 項目 | ファイル |
 |------|---------|
-| お問い合わせページに表示するメールアドレス（初期値 `info@example.com`） | `src/editions/lite/config.js` の `CONTACT_EMAIL` |
-| お問い合わせページに表示する電話番号（初期値 `03-0000-0000`） | `src/editions/lite/config.js` の `CONTACT_PHONE` |
-| 電話の受付時間・お問い合わせページの文言 | `src/content/ja/contact.js`・`src/content/en/contact.js` |
-| ニュース記事 | `src/editions/lite/news/*.md` |
+| 社名・住所・代表者・電話・メール・受付時間・SNS・地図（今は架空のサンプル） | `src/content/company-profile.js` |
+| 事業内容・導入事例・採用情報・企業理念などの文言 | `src/content/ja/*.js`・`src/content/en/*.js` |
+| ニュース・コラム記事 | `src/editions/lite/news/*.md`・`src/editions/lite/columns/*.md` |
 | SNS 共有カードの画像（1200×630） | `public/ogp.png` |
 | 独自ドメインの公開URL | `.env.lite` の `VITE_SITE_URL` |
+| 検索エンジンの所有権確認コード | `src/editions/lite/config.js` の `SEARCH_VERIFICATION` |
 | ヘッダー・フッターのリンク | `src/editions/lite/config.js` |
+
+> 公開URL（`VITE_SITE_URL`）なしで `npm run build:lite` したものは**確認用ビルド**です（全ページ noindex）。
+> デプロイスクリプトは公開URLを自動で設定してビルドし、確認用ビルドのままでは公開しません。
 
 ### CloudFormation で構築する
 

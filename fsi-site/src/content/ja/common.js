@@ -1,15 +1,19 @@
 /**
  * 共通の文言（日本語）
  *
- * ヘッダー・フッター・ニュース・検索など、複数のページで使う文言をまとめている。
+ * ヘッダー・フッター・ニュース・コラム・検索など、複数のページで使う文言をまとめている。
  * 英語版は ../en/common.js。項目の名前（キー）は日本語版と英語版でそろえること。
  * 文中の「\n」は画面上で改行になる。
+ * サイト名は ../company-profile.js の siteName。
  */
+import P from "../company-profile";
+
 export default {
-  siteName: "FSI-STYLE CORP",
+  siteName: P.siteName,
   defaultDescription: "高信頼・高性能なITソリューションで企業の未来を支えます。",
   breadcrumbLabel: "現在位置",
   breadcrumbTop: "トップ",
+  skipToContent: "本文へ移動",
 
   header: {
     menu: "メニュー",
@@ -19,7 +23,8 @@ export default {
     themeToDark: "ダークモードに切り替える",
     themeToLight: "ライトモードに切り替える",
     langSwitch: "EN",
-    langSwitchLabel: "English（英語のページへ）",
+    // 読み上げ用の名前。画面の表示（EN）を含めること（音声操作で「EN」と言って押せるように）
+    langSwitchLabel: "EN（English・英語のページへ）",
   },
 
   footer: {
@@ -37,7 +42,7 @@ export default {
     eyebrow: "NEWS RELEASE",
     heading: "ニュースリリース",
     lead: "当社の最新情報・お知らせをお届けします。",
-    description: "FSI-STYLE CORPのニュースリリース一覧です。",
+    description: `${P.siteName}のニュースリリース一覧です。新サービス・組織・IR・お知らせなどの最新情報をお届けします。`,
     empty: "ニュースはまだありません。",
     more: "ニュース一覧を表示する",
     all: "すべて",
@@ -51,7 +56,7 @@ export default {
     prevPage: "前へ",
     nextPage: "次へ",
     notFoundTitle: "記事が見つかりません",
-    notFoundText: "お探しのニュースは削除されたか、URLが間違っている可能性があります。",
+    notFoundText: "お探しの記事は削除されたか、URLが間違っている可能性があります。",
     backToList: "← ニュース一覧に戻る",
     toList: "ニュース一覧へ",
     loading: "読み込み中...",
@@ -63,9 +68,27 @@ export default {
     copied: "コピーしました",
     print: "印刷する",
     rss: "RSSで購読",
-    langNotice: "",
+    updated: "更新",
+    jaOnly: "",
     // カテゴリ名の表示（日本語版はそのまま表示する）
     categories: {},
+  },
+
+  // コラム（廉価版のみ）。ここにない項目は上の news の文言を使う
+  columns: {
+    eyebrow: "COLUMN",
+    heading: "コラム",
+    lead: "システム開発・クラウド・運用の現場から、役立つ知識をお届けします。",
+    description: `${P.siteName}のエンジニアが、システム開発・クラウド移行・運用保守・DXの実践的なノウハウを解説するコラムです。`,
+    empty: "コラムはまだありません。",
+    more: "コラム一覧を見る",
+    searchLabel: "コラムをキーワードで検索",
+    countSuffix: "件のコラム",
+    noMatch: "該当するコラムがありません。",
+    backToList: "← コラム一覧に戻る",
+    toList: "コラム一覧へ",
+    related: "関連コラム",
+    author: "執筆",
   },
 
   notFound: {

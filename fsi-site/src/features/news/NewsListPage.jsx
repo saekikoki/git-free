@@ -1,34 +1,36 @@
 /**
- * NewsListPage.jsx - ニュースリリース一覧ページ（上場企業級IRニュース）
- * URL: /news（英語: /en/news）
+ * NewsListPage.jsx - ニュースリリース一覧（/news/）・コラム一覧（/columns/。廉価版のみ）
  *
  * 機能:
  *   - カテゴリによる絞り込みタブ
  *   - 年による絞り込み
- *   - キーワード検索（見出しと本文）
+ *   - キーワード検索（見出しと要約）
  *   - ページ送り（10件ずつ）
  *   - 絞り込みの状態は URL（?category=製品&year=2025&q=...&page=2）に残るので、そのまま共有できる
- *   - RSS フィードへのリンク（廉価版）
+ *   - RSS フィードへのリンク（廉価版のニュース）
+ *
+ * 絞り込んだページ（?category=... など）は、正式URL（canonical）が絞り込みなしの一覧を指すので、
+ * 検索エンジンには一覧ページ1つとして扱われる。
  */
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import Link from "../../i18n/LocalizedLink";
 import PageHead from "../../components/layout/PageHead";
+import Breadcrumb from "../../components/layout/Breadcrumb";
 import useHydrated from "../../components/ui/useHydrated";
 import { breadcrumbJsonLd } from "../../components/layout/seo";
 import { useLang, localizePath } from "../../i18n/lang";
 import { useContent } from "../../content";
 import { FEATURES } from "@edition/config";
 import NewsCard from "./NewsCard";
-import { categoryLabel, localizeNews, useNewsList } from "./newsUtils";
+import { categoryLabel, listPath, localizeNews, newsTexts, useNewsList } from "./newsUtils";
 
 const PAGE_SIZE = 10;
 
-export default function NewsListPage() {
+export default function NewsListPage({ kind = "news" }) {
   const lang = useLang();
   const t = useContent();
-  const tn = t.common.news;
-  const news = useNewsList();
+  const tn = newsTexts(t, kind);
+  const news = useNewsList(kind);
   const [params, setParams] = useSearchParams();
 
   // 事前HTML化したページは「絞り込みなし」の状態。URLの条件はブラウザで引き継いだ後に反映する
@@ -56,7 +58,7 @@ export default function NewsListPage() {
     [news]
   );
 
-  // 絞り込み + 検索（英語ページでは英語の見出し・本文も対象）
+  // 絞り込み + 検索（英語ページでは英語の見出し・要約も対象）
   const filtered = useMemo(() => {
     const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
     return news.filter((item) => {
@@ -64,7 +66,7 @@ export default function NewsListPage() {
       if (category && n.category !== category) return false;
       if (year && !String(n.publishedAt).startsWith(year)) return false;
       if (!words.length) return true;
-      const text = `${n.title} ${n.content || ""} ${n.summary || ""}`.toLowerCase();
+      const text = `${n.title} ${n.summary || ""} ${n.excerpt || ""} ${n.content || ""}`.toLowerCase();
       return words.every((w) => text.includes(w));
     });
   }, [news, category, year, query, lang]);
@@ -78,6 +80,8 @@ export default function NewsListPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const showRss = FEATURES.rss && kind === "news";
+
   return (
     <div className="newsx">
       <PageHead
@@ -85,7 +89,7 @@ export default function NewsListPage() {
         description={tn.description}
         jsonLd={breadcrumbJsonLd([
           { name: t.common.breadcrumbTop, path: localizePath("/", lang) },
-          { name: tn.heading, path: localizePath("/news", lang) },
+          { name: tn.heading, path: localizePath(listPath(kind), lang) },
         ])}
       />
 
@@ -98,14 +102,7 @@ export default function NewsListPage() {
         </div>
       </section>
 
-      {/* パンくず */}
-      <nav className="corp-breadcrumb" aria-label={t.common.breadcrumbLabel}>
-        <div className="corp-container">
-          <Link to="/">{t.common.breadcrumbTop}</Link>
-          <span className="corp-sep">/</span>
-          <span>{tn.heading}</span>
-        </div>
-      </nav>
+      <Breadcrumb items={[{ name: tn.heading }]} />
 
       <section className="corp-section">
         <div className="corp-container">
@@ -152,20 +149,20 @@ export default function NewsListPage() {
           {/* 件数表示 */}
           <div className="newsx-meta-row">
             <p className="newsx-count" aria-live="polite">{filtered.length} {tn.countSuffix}</p>
-            {FEATURES.rss && (
+            {showRss && (
               <a className="newsx-rss" href={lang === "en" ? "/en/feed.xml" : "/feed.xml"}>
                 <span aria-hidden="true">◉</span> {tn.rss}
               </a>
             )}
           </div>
 
-          {/* ニュース一覧 */}
+          {/* 一覧 */}
           {shown.length === 0 ? (
             <p className="newsx-empty">{news.length === 0 ? tn.empty : tn.noMatch}</p>
           ) : (
             <ul className="newsx-list">
               {shown.map((n) => (
-                <li key={n.SK}><NewsCard item={n} /></li>
+                <li key={n.SK}><NewsCard item={n} kind={kind} /></li>
               ))}
             </ul>
           )}

@@ -9,6 +9,7 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { fileURLToPath } from "url";
+import liteMarkdownPlugin from "./scripts/lite/markdown.mjs";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 
@@ -34,7 +35,7 @@ function liteThemePlugin() {
   };
 }
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
   // mode に応じた .env ファイルを読み込む
   const env = loadEnv(mode, process.cwd(), "");
 
@@ -42,7 +43,8 @@ export default defineConfig(({ mode }) => {
   const apiTarget = env.VITE_API_TARGET || "http://localhost:3001";
 
   return {
-    plugins: [react(), ...(edition === "lite" ? [liteThemePlugin()] : [])],
+    // liteMarkdownPlugin: ニュース・コラムの Markdown をビルド時に HTML に変換する
+    plugins: [react(), liteMarkdownPlugin(), ...(edition === "lite" ? [liteThemePlugin()] : [])],
     resolve: {
       alias: {
         "@edition": path.resolve(rootDir, `src/editions/${edition}`),
@@ -52,6 +54,9 @@ export default defineConfig(({ mode }) => {
       // フル版は dist/、廉価版は dist-lite/ に出力（両方を同時に保持できる）
       // （事前HTML化用のビルドは package.json の build:lite で --outDir .ssr-lite を指定）
       outDir: edition === "lite" ? "dist-lite" : "dist",
+      // 廉価版は「どのページがどの JS を使うか」の一覧（manifest.json）を出し、
+      // 事前HTML化のときにページごとの先読み（modulepreload）を入れる。使い終わったら消す
+      manifest: edition === "lite" && !isSsrBuild,
     },
     ssr: {
       // CommonJS 形式のライブラリは、事前HTML化用のファイルにまとめて取り込む

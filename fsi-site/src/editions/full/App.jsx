@@ -6,6 +6,7 @@
  */
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "../../features/auth/AuthContext";
+import "../../styles/full-only.css"; // ログイン・管理・掲示板・チャット・ゲームの CSS（廉価版には含めない）
 
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
@@ -17,6 +18,11 @@ import NewsList from "../../features/news/NewsListPage";
 import NewsDetail from "../../features/news/NewsDetailPage";
 import CompanyPage from "../../features/company/CompanyPage";
 import RecruitPage from "../../features/company/RecruitPage";
+import JobDetailPage from "../../features/company/JobDetailPage";
+import ServicesPage from "../../features/services/ServicesPage";
+import ServiceDetailPage from "../../features/services/ServiceDetailPage";
+import CasesPage from "../../features/cases/CasesPage";
+import CaseDetailPage from "../../features/cases/CaseDetailPage";
 import ContactPage from "../../features/contact/ContactPage";
 import SengokuGame from "../../features/game/SengokuGamePage";
 import Privacy from "../../features/legal/PrivacyPage";
@@ -35,13 +41,18 @@ export default function App() {
     <AuthProvider>
       <ScrollToTop />
       <Header />
-      <main>
+      <main id="main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:sk" element={<NewsDetail />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/:slug" element={<ServiceDetailPage />} />
+          <Route path="/cases" element={<CasesPage />} />
+          <Route path="/cases/:slug" element={<CaseDetailPage />} />
           <Route path="/company" element={<CompanyPage />} />
           <Route path="/recruit" element={<RecruitPage />} />
+          <Route path="/recruit/jobs/:slug" element={<JobDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/game" element={<SengokuGame />} />
           <Route path="/privacy" element={<Privacy />} />

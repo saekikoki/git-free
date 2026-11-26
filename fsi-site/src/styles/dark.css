@@ -219,3 +219,60 @@
 /* 画像は少しだけ暗くして、まぶしさを抑える */
 [data-theme="dark"] .newsx-article-image,
 [data-theme="dark"] .newsx-markdown img { filter: brightness(0.9); }
+
+/* ---- 事業内容・導入事例・募集職種の詳細（あとから追加した画面）---- */
+[data-theme="dark"] .svc-list-card,
+[data-theme="dark"] .svc-feature,
+[data-theme="dark"] .svc-process-step,
+[data-theme="dark"] .svc-other,
+[data-theme="dark"] .svc-checklist li,
+[data-theme="dark"] .case-card,
+[data-theme="dark"] .home-columns-wrap {
+  background: var(--dm-surface);
+  border-color: var(--color-border);
+}
+[data-theme="dark"] .svc-list-icon,
+[data-theme="dark"] .case-voice,
+[data-theme="dark"] .job-apply {
+  background: var(--dm-surface-2);
+}
+[data-theme="dark"] .svc-list-title,
+[data-theme="dark"] .svc-feature-title,
+[data-theme="dark"] .svc-process-title,
+[data-theme="dark"] .svc-other-title,
+[data-theme="dark"] .svc-checklist li,
+[data-theme="dark"] .case-card-title,
+[data-theme="dark"] .case-h2,
+[data-theme="dark"] .case-voice blockquote,
+[data-theme="dark"] .job-apply-title {
+  color: var(--dm-heading);
+}
+[data-theme="dark"] .svc-list-lead,
+[data-theme="dark"] .svc-text,
+[data-theme="dark"] .job-apply p {
+  color: var(--dm-text);
+}
+[data-theme="dark"] .svc-feature-text,
+[data-theme="dark"] .svc-process-text,
+[data-theme="dark"] .svc-other-text,
+[data-theme="dark"] .case-card-summary,
+[data-theme="dark"] .case-voice figcaption,
+[data-theme="dark"] .newsx-card-year,
+[data-theme="dark"] .search-result-meta {
+  color: var(--dm-muted);
+}
+[data-theme="dark"] .corp-eyebrow,
+[data-theme="dark"] .services-v2-eyebrow,
+[data-theme="dark"] .svc-feature-num,
+[data-theme="dark"] .svc-list-more,
+[data-theme="dark"] .service-v2-more,
+[data-theme="dark"] .case-card-more,
+[data-theme="dark"] .showcase-link,
+[data-theme="dark"] .svc-text a,
+[data-theme="dark"] .corp-profile dd a {
+  color: var(--dm-accent);
+}
+[data-theme="dark"] .case-card-industry {
+  background: rgba(111, 208, 236, 0.12);
+  color: var(--dm-accent);
+}

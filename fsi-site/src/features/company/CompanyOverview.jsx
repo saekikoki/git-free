@@ -17,7 +17,7 @@ import PageHead from "../../components/layout/PageHead";
 import Lines from "../../components/ui/Lines";
 import CountUp from "../../components/ui/CountUp";
 import useReveal from "../../components/ui/useReveal";
-import { breadcrumbJsonLd } from "../../components/layout/seo";
+import { breadcrumbJsonLd, organizationJsonLd } from "../../components/layout/seo";
 import { localizePath, useLang } from "../../i18n/lang";
 import { useContent } from "../../content";
 import AccessMap from "./AccessMap";
@@ -34,10 +34,13 @@ export default function CompanyOverview() {
       <PageHead
         title={t.title}
         description={t.description}
-        jsonLd={breadcrumbJsonLd([
-          { name: all.common.breadcrumbTop, path: localizePath("/", lang) },
-          { name: t.title, path: localizePath("/company", lang) },
-        ])}
+        jsonLd={[
+          organizationJsonLd({ description: t.description, lang }),
+          breadcrumbJsonLd([
+            { name: all.common.breadcrumbTop, path: localizePath("/", lang) },
+            { name: t.title, path: localizePath("/company", lang) },
+          ]),
+        ]}
       />
 
       {/* 1. ヒーロー */}

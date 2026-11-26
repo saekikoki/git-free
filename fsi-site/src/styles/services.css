@@ -1,0 +1,156 @@
+/* === 事業内容（/services/）・募集職種の詳細・共通の小物 === */
+
+/* ---- カード全体を押せるようにする（中の見出しのリンクを、カードいっぱいに広げる）---- */
+.service-v2-card,
+.svc-list-card,
+.case-card,
+.recruit-job-card { position: relative; }
+.service-v2-link::after,
+.svc-list-title a::after,
+.case-card-title a::after,
+.recruit-job-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.service-v2-link, .svc-list-title a, .case-card-title a, .recruit-job-title a { color: inherit; }
+.service-v2-card:focus-within, .svc-list-card:focus-within, .case-card:focus-within, .recruit-job-card:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+.service-v2-more { display: inline-block; margin-top: 18px; font-size: 13px; font-weight: 700; color: #1a6f8f; }
+
+/* ---- 画面遷移中の空の枠 ---- */
+.page-loading { min-height: 60vh; }
+
+/* ---- 一覧 ---- */
+.svc-list { display: flex; flex-direction: column; gap: 20px; }
+.svc-list-card {
+  display: grid;
+  grid-template-columns: 88px 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 32px;
+  background: #fff;
+  border: 1px solid #e6edf2;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.svc-list-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(11, 60, 93, 0.12); }
+.svc-list-icon {
+  width: 88px; height: 88px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #eaf6fb, #f5f9fc);
+}
+.svc-list-title { margin: 0 0 8px; font-size: 22px; color: #0b3c5d; }
+.svc-list-lead { margin: 0 0 14px; font-size: 14px; line-height: 1.9; color: #3b4956; }
+.svc-list-body .service-v2-tags { list-style: none; padding: 0; margin: 0; }
+.svc-list-more { font-size: 13px; font-weight: 700; color: #1a6f8f; white-space: nowrap; }
+
+/* ---- 詳細 ---- */
+.svc-hero-lead { max-width: 760px; line-height: 1.9; }
+.svc-narrow { max-width: 860px; }
+.svc-text { font-size: 15px; line-height: 2; color: #3b4956; margin: 0 0 18px; }
+.svc-text a, .corp-profile dd a { color: #1a6f8f; text-decoration: underline; }
+
+.svc-checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.svc-checklist li {
+  position: relative;
+  padding: 16px 20px 16px 52px;
+  background: #fff;
+  border: 1px solid #e6edf2;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #1b3a4b;
+}
+.svc-checklist li::before {
+  content: "✓";
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: #2bb0d6;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.svc-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.svc-feature {
+  padding: 28px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #e6edf2;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.05);
+}
+.svc-feature-num { font-family: var(--font-heading); font-size: 28px; font-weight: 800; color: #1a6f8f; }
+.svc-feature-title { margin: 6px 0 8px; font-size: 18px; color: #0b3c5d; }
+.svc-feature-text { margin: 0; font-size: 14px; line-height: 1.9; color: #55707f; }
+
+.svc-process { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.svc-process-step {
+  position: relative;
+  padding: 24px 18px;
+  text-align: center;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.06);
+}
+.svc-process-num {
+  width: 40px; height: 40px;
+  margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0b3c5d, #2bb0d6);
+  color: #fff;
+  font-weight: 800;
+  font-family: var(--font-heading);
+}
+.svc-process-title { margin: 0 0 6px; font-size: 15px; color: #1b3a4b; }
+.svc-process-text { margin: 0; font-size: 12px; line-height: 1.7; color: #55707f; }
+
+.svc-others { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.svc-other {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid #e6edf2;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.svc-other:hover { border-color: #2bb0d6; box-shadow: 0 8px 24px rgba(11, 60, 93, 0.1); }
+.svc-other-icon { font-size: 28px; }
+.svc-other-title { font-size: 17px; font-weight: 700; color: #0b3c5d; }
+.svc-other-text { font-size: 13px; line-height: 1.8; color: #55707f; }
+
+/* ---- 募集職種の詳細 ---- */
+.job-apply {
+  margin-top: 40px;
+  padding: 32px 24px;
+  text-align: center;
+  border-radius: 16px;
+  background: #f5f8fa;
+}
+.job-apply-title { margin: 0 0 8px; font-size: 20px; color: #0b3c5d; }
+.job-apply p { margin: 0 0 20px; color: #3b4956; font-size: 14px; }
+
+@media (max-width: 900px) {
+  .svc-process { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .svc-list-card { grid-template-columns: 1fr; padding: 24px; }
+  .svc-list-icon { width: 64px; height: 64px; font-size: 30px; }
+  .svc-list-more { display: none; }
+  .svc-features { grid-template-columns: 1fr; }
+  .svc-process { grid-template-columns: 1fr; }
+}

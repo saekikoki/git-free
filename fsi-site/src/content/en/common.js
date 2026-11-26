@@ -3,11 +3,14 @@
  *
  * 日本語版は ../ja/common.js。キーは日本語版とそろえること。
  */
+import P from "../company-profile";
+
 export default {
-  siteName: "FSI-STYLE CORP",
+  siteName: P.siteName,
   defaultDescription: "Reliable, high-performance IT solutions that support the future of business.",
   breadcrumbLabel: "You are here",
   breadcrumbTop: "Home",
+  skipToContent: "Skip to content",
 
   header: {
     menu: "Menu",
@@ -17,7 +20,7 @@ export default {
     themeToDark: "Switch to dark mode",
     themeToLight: "Switch to light mode",
     langSwitch: "JP",
-    langSwitchLabel: "日本語（Japanese page）",
+    langSwitchLabel: "JP (日本語のページへ / Japanese page)",
   },
 
   footer: {
@@ -34,8 +37,8 @@ export default {
   news: {
     eyebrow: "NEWS RELEASE",
     heading: "News",
-    lead: "The latest news and announcements from FSI-STYLE CORP.",
-    description: "News releases from FSI-STYLE CORP.",
+    lead: `The latest news and announcements from ${P.siteName}.`,
+    description: `News releases from ${P.siteName}: new services, organization, IR and announcements.`,
     empty: "No news yet.",
     more: "View all news",
     all: "All",
@@ -61,15 +64,37 @@ export default {
     copied: "Copied",
     print: "Print",
     rss: "Subscribe via RSS",
-    langNotice: "This article is available in Japanese only.",
-    // カテゴリ名の英語表記（ニュースの Markdown では日本語のカテゴリ名を書く）
+    updated: "Updated",
+    // 英語版のない記事に付ける目印（クリックすると日本語のページを開く）
+    jaOnly: "Japanese",
+    // カテゴリ名の英語表記（Markdown では日本語のカテゴリ名を書く）
     categories: {
       "お知らせ": "Notice",
       "製品": "Products",
       "組織": "Organization",
       "IR": "IR",
       "採用": "Careers",
+      "クラウド": "Cloud",
+      "開発": "Development",
+      "運用": "Operations",
+      "DX": "DX",
     },
+  },
+
+  columns: {
+    eyebrow: "COLUMN",
+    heading: "Columns",
+    lead: "Practical insights from the front lines of system development, cloud and operations.",
+    description: `Columns by ${P.siteName} engineers explaining practical know-how on system development, cloud migration, operations and DX.`,
+    empty: "No columns yet.",
+    more: "View all columns",
+    searchLabel: "Search columns by keyword",
+    countSuffix: "columns",
+    noMatch: "No matching columns found.",
+    backToList: "← Back to columns",
+    toList: "Go to columns",
+    related: "Related columns",
+    author: "Author",
   },
 
   notFound: {

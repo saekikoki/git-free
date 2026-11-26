@@ -1,10 +1,12 @@
 /**
  * 規約系ページの文言（英語）。キーは ../ja/legal.js とそろえる。
  */
+import P from "../company-profile";
+
 export default {
   privacy: {
     title: "Privacy Policy",
-    description: "The privacy policy of FSI-STYLE CORP.",
+    description: `The privacy policy of ${P.siteName}.`,
     sections: [
       {
         heading: "Basic Policy",
@@ -34,7 +36,7 @@ export default {
       {
         heading: "5. Contact",
         paragraphs: ["For inquiries about the handling of personal information, or requests for disclosure, correction or deletion, please contact us below."],
-        contact: "FSI-STYLE CORP Personal Information Manager\nEmail: privacy@fsi-style.co.jp\nPhone: +81-3-0000-0000",
+        contact: `${P.legalName.en} Personal Information Manager\nEmail: ${P.privacyEmail}\nPhone: ${P.phoneIntl}`,
       },
     ],
   },
@@ -81,6 +83,6 @@ export default {
 
   sitemap: {
     title: "Sitemap",
-    description: "A list of all pages on the FSI-STYLE CORP website.",
+    description: `A list of all pages on the ${P.siteName} website.`,
   },
 };

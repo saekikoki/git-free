@@ -7,10 +7,12 @@
  *   list       … 箇条書き（省略可）
  *   contact    … 枠で囲んで表示する連絡先（省略可。\n で改行）
  */
+import P from "../company-profile";
+
 export default {
   privacy: {
     title: "個人情報保護への取り組み",
-    description: "FSI-STYLE CORPの個人情報保護方針についてご案内します。",
+    description: `${P.siteName}の個人情報保護方針についてご案内します。`,
     sections: [
       {
         heading: "基本方針",
@@ -37,7 +39,7 @@ export default {
       {
         heading: "5. お問い合わせ窓口",
         paragraphs: ["個人情報の取り扱いに関するお問い合わせ、開示・訂正・削除等のご請求は、下記までご連絡ください。"],
-        contact: "FSI-STYLE CORP 個人情報管理責任者\nメール: privacy@fsi-style.co.jp\n電話: 03-0000-0000",
+        contact: `${P.legalName.ja} 個人情報管理責任者\nメール: ${P.privacyEmail}\n電話: ${P.phone}`,
       },
     ],
   },
@@ -81,6 +83,6 @@ export default {
 
   sitemap: {
     title: "サイトマップ",
-    description: "FSI-STYLE CORPサイトの全ページ一覧です。",
+    description: `${P.siteName}サイトの全ページ一覧です。`,
   },
 };

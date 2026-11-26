@@ -1,0 +1,21 @@
+/* === 見やすさ（アクセシビリティ）の調整 ===
+ * Lighthouse の指摘に合わせて、白い背景の上の薄い文字を少し濃くし、小さなボタンの押せる範囲を広げる。
+ * 読みやすいサイトは検索エンジンの評価にも良い影響がある。
+ */
+
+/* 白い背景の上の英字見出し（OUR BUSINESS など）。濃い背景の上のもの（--light）は元の水色のまま */
+.corp-eyebrow,
+.services-v2-eyebrow { color: #1a6f8f; }
+
+/* 日付・補足の文字 */
+.newsx-card-year,
+.search-result-meta { color: #5d7686; }
+
+/* スライドのドット（小さいので、見た目はそのままで押せる範囲を広げる） */
+.showcase-dot { position: relative; }
+.showcase-dot::before { content: ""; position: absolute; inset: -9px -4px; }
+
+/* 文章の中のリンクは、色だけでなく下線でも分かるようにする */
+.static-page-content p a,
+.faq-a p a,
+.contact-page-desc a { text-decoration: underline; }

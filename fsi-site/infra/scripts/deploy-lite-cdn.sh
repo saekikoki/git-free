@@ -69,7 +69,7 @@ build() {
   log "廉価版をビルド中（公開URL: ${VITE_SITE_URL}）..."
   [ -d node_modules ] || npm install
   npm run build:lite
-  npm run check:lite || error "公開前チェックでエラーが見つかりました。上の内容を直してから再実行してください。"
+  npm run check:lite -- --require-site-url || error "公開前チェックでエラーが見つかりました。上の内容を直してから再実行してください。"
 }
 
 cdk_deploy() {

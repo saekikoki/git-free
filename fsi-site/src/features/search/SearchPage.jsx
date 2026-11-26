@@ -4,15 +4,19 @@
  * 入力した言葉でページとニュースを探し、該当箇所の前後の文章を表示する。
  * 検索語は URL（?q=）に残るので、結果をそのまま共有できる。
  */
-import { useEffect, useMemo, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
-import Link from "../../i18n/LocalizedLink";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import PageHead from "../../components/layout/PageHead";
 import useHydrated from "../../components/ui/useHydrated";
 import { useLang } from "../../i18n/lang";
 import { useContent } from "../../content";
 import { formatNewsDate } from "../news/newsUtils";
-import { normalize, searchSite } from "./searchIndex";
+import { normalize, prepareSearch, searchSite } from "./searchIndex";
+
+// 検索結果の種類ごとの表示名（search.js のキー）
+const TYPE_LABEL = {
+  page: "typePage", news: "typeNews", columns: "typeColumns", service: "typeService", case: "typeCase", job: "typeJob",
+};
 
 /** 文章の中の検索語に <mark> を付けて目立たせる */
 function Highlight({ text, words }) {
@@ -51,7 +55,16 @@ export default function SearchPage() {
   // 事前HTML化したページには検索語がないので、ブラウザで引き継いだ後に URL の ?q= を使う
   const query = hydrated ? params.get("q") || "" : "";
   const words = useMemo(() => normalize(query).split(/\s+/).filter(Boolean), [query]);
-  const results = useMemo(() => searchSite(query, lang), [query, lang]);
+
+  // ニュース・コラムの本文を読み込んでから検索する（読み込み済みの言語を覚えておく）
+  const [readyLang, setReadyLang] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    prepareSearch(lang).then(() => alive && setReadyLang(lang)).catch(console.error);
+    return () => { alive = false; };
+  }, [lang]);
+  const ready = readyLang === lang;
+  const results = useMemo(() => (ready ? searchSite(query, lang) : []), [query, lang, ready]);
 
   // ページを開いたら入力欄にカーソルを置く
   useEffect(() => {
@@ -92,7 +105,7 @@ export default function SearchPage() {
 
           {query && (
             <p className="search-count" aria-live="polite">
-              {results.length > 0 ? `${results.length} ${t.resultSuffix}` : t.noMatch}
+              {!ready ? t.loading : results.length > 0 ? `${results.length} ${t.resultSuffix}` : t.noMatch}
             </p>
           )}
 
@@ -101,10 +114,11 @@ export default function SearchPage() {
               <li key={r.url} className="search-result">
                 <div className="search-result-meta">
                   <span className={`search-badge search-badge--${r.type}`}>
-                    {r.type === "news" ? t.typeNews : t.typePage}
+                    {t[TYPE_LABEL[r.type]] || t.typePage}
                   </span>
                   {r.date && <time dateTime={r.date}>{formatNewsDate(r.date, lang).full}</time>}
                 </div>
+                {/* r.url は言語つきのパスなので、言語を付け足さない Link を使う */}
                 <Link to={r.url} className="search-result-title">
                   <Highlight text={r.title} words={words} />
                 </Link>

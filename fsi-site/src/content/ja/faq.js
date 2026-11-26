@@ -4,9 +4,11 @@
  * items の1件が1つの質問。category は categories の中の名前を使う。
  * 回答（a）の中の「\n」は改行になる。
  */
+import P, { formatAddress } from "../company-profile";
+
 export default {
   title: "よくある質問",
-  description: "FSI-STYLE CORPへよく寄せられるご質問と回答をまとめています。",
+  description: `${P.siteName}へよく寄せられる、会社・サービス・採用・このサイトについてのご質問と回答をまとめています。`,
   eyebrow: "FAQ",
   lead: "お問い合わせの前に、こちらもご確認ください。",
   all: "すべて",
@@ -20,7 +22,7 @@ export default {
     {
       category: "会社について",
       q: "会社の所在地はどこですか？",
-      a: "本社は神奈川県横浜市中区桜木町1-1にあります。\n詳しくは企業情報ページの「アクセス」をご覧ください。",
+      a: `本社は${formatAddress(P, "ja").replace(/^〒\S+ /, "")}にあります。\n詳しくは企業情報ページの「アクセス」をご覧ください。`,
     },
     {
       category: "会社について",

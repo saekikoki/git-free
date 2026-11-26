@@ -5,11 +5,14 @@
  * 共通ページはこのファイルの関数だけを使うので、廉価版と差し替えられる。
  */
 
-// 「待たずにすぐ返す」取得は廉価版（事前HTML化）用。フル版はAPIを待つので使わない
+// 以下は廉価版（Markdown の記事を手元に持っている版）用。フル版は API を待つので使わない
 export const getNewsListSync = null;
 export const getNewsItemSync = null;
+export const getNewsBodySync = null;
+export const loadNewsBody = null;
+export const loadAllNewsBodies = null;
 
-// ニュース一覧（新しい順）
+// ニュース一覧（新しい順）。kind（news / columns）は廉価版用でフル版は news のみ
 export async function fetchNewsList() {
   const res = await fetch("/api/news");
   if (!res.ok) throw new Error("ニュースの取得に失敗しました");

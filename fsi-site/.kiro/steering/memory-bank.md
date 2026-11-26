@@ -116,4 +116,15 @@ npm run build:aws # AWS向けビルド
 
 - ニュース編集機能（PUT）
 - お問い合わせの送信先（SES/SNS等）
-- 廉価版の `CONTACT_EMAIL` / `CONTACT_PHONE` は仮の値（公開前に変更）
+- 会社情報は架空のサンプル（`src/content/company-profile.js` に一元化。ユーザーがサイト完成後に実際の会社情報へ差し替え予定）
+- 独自ドメインはユーザーが用意済み（サイト完成後に設定）。公開までの手順は `docs/TODO_LAUNCH.md`
+
+廉価版の SEO 対応（2026-07）:
+- 文言はページごとに遅延読み込み（`content/index.js` の `loadContent`）。ページが使う文言は `editions/lite/routes.js` の `content` に必ず書く
+- ページごとのコード分割: `pageEntries.js`（import）・`LazyPage.jsx`・`boot.js`（hydrate 前に該当ページ・文言・記事本文を読み込む）
+- Markdown は Vite プラグイン `scripts/lite/markdown.mjs` でビルド時に HTML 化（`?meta` で一覧用、無印で本文）
+- 公開URL未設定ビルドは NOINDEX_ALL（全ページ noindex、robots.txt Disallow）。デプロイは `check:lite -- --require-site-url`
+- サイト内リンクは末尾 `/`（`withTrailingSlash`）。CloudFront Function は `/x` → `/x/` に 301
+- 英語版のない記事は `/en/` ページを作らない（一覧から日本語ページへリンク、hreflang も出さない）
+- 404.html は `#root[data-path]` で別URL用と判定して hydrate せず createRoot（React #418 対策）
+- 追加ページ: /services/, /services/:slug/, /cases/, /cases/:slug/, /recruit/jobs/:slug/（JobPosting）, /columns/

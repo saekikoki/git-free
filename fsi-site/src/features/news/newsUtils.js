@@ -1,5 +1,7 @@
 /**
- * newsUtils.js - ニュース画面で共通に使う小さな関数
+ * newsUtils.js - ニュース・コラムの画面で共通に使う関数
+ *
+ * kind は "news"（ニュースリリース）か "columns"（コラム。廉価版のみ）。
  */
 import { useEffect, useState } from "react";
 import {
@@ -7,6 +9,8 @@ import {
   fetchNewsItem,
   getNewsListSync,
   getNewsItemSync,
+  getNewsBodySync,
+  loadNewsBody,
 } from "@edition/dataSource";
 
 /**
@@ -15,7 +19,7 @@ import {
  * （事前HTML化したときとブラウザで表示したときに日付がずれないようにするため）。
  */
 export function formatNewsDate(value, lang = "ja") {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value || "");
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(value || "");
   let y, mo, d;
   if (m) {
     [, y, mo, d] = m.map(Number);
@@ -35,8 +39,8 @@ export function formatNewsDate(value, lang = "ja") {
 
 /**
  * 記事を表示中の言語に合わせる。
- * 英語ページで英語版（.en.md）があれば英語の見出し・本文に差し替える。
- * 英語版がなければ日本語のまま表示し、jaOnly: true を付ける。
+ * 英語ページで英語版（.en.md）があれば英語の見出し・要約に差し替える。
+ * 英語版がなければ日本語のまま返し、jaOnly: true を付ける。
  */
 export function localizeNews(item, lang) {
   if (!item) return item;
@@ -45,48 +49,77 @@ export function localizeNews(item, lang) {
   return { ...item, ...item.en, jaOnly: false };
 }
 
+/** 一覧ページのパス */
+export function listPath(kind = "news") {
+  return kind === "columns" ? "/columns/" : "/news/";
+}
+
+/**
+ * 記事ページのパス（言語つき）。
+ * 英語版のない記事は英語ページを作っていないので、英語ページからも日本語のページへリンクする。
+ */
+export function newsPath(item, lang, kind = "news") {
+  const base = kind === "columns" ? "/columns" : "/news";
+  return lang === "en" && item.en ? `/en${base}/${item.SK}/` : `${base}/${item.SK}/`;
+}
+
 /** 表示用のカテゴリ名（英語ページでは英語名に置き換える） */
 export function categoryLabel(category, t) {
   return (t.common.news.categories || {})[category] || category;
 }
 
-/**
- * ニュース一覧を取得するフック。
- * 廉価版はすぐに手元のデータを返し、フル版は API の応答を待つ。
- */
-export function useNewsList() {
-  const [news, setNews] = useState(() => (getNewsListSync ? getNewsListSync() : []));
-  useEffect(() => {
-    if (getNewsListSync) return; // 廉価版は取得済み
-    fetchNewsList().then(setNews).catch(console.error);
-  }, []);
-  return news;
+/** ニュースとコラムで文言を切り替える（コラムにない文言はニュースのものを使う） */
+export function newsTexts(t, kind = "news") {
+  return kind === "columns" ? { ...t.common.news, ...t.common.columns } : t.common.news;
 }
 
 /**
- * ニュース1件を取得するフック。戻り値は { article, error }。
- * article が undefined の間は読み込み中。null なら見つからなかった。
+ * 一覧を取得するフック。
+ * 廉価版はすぐに手元のデータを返し、フル版は API の応答を待つ。
  */
-export function useNewsItem(sk) {
-  const [state, setState] = useState(() => {
-    if (!getNewsItemSync) return { sk, article: undefined, error: "" };
-    const item = getNewsItemSync(sk);
-    return { sk, article: item, error: item ? "" : "not-found" };
-  });
+export function useNewsList(kind = "news") {
+  const [news, setNews] = useState(() => (getNewsListSync ? getNewsListSync(kind) : []));
+  useEffect(() => {
+    if (getNewsListSync) return; // 廉価版は取得済み
+    fetchNewsList(kind).then(setNews).catch(console.error);
+  }, [kind]);
+  return getNewsListSync ? getNewsListSync(kind) : news;
+}
+
+/**
+ * 1件を取得するフック。戻り値は { article, bodyReady, error }。
+ *   article が undefined … 読み込み中（フル版）
+ *   error が "not-found" … 見つからない
+ *   bodyReady が false   … 見出しは出せるが本文はまだ（廉価版で、記事を開いた直後）
+ * article は日本語の情報。英語に合わせるのは localizeNews で行う。
+ */
+export function useNewsItem(sk, kind = "news", lang = "ja") {
+  const isLite = Boolean(getNewsItemSync);
+  const [, setTick] = useState(0);
+  const [remote, setRemote] = useState({ sk: null, article: undefined, error: "" });
+
+  const meta = isLite ? getNewsItemSync(sk, kind) : null;
+  const body = isLite && meta ? getNewsBodySync(sk, kind, lang) : null;
 
   useEffect(() => {
-    if (getNewsItemSync) return;
     let alive = true;
-    fetchNewsItem(sk)
-      .then((article) => alive && setState({ sk, article, error: "" }))
-      .catch(() => alive && setState({ sk, article: null, error: "not-found" }));
+    if (isLite) {
+      // 本文がまだなら読み込んで、表示し直す
+      if (meta && !getNewsBodySync(sk, kind, lang)) {
+        loadNewsBody(sk, kind, lang).then(() => alive && setTick((n) => n + 1)).catch(console.error);
+      }
+    } else {
+      fetchNewsItem(sk)
+        .then((article) => alive && setRemote({ sk, article, error: "" }))
+        .catch(() => alive && setRemote({ sk, article: null, error: "not-found" }));
+    }
     return () => { alive = false; };
-  }, [sk]);
+  }, [isLite, meta, sk, kind, lang]);
 
-  // 廉価版で記事を移動したとき（関連記事のリンクなど）は、その場で取り直す
-  if (getNewsItemSync && state.sk !== sk) {
-    const item = getNewsItemSync(sk);
-    return { article: item, error: item ? "" : "not-found" };
+  if (isLite) {
+    if (!meta) return { article: null, bodyReady: false, error: "not-found" };
+    return { article: { ...meta, html: body?.html, text: body?.text }, bodyReady: Boolean(body), error: "" };
   }
-  return state;
+  if (remote.sk !== sk) return { article: undefined, bodyReady: false, error: "" };
+  return { article: remote.article, bodyReady: Boolean(remote.article), error: remote.error };
 }

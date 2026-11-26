@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import PageHead from "../../components/layout/PageHead";
+import profile from "../../content/company-profile";
 // フル版: APIへPOST / 廉価版: メールソフトを起動（@edition/dataSource が切り替える）
 import { submitContact } from "@edition/dataSource";
 
@@ -179,8 +180,9 @@ export default function ContactPage() {
 
       <div className="contact-other">
         <h3>お電話でのお問い合わせ</h3>
-        <p className="contact-phone-number">03-0000-0000</p>
-        <p className="contact-phone-hours">受付時間: 平日 9:00〜17:30（土日祝日を除く）</p>
+        {/* 電話番号と受付時間は src/content/company-profile.js で変更する */}
+        <p className="contact-phone-number">{profile.phone}</p>
+        <p className="contact-phone-hours">{profile.businessHours.ja}</p>
       </div>
     </section>
   );

@@ -99,7 +99,7 @@ export VITE_SITE_URL="${VITE_SITE_URL:-$SITE_URL}"
 npm run build:lite
 
 log "Step 3/5: 公開前チェック中..."
-npm run check:lite || error "公開前チェックでエラーが見つかりました。上の内容を直してから再実行してください。"
+npm run check:lite -- --require-site-url || error "公開前チェックでエラーが見つかりました。上の内容を直してから再実行してください。"
 
 # ---- 4. アップロード ----
 log "Step 4/5: ファイルをアップロード中..."

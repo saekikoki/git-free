@@ -1,0 +1,107 @@
+/* === 導入事例（/cases/）=== */
+.case-filter { margin-bottom: 28px; }
+.case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e6edf2;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(11, 60, 93, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.case-card:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(11, 60, 93, 0.14); }
+.case-card-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 150px;
+  padding: 20px 24px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent, #0b3c5d) 0%, color-mix(in srgb, var(--accent, #0b3c5d) 70%, #2bb0d6) 100%);
+}
+.case-card-icon { position: absolute; top: 16px; right: 20px; font-size: 36px; opacity: 0.85; }
+.case-card-metric { font-family: var(--font-heading); font-size: 34px; font-weight: 800; line-height: 1.1; }
+.case-card-metric-label { font-size: 12px; font-weight: 700; opacity: 0.9; }
+.case-card-body { display: flex; flex-direction: column; flex: 1; padding: 22px 24px 24px; }
+.case-card-industry {
+  align-self: flex-start;
+  margin-bottom: 10px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #eaf6fb;
+  color: #1a6f8f;
+  font-size: 12px;
+  font-weight: 700;
+}
+.case-card-title { margin: 0 0 10px; font-size: 17px; line-height: 1.6; color: #0b3c5d; }
+.case-card-summary { flex: 1; margin: 0 0 16px; font-size: 13px; line-height: 1.8; color: #55707f; }
+.case-card-more { font-size: 13px; font-weight: 700; color: #1a6f8f; }
+
+/* ---- 詳細 ---- */
+.case-hero-inner { display: grid; grid-template-columns: 1fr 240px; gap: 32px; align-items: center; }
+.case-hero-industry,
+.case-hero .case-hero-industry {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 3px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+.case-hero-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 28px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  text-align: center;
+}
+.case-hero-icon { font-size: 40px; }
+.case-hero-value { font-family: var(--font-heading); font-size: 42px; font-weight: 800; color: #fff; line-height: 1.1; }
+.case-hero-label { font-size: 13px; color: rgba(255, 255, 255, 0.85); font-weight: 700; }
+
+.case-profile { margin-bottom: 40px; }
+.case-h2 {
+  margin: 40px 0 16px;
+  padding-left: 14px;
+  border-left: 4px solid #2bb0d6;
+  font-size: 22px;
+  line-height: 1.5;
+  color: #0b3c5d;
+}
+.case-results li { font-weight: 700; }
+.case-voice {
+  margin: 40px 0 0;
+  padding: 28px 32px;
+  border-radius: 16px;
+  background: #f5f8fa;
+}
+.case-voice blockquote { margin: 0 0 12px; font-size: 16px; line-height: 1.9; color: #1b3a4b; font-weight: 700; }
+.case-voice figcaption { font-size: 13px; color: #55707f; }
+
+/* ---- ニュース・コラムの小物 ---- */
+.newsx-badge--ja { background: #6b7c8d; }
+.newsx-updated { font-size: 13px; color: rgba(255, 255, 255, 0.8); }
+.newsx-author { margin: 14px 0 0; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
+.home-columns-wrap { background: #fff; }
+.showcase-link { display: inline-block; margin-top: 16px; font-size: 14px; font-weight: 700; color: #1a6f8f; }
+.showcase-link:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .case-grid { grid-template-columns: 1fr 1fr; }
+  .case-hero-inner { grid-template-columns: 1fr; }
+  .case-hero-metric { flex-direction: row; justify-content: center; gap: 14px; }
+}
+@media (max-width: 600px) {
+  .case-grid { grid-template-columns: 1fr; }
+}

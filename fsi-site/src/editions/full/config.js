@@ -10,10 +10,10 @@ export const EDITION = "full";
 // --- 以下は廉価版で使う設定。フル版では使わないので空にしている ---
 // （共通の画面が同じ名前で読み込むため、値だけ用意しておく）
 export const SITE_URL = "";       // 空のときは canonical / OGP の URL を出さない
+export const NOINDEX_ALL = false; // フル版は検索エンジンの登録を止めない
+export const SEARCH_VERIFICATION = {};
 export const LANGS = ["ja"];      // 英語ページなし
-export const FEATURES = {};       // FAQ・サイト内検索・RSS なし
-export const CONTACT_EMAIL = "";
-export const CONTACT_PHONE = "";
+export const FEATURES = {};       // FAQ・サイト内検索・RSS・コラムなし
 
 // ヘッダーのリンク
 export const headerNav = [
@@ -35,6 +35,8 @@ export const footerNav = [
     heading: "企業情報",
     links: [
       { label: "会社概要", to: "/company" },
+      { label: "事業内容", to: "/services" },
+      { label: "導入事例", to: "/cases" },
       { label: "採用情報", to: "/recruit" },
       { label: "お問い合わせ", to: "/contact" },
     ],
@@ -65,6 +67,13 @@ export const sitemap = [
       { label: "トップページ", to: "/" },
       { label: "企業情報", to: "/company" },
       { label: "採用情報", to: "/recruit" },
+    ],
+  },
+  {
+    heading: "事業内容",
+    links: [
+      { label: "事業内容一覧", to: "/services" },
+      { label: "導入事例", to: "/cases" },
     ],
   },
   { heading: "ニュース", links: [{ label: "ニュースリリース一覧", to: "/news" }] },

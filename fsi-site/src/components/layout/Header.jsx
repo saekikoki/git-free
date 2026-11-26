@@ -13,11 +13,13 @@ import { useState, useEffect, useRef } from "react";
 import Link from "../../i18n/LocalizedLink";   // 言語に合わせてリンク先を変える <Link>
 import { useLang } from "../../i18n/lang";
 import { useContent } from "../../content";
+import profile from "../../content/company-profile";
 import { headerNav, HeaderExtra } from "@edition/config"; // エディションごとのナビ設定
 
 export default function Header() {
   const lang = useLang();
-  const t = useContent().common.header;
+  const all = useContent();
+  const t = all.common.header;
   // 英語ページでは labelEn（なければ label）を表示する
   const labelOf = (item) => (lang === "en" && item.labelEn) || item.label;
 
@@ -91,10 +93,15 @@ export default function Header() {
 
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+      {/* キーボード操作の人が、メニューを飛ばして本文へ移れるリンク（Tab で最初に出る） */}
+      <a className="skip-link" href="#main">{all.common.skipToContent}</a>
       {/* ロゴ: クリックでトップページへ遷移 */}
-      <h1 className="logo">
-        <Link to="/">FSI-STYLE <span className="logo-accent">CORP</span></Link>
-      </h1>
+      {/* 見出し（h1）はページごとに1つだけにするため、ロゴは見出しにしない */}
+      <div className="logo">
+        <Link to="/">
+          {profile.brand.main} <span className="logo-accent">{profile.brand.accent}</span>
+        </Link>
+      </div>
 
       {/* PC用ナビゲーション（768px以上で表示、モバイルではCSSで非表示） */}
       <nav className="pc-nav" aria-label={t.mainNav}>

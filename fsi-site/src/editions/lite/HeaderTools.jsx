@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { langFromPath, localizePath, stripLang } from "../../i18n/lang";
 import { getContent } from "../../content";
 import useHydrated from "../../components/ui/useHydrated";
+import { collections } from "./newsLoader";
 
 const THEME_KEY = "fsi-theme";
 
@@ -66,9 +67,15 @@ export default function HeaderTools({ onNavigate }) {
 
   // 言語切り替え先: 今と同じページの、もう一方の言語
   // （404 ページから切り替えたときは、もう一方の言語のトップへ）
+  // （英語版のない記事から EN を押したときは、英語の一覧ページへ）
   const base = stripLang(pathname);
   const otherLang = lang === "en" ? "ja" : "en";
-  const otherPath = base === "/404" ? localizePath("/", otherLang) : localizePath(base, otherLang) + search;
+  const article = base.match(/^\/(news|columns)\/([^/]+)\/?$/);
+  let otherPath = localizePath(base, otherLang) + search;
+  if (base === "/404" || base === "/404/") otherPath = localizePath("/", otherLang);
+  else if (article && otherLang === "en" && !collections[article[1]]?.get(article[2])?.en) {
+    otherPath = localizePath(`/${article[1]}`, "en");
+  }
 
   return (
     <div className="header-tools">

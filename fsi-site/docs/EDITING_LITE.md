@@ -17,16 +17,48 @@
 
 ## 公開前に変更する項目
 
+公開までの作業は [TODO_LAUNCH.md](TODO_LAUNCH.md) にチェックリストでまとめています。主なものは次のとおりです。
+
 | 項目 | ファイル | 初期値 |
 |------|---------|--------|
-| お問い合わせのメールアドレス | `src/editions/lite/config.js` の `CONTACT_EMAIL` | `info@example.com` |
-| お問い合わせの電話番号 | `src/editions/lite/config.js` の `CONTACT_PHONE` | `03-0000-0000` |
-| 電話の受付時間 | `src/content/ja/contact.js`・`src/content/en/contact.js` の `phoneHours` | 平日 9:00〜17:30 |
+| **会社の基本情報**（社名・ロゴの文字・住所・代表者・設立日・電話・メール・受付時間・SNS・地図の場所） | `src/content/company-profile.js` | 架空のサンプル |
 | 公開URL（独自ドメインの場合のみ） | `.env.lite` の `VITE_SITE_URL` | 空（デプロイ時に自動設定） |
+| 検索エンジンの所有権確認コード | `src/editions/lite/config.js` の `SEARCH_VERIFICATION` | 空 |
 | SNS で共有したときの画像 | `public/ogp.png`（1200×630 の PNG に差し替え） | サイト名入りの画像 |
 | ヘッダー・フッターのリンク | `src/editions/lite/config.js` | |
 
-`npm run check:lite` は、上のメールアドレス・電話番号・公開URLが仮の値のままだと「注意」を表示します。
+`npm run check:lite` は、メールアドレス・電話番号・会社情報がサンプルのままだと「注意」を表示します。
+
+### 会社の基本情報（company-profile.js）
+
+社名や住所などは、**このファイル1つ**を書き換えれば、ヘッダー・フッター・企業情報・お問い合わせ・個人情報保護方針・
+よくある質問・検索エンジン向けの会社情報・求人の勤務地に、まとめて反映されます。
+
+```js
+export default {
+  siteName: "FSI-STYLE CORP",                       // サイト名（タブ・検索結果に出る）
+  brand: { main: "FSI-STYLE", accent: "CORP" },     // ロゴの文字
+  legalName: { ja: "株式会社エフエスアイスタイル", en: "FSI-STYLE Corporation" },
+  address: { postalCode: "100-0000", region: { ja: "東京都", ... }, ... },
+  email: "info@example.com",
+  phone: "03-0000-0000",
+  sns: { x: "", facebook: "", linkedin: "", youtube: "" },  // URL を入れたものだけフッターに出る
+  ...
+};
+```
+
+## 検索エンジン対策（SEO）のために気をつけること
+
+ビルド時に、ページごとの HTML・sitemap.xml・構造化データなどは自動で作られます。中身を書くときは次の点に気をつけてください。
+
+- **ページのタイトル（title）と説明（description）に、検索してほしい言葉を入れる**
+  - 例: 事業内容なら「クラウド移行」「システム開発」など。日本語のタイトルは30文字前後、説明は120文字前後が目安
+  - トップページのタイトルは `src/content/ja/home.js` の `title`
+- **1ページに1つのテーマ**。事業・事例・求人は1件ずつ別ページになるので、それぞれ具体的に書く
+- **記事は定期的に追加する**（ニュース・コラム）。古くなった情報は `updated:`（更新日）を付けて直す
+- **画像には説明を付ける**（Markdown の `![ここに説明](/images/...)`）
+- **サイト内リンクは `/company/` のように末尾に / を付ける**（Markdown では自動で付く）
+- `npm run check:lite` の「注意」（タイトルが長すぎる、見出しが2つある など）は、できるだけなくす
 
 ## ニュースの追加・削除
 
@@ -87,8 +119,33 @@ summary: Short description (optional)
 English body here.
 ```
 
-英語版のファイルがない記事は、英語ページでも日本語のまま表示され、「This article is available in Japanese only.」と案内が出ます。
+英語版のファイルがない記事は、英語ページを作りません（日本語と同じ中身のページが2つできると、検索エンジンに重複とみなされるため）。
+英語の一覧には「Japanese」の目印付きで表示され、押すと日本語のページが開きます。
 `category` と `date` は日本語版のものが使われます。カテゴリの英語名は `src/content/en/common.js` の `news.categories` で設定します。
+
+### 内容を更新したとき
+
+記事を直したら、先頭の設定に `updated:`（更新日）を足します。記事に「更新」の日付が表示され、検索エンジンにも更新を伝えます。
+
+```markdown
+---
+title: 夏季休業のお知らせ
+category: お知らせ
+date: 2025-06-10
+updated: 2025-07-05
+---
+```
+
+## コラムの追加・削除
+
+コラム（`/columns/`）は `src/editions/lite/columns/` に置きます。書き方はニュースとまったく同じで、次の項目も使えます。
+
+| 項目 | 説明 |
+|------|------|
+| `author` | 執筆者・執筆部署（例: `クラウド事業部`）。記事の見出しの下に表示される |
+
+検索で見つけてもらうための記事なので、「お客様が困っていること」をタイトルにし（例:「クラウド移行を失敗させない5つのステップ」）、
+本文の最後に関連する事業内容や導入事例へのリンクを入れると効果的です。
 
 ### 削除
 
@@ -117,9 +174,12 @@ English body here.
 
 | 変更したい内容 | 日本語 | 英語 |
 |------|---------|------|
-| トップ（見出し・事業内容・実績・導入事例） | `src/content/ja/home.js` | `src/content/en/home.js` |
+| 社名・住所・連絡先など（両方の言語で共通） | `src/content/company-profile.js` | 同左 |
+| トップ（タイトル・見出し・実績の数字） | `src/content/ja/home.js` | `src/content/en/home.js` |
+| 事業内容（トップのカード・一覧・各事業の詳細ページ） | `src/content/ja/services.js` | `src/content/en/services.js` |
+| 導入事例（トップのスライド・一覧・各事例の詳細ページ） | `src/content/ja/cases.js` | `src/content/en/cases.js` |
 | 企業情報（理念・数字・会社概要・役員・沿革・アクセス） | `src/content/ja/company.js` | `src/content/en/company.js` |
-| 採用情報（職種・社員インタビュー・福利厚生・選考フロー） | `src/content/ja/recruit.js` | `src/content/en/recruit.js` |
+| 採用情報（職種と各職種の詳細ページ・社員インタビュー・福利厚生・選考フロー） | `src/content/ja/recruit.js` | `src/content/en/recruit.js` |
 | よくある質問 | `src/content/ja/faq.js` | `src/content/en/faq.js` |
 | お問い合わせページ | `src/content/ja/contact.js` | `src/content/en/contact.js` |
 | 個人情報保護方針・利用規約 | `src/content/ja/legal.js` | `src/content/en/legal.js` |
@@ -133,7 +193,13 @@ English body here.
 - 改行したいところには `\n` を書く（例: `"1行目\n2行目"`）
 - 項目を増やすときは、同じ形の `{ ... },` をコピーして中身を書き換える（例: FAQ の質問、沿革の年、採用の職種）
 - 採用の職種の `category` と `types` は、`filters` に書いた名前と同じにする（絞り込みボタンと対応させるため）
-- 企業情報の地図の場所は `access.mapQuery`（Google マップで検索する住所）で変える
+- 企業情報の地図の場所は `company-profile.js` の `mapQuery`（Google マップで検索する住所）で変える
+- 事業・事例・職種を足すときは `slug`（URL になる英小文字の名前）を付け、日本語と英語で同じ `slug` にする。
+  新しい `slug` のページはビルド時に自動で作られ、sitemap.xml にも載る
+- 事業内容の `relatedCases`、導入事例の `service` には、関連する相手の `slug` を書く（詳細ページで互いにリンクされる）
+- 職種には Google の求人検索用の項目（`employmentType`・`salary`・`datePosted`）がある。締め切った職種は消す
+- 新しい文言ファイル（`src/content/ja/xxx.js`）を作ったときは、`src/content/index.js` の `CONTENT_NAMES` と、
+  使うページの `src/editions/lite/routes.js` の `content` に名前を足す
 - 日本語を変えたら、英語のファイルも合わせて直す
 - 書き換えたあと `npm run dev:lite` の画面で崩れていないか確認する
 - 見た目（色・余白など）を変えたい場合は `src/styles/` 配下の CSS を編集する（ダークモードの色は `src/styles/dark.css`）

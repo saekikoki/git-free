@@ -1,18 +1,22 @@
 /**
  * @file Achievements.jsx
  * @description 実績紹介セクション。
- * 上部に主要KPI（実績サマリー。画面に入るとカウントアップ）、下部に事例カルーセルを表示する。
+ * 上部に主要KPI（実績サマリー。画面に入るとカウントアップ）、下部に導入事例のカルーセルを表示する。
  * カルーセルは5秒ごとに自動送り、ホバーで停止、前後ボタン・ドットで手動操作可能。
- * 文言・数値は src/content/{ja,en}/home.js の achievements。
+ * 各スライドから導入事例の詳細ページ（/cases/<slug>/）へリンクする。
+ * KPI は src/content/{ja,en}/home.js、事例は cases.js。
  */
 
 import { useState, useEffect, useCallback } from "react";
+import Link from "../../i18n/LocalizedLink";
 import { useContent } from "../../content";
 import CountUp from "../../components/ui/CountUp";
 
 export default function Achievements() {
-  const t = useContent().home.achievements;
-  const items = t.items;
+  const all = useContent();
+  const t = all.home.achievements;
+  const cases = all.cases;
+  const items = cases.items;
   const [current, setCurrent] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
@@ -67,24 +71,26 @@ export default function Achievements() {
         <div className="showcase-viewport" aria-live="polite">
           {items.map((item, index) => (
             <article
-              key={item.id}
+              key={item.slug}
               className={`showcase-card ${index === current ? "is-active" : ""}`}
               style={{ "--accent": item.color }}
               aria-hidden={index !== current}
+              inert={index !== current ? true : undefined}
             >
               {/* 左: ビジュアル面 */}
               <div className="showcase-visual" style={{ background: `linear-gradient(135deg, ${item.color} 0%, ${item.color}cc 100%)` }}>
                 <span className="showcase-icon" aria-hidden="true">{item.icon}</span>
-                <span className="showcase-category">{item.category}</span>
+                <span className="showcase-category">{item.industry}</span>
               </div>
               {/* 右: テキスト面 */}
               <div className="showcase-body">
                 <h3 className="showcase-title">{item.title}</h3>
-                <p className="showcase-desc">{item.description}</p>
+                <p className="showcase-desc">{item.summary}</p>
                 <div className="showcase-metric">
                   <span className="showcase-metric-label">{item.metric}</span>
                   <span className="showcase-metric-value">{item.metricValue}</span>
                 </div>
+                <Link to={`/cases/${item.slug}`} className="showcase-link">{cases.more} →</Link>
               </div>
             </article>
           ))}
@@ -97,13 +103,17 @@ export default function Achievements() {
       <div className="showcase-dots">
         {items.map((item, i) => (
           <button
-            key={item.id}
+            key={item.slug}
             className={`showcase-dot ${i === current ? "is-active" : ""}`}
             style={i === current ? { background: activeItem.color } : undefined}
             onClick={() => setCurrent(i)}
             aria-label={`${t.dot} ${i + 1}`}
           />
         ))}
+      </div>
+
+      <div className="news-more">
+        <Link to="/cases" className="news-more-btn">{cases.allCases}</Link>
       </div>
     </section>
   );

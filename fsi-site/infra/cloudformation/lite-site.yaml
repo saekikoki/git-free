@@ -137,7 +137,7 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
-  # /company → /company/index.html のように、URL をファイル名に直す
+  # /company/ → /company/index.html のように、URL をファイル名に直す
   # （S3 のウェブサイト機能を使わないので、index.html を自動では付けてくれないため）
   RewriteFunction:
     Type: AWS::CloudFront::Function
@@ -148,14 +148,31 @@ Resources:
       FunctionConfig:
         Comment: "gon-hp lite: /path -> /path/index.html"
         Runtime: cloudfront-js-2.0
+      # 末尾が / のURLは index.html を返し、拡張子のないURL（/company）は /company/ に 301 で転送する
+      # （同じページに2つのURLができると、検索エンジンの評価が分散するため）
       FunctionCode: |
         function handler(event) {
           var request = event.request;
           var uri = request.uri;
           if (uri.endsWith("/")) {
             request.uri = uri + "index.html";
-          } else if (uri.split("/").pop().indexOf(".") === -1) {
-            request.uri = uri + "/index.html";
+            return request;
+          }
+          if (uri.split("/").pop().indexOf(".") === -1) {
+            var qs = [];
+            for (var key in request.querystring) {
+              var v = request.querystring[key];
+              if (v.multiValue) {
+                v.multiValue.forEach(function (m) { qs.push(key + "=" + m.value); });
+              } else {
+                qs.push(v.value === "" ? key : key + "=" + v.value);
+              }
+            }
+            return {
+              statusCode: 301,
+              statusDescription: "Moved Permanently",
+              headers: { location: { value: uri + "/" + (qs.length ? "?" + qs.join("&") : "") } }
+            };
           }
           return request;
         }
