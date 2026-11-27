@@ -1,7 +1,7 @@
 /**
  * 企業情報ページの文言（日本語）
  *
- * 社名・所在地・代表者・設立日・資本金・従業員数・地図・最寄り駅は ../company-profile.js から自動で入る。
+ * 社名・所在地・代表者・設立日・資本金・従業員数・認定・地図・最寄り駅は ../company-profile.js から自動で入る。
  * このファイルでは、理念・数字・役員・沿革など、ページ固有の文言を編集する。
  * 現在の内容はすべて架空のサンプルです。
  */
@@ -9,21 +9,21 @@ import P, { formatAddress, formatFoundingDate, foundingYear } from "../company-p
 
 export default {
   title: "企業情報",
-  description: `${P.legalName.ja}（${P.siteName}）の企業情報。企業理念・会社概要・役員・沿革・アクセスをご紹介します。`,
+  description: `${P.legalName.ja}（${P.siteName}）の企業情報。企業理念・会社概要・警備業の認定・役員・沿革・アクセスをご紹介します。`,
 
   hero: {
     eyebrow: "COMPANY",
     title: "企業情報",
-    lead: "IT×OT×AIの融合で、社会の未来を支える。\n設立から積み重ねてきた技術が、次世代の価値を生み出します。",
+    lead: "人と街の安全を、24時間365日守る。\n設立から積み重ねてきた経験と教育が、現場の安心を支えます。",
   },
 
   philosophy: {
     eyebrow: "PHILOSOPHY",
     title: "企業理念",
     items: [
-      { icon: "🎯", title: "Mission", subtitle: "使命", text: "技術の力で社会課題を解決し、人々の豊かな未来を創造する。" },
-      { icon: "🔭", title: "Vision", subtitle: "目指す姿", text: "IT×OT×AIの融合で、あらゆる産業のDXをリードするテクノロジーカンパニー。" },
-      { icon: "💎", title: "Values", subtitle: "価値観", text: "誠実・挑戦・共創。お客様と共に価値を生み出し続ける。" },
+      { icon: "🎯", title: "Mission", subtitle: "使命", text: "警備を通じて、人々の安全と安心を守り、地域の暮らしを支える。" },
+      { icon: "🔭", title: "Vision", subtitle: "目指す姿", text: "お客様と地域から最も信頼される、教育の行き届いた警備会社。" },
+      { icon: "💎", title: "Values", subtitle: "価値観", text: "誠実・責任・思いやり。どんな現場でも、礼儀と規律を忘れない。" },
     ],
   },
 
@@ -32,9 +32,9 @@ export default {
     title: `数字で見る${P.shortName.ja}`,
     items: [
       { value: foundingYear(P), suffix: "年設立", label: "30年の実績", plain: true },
-      { value: "350", suffix: "社+", label: "取引企業数" },
-      { value: "1,200", suffix: "件+", label: "プロジェクト実績" },
-      { value: "98", suffix: "%", label: "顧客満足度" },
+      { value: "480", suffix: "か所+", label: "契約施設・現場数" },
+      { value: "420", suffix: "名", label: "警備員数" },
+      { value: "24", suffix: "時間365日", label: "緊急対応体制" },
     ],
   },
 
@@ -48,7 +48,9 @@ export default {
       { label: "設立", value: formatFoundingDate(P, "ja") },
       { label: "資本金", value: P.capital.ja },
       { label: "従業員数", value: P.employees.ja },
-      { label: "事業内容", value: "システム開発、クラウド導入・移行、システム運用・保守、DX推進支援" },
+      { label: "警備業の認定", value: P.securityLicense.ja },
+      { label: "事業内容", value: "警備業（施設警備業務・巡回警備業務・保安警備業務・交通誘導警備業務・雑踏警備業務・駐車場警備業務）" },
+      { label: "加盟団体", value: "警備業協会 会員（サンプル）" },
       { label: "取引銀行", value: "〇〇銀行、△△銀行（サンプル）" },
     ],
   },
@@ -58,9 +60,9 @@ export default {
     title: "役員一覧",
     items: [
       { name: P.representative.ja.name, role: P.representative.ja.title, initial: "Y" },
-      { name: "佐藤 花子", role: "取締役 CFO", initial: "S" },
-      { name: "鈴木 一郎", role: "取締役 CTO", initial: "S" },
-      { name: "田中 美咲", role: "執行役員 事業本部長", initial: "T" },
+      { name: "佐藤 花子", role: "取締役 管理本部長", initial: "S" },
+      { name: "鈴木 一郎", role: "取締役 警備事業本部長", initial: "S" },
+      { name: "田中 美咲", role: "執行役員 教育訓練部長", initial: "T" },
     ],
   },
 
@@ -68,11 +70,11 @@ export default {
     eyebrow: "HISTORY",
     title: "沿革",
     items: [
-      { year: foundingYear(P), event: `${P.legalName.ja}を設立。受託システム開発を開始` },
-      { year: "2003", event: "金融・製造業向けの基幹システム開発を本格展開" },
-      { year: "2010", event: "24時間365日の運用・保守サービスを開始" },
-      { year: "2016", event: "クラウド導入・移行支援サービスを開始" },
-      { year: "2024", event: "IT×OT×AIの融合による総合DX企業へ" },
+      { year: foundingYear(P), event: `${P.legalName.ja}を設立。施設警備業務を開始` },
+      { year: "2003", event: "交通誘導警備業務・雑踏警備業務を開始" },
+      { year: "2010", event: "駐車場警備業務を開始" },
+      { year: "2016", event: "24時間体制の緊急対応センターを開設" },
+      { year: "2024", event: "警備員の教育訓練施設を拡充" },
     ],
   },
 

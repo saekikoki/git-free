@@ -7,7 +7,7 @@ export default {
   title: "Site Search",
   description: `Search pages, news and columns on the ${P.siteName} website.`,
   eyebrow: "SEARCH",
-  placeholder: "Enter keywords (e.g. cloud, careers)",
+  placeholder: "Enter keywords (e.g. facility security, careers)",
   label: "Search this site",
   button: "Search",
   hint: "Searches page text, news and columns. Separate words with spaces to find results containing all of them.",

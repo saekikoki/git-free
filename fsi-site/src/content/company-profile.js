@@ -8,28 +8,34 @@
  *   - お問い合わせページ、個人情報保護方針の窓口、よくある質問の所在地
  *   - 検索エンジン向けの会社情報（構造化データ）、求人情報の勤務地
  *
- * 現在の値は、すべて架空のサンプルです（実在の会社・住所・人物とは関係ありません）。
+ * 現在の値は、すべて架空のサンプルです（実在の会社・住所・人物・認定番号とは関係ありません）。
  * 日本語（ja）と英語（en）の両方がある項目は、両方を書き換えてください。
  */
 export default {
   // サイト名（ブラウザのタブ・検索結果・SNS で表示される名前）
-  siteName: "FSI-STYLE CORP",
+  siteName: "FSI-STYLE SECURITY",
   // ロゴの文字（main は白、accent は水色で表示）
-  brand: { main: "FSI-STYLE", accent: "CORP" },
+  brand: { main: "FSI-STYLE", accent: "SECURITY" },
   // 文中で使う短い呼び名（例: 「FSI-STYLEは、…」）
   shortName: { ja: "FSI-STYLE", en: "FSI-STYLE" },
   // 正式な社名（会社概要・著作権表示・構造化データ）
-  legalName: { ja: "株式会社エフエスアイスタイル", en: "FSI-STYLE Corporation" },
+  legalName: { ja: "FSI-STYLE警備株式会社", en: "FSI-STYLE Security Co., Ltd." },
 
   representative: {
     ja: { title: "代表取締役社長", name: "山田 太郎" },
     en: { title: "President & CEO", name: "Taro Yamada" },
   },
 
+  // 警備業の認定（警備業法に基づき、都道府県の公安委員会が認定する）。実際の認定番号に書き換える
+  securityLicense: {
+    ja: "東京都公安委員会 認定 第00000000号（サンプル）",
+    en: "Certified by the Tokyo Metropolitan Public Safety Commission, No. 00000000 (sample)",
+  },
+
   // 設立日（YYYY-MM-DD）。会社概要の表示と構造化データに使う
   foundingDate: "1995-04-01",
-  capital: { ja: "1億円", en: "100 million yen" },
-  employees: { ja: "1,200名（2025年4月時点）", en: "1,200 (as of April 2025)" },
+  capital: { ja: "3,000万円", en: "30 million yen" },
+  employees: { ja: "420名（2025年4月時点）", en: "420 (as of April 2025)" },
 
   // 所在地。street / locality / region / postalCode は検索エンジン向けの住所の部品
   address: {
@@ -54,8 +60,8 @@ export default {
   // 海外向けの電話番号表記（英語ページで使う）
   phoneIntl: "+81-3-0000-0000",
   businessHours: {
-    ja: "受付時間: 平日 9:00〜17:30（土日祝日を除く）",
-    en: "Hours: Weekdays 9:00-17:30 JST (except weekends and Japanese holidays)",
+    ja: "受付時間: 平日 9:00〜17:30（土日祝日を除く）／緊急時は24時間対応",
+    en: "Hours: Weekdays 9:00-17:30 JST (except weekends and Japanese holidays). 24-hour emergency response.",
   },
 
   // SNS の URL（https:// から書く）。空のものはフッターに表示しない

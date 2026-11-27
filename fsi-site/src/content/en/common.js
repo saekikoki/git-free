@@ -7,7 +7,7 @@ import P from "../company-profile";
 
 export default {
   siteName: P.siteName,
-  defaultDescription: "Reliable, high-performance IT solutions that support the future of business.",
+  defaultDescription: "A security company keeping facilities, roads and events safe 24 hours a day, 365 days a year.",
   breadcrumbLabel: "You are here",
   breadcrumbTop: "Home",
   skipToContent: "Skip to content",
@@ -24,7 +24,7 @@ export default {
   },
 
   footer: {
-    tagline: "A technology company supporting\nthe future of business through IT × OT × AI.",
+    tagline: "A security company protecting\npeople and cities 24/7, 365 days a year.",
     privacy: "Privacy Policy",
     terms: "Terms of Use",
     sitemap: "Sitemap",
@@ -38,7 +38,7 @@ export default {
     eyebrow: "NEWS RELEASE",
     heading: "News",
     lead: `The latest news and announcements from ${P.siteName}.`,
-    description: `News releases from ${P.siteName}: new services, organization, IR and announcements.`,
+    description: `News releases from ${P.siteName}: new security services, organization, recruiting and announcements.`,
     empty: "No news yet.",
     more: "View all news",
     all: "All",
@@ -74,18 +74,19 @@ export default {
       "組織": "Organization",
       "IR": "IR",
       "採用": "Careers",
-      "クラウド": "Cloud",
-      "開発": "Development",
-      "運用": "Operations",
-      "DX": "DX",
+      "サービス": "Services",
+      "施設警備": "Facility security",
+      "交通誘導": "Traffic control",
+      "イベント": "Events",
+      "防犯": "Crime prevention",
     },
   },
 
   columns: {
     eyebrow: "COLUMN",
     heading: "Columns",
-    lead: "Practical insights from the front lines of system development, cloud and operations.",
-    description: `Columns by ${P.siteName} engineers explaining practical know-how on system development, cloud migration, operations and DX.`,
+    lead: "Practical knowledge from the front lines of security, for facility management and safety measures.",
+    description: `Columns by ${P.siteName} security professionals explaining practical know-how on facility security, traffic control and event safety.`,
     empty: "No columns yet.",
     more: "View all columns",
     searchLabel: "Search columns by keyword",

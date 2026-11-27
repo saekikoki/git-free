@@ -22,7 +22,7 @@ export default {
       {
         heading: "2. Use of Personal Information",
         paragraphs: ["We use personal information only within the scope of the purposes stated in advance, and never for any other purpose."],
-        list: ["Responding to inquiries", "Providing and improving our services", "Screening and contacting applicants in recruitment", "Responding as required by law"],
+        list: ["Responding to inquiries", "Contracting, providing and improving our security services", "Use, within the scope of the contract, of information obtained in security work (entry records, camera footage, etc.)", "Screening and contacting applicants in recruitment", "Responding as required by law"],
       },
       {
         heading: "3. Provision to Third Parties",

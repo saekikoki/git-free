@@ -6,21 +6,21 @@ import P, { formatAddress, formatFoundingDate, foundingYear } from "../company-p
 
 export default {
   title: "Company",
-  description: `Corporate information of ${P.legalName.en} (${P.siteName}): philosophy, profile, executives, history and access.`,
+  description: `Corporate information of ${P.legalName.en} (${P.siteName}): philosophy, profile, security license, executives, history and access.`,
 
   hero: {
     eyebrow: "COMPANY",
     title: "Company",
-    lead: "Supporting the future of society through IT × OT × AI.\nThe technology we have built since our founding creates value for the next generation.",
+    lead: "Protecting people and cities 24 hours a day, 365 days a year.\nExperience and training built since our founding support the safety of every site.",
   },
 
   philosophy: {
     eyebrow: "PHILOSOPHY",
     title: "Our Philosophy",
     items: [
-      { icon: "🎯", title: "Mission", subtitle: "Our purpose", text: "Solve social challenges through technology and create a prosperous future for people." },
-      { icon: "🔭", title: "Vision", subtitle: "Where we are heading", text: "A technology company leading DX in every industry through the fusion of IT, OT and AI." },
-      { icon: "💎", title: "Values", subtitle: "What we believe", text: "Integrity, challenge and co-creation. Continuously creating value together with our customers." },
+      { icon: "🎯", title: "Mission", subtitle: "Our purpose", text: "Through security, protect people's safety and peace of mind and support community life." },
+      { icon: "🔭", title: "Vision", subtitle: "Where we are heading", text: "A well-trained security company trusted most by customers and communities." },
+      { icon: "💎", title: "Values", subtitle: "What we believe", text: "Integrity, responsibility and compassion. Courtesy and discipline at every site." },
     ],
   },
 
@@ -29,9 +29,9 @@ export default {
     title: `${P.shortName.en} by the Numbers`,
     items: [
       { value: foundingYear(P), suffix: "", label: "Founded", plain: true },
-      { value: "350", suffix: "+", label: "Client companies" },
-      { value: "1,200", suffix: "+", label: "Projects delivered" },
-      { value: "98", suffix: "%", label: "Customer satisfaction" },
+      { value: "480", suffix: "+", label: "Contracted sites" },
+      { value: "420", suffix: "", label: "Security guards" },
+      { value: "24", suffix: "/7", label: "Emergency response" },
     ],
   },
 
@@ -45,7 +45,9 @@ export default {
       { label: "Founded", value: formatFoundingDate(P, "en") },
       { label: "Capital", value: P.capital.en },
       { label: "Employees", value: P.employees.en },
-      { label: "Business", value: "System development, cloud adoption and migration, IT operations and maintenance, DX support" },
+      { label: "Security license", value: P.securityLicense.en },
+      { label: "Business", value: "Security services (facility, patrol, safety, traffic control, crowd control and parking lot security)" },
+      { label: "Affiliations", value: "Member of the Security Industry Association (sample)" },
       { label: "Banks", value: "XX Bank, YY Bank (sample)" },
     ],
   },
@@ -55,9 +57,9 @@ export default {
     title: "Executives",
     items: [
       { name: P.representative.en.name, role: P.representative.en.title, initial: "Y" },
-      { name: "Hanako Sato", role: "Director & CFO", initial: "S" },
-      { name: "Ichiro Suzuki", role: "Director & CTO", initial: "S" },
-      { name: "Misaki Tanaka", role: "Executive Officer, Head of Business", initial: "T" },
+      { name: "Hanako Sato", role: "Director, Head of Administration", initial: "S" },
+      { name: "Ichiro Suzuki", role: "Director, Head of Security Operations", initial: "S" },
+      { name: "Misaki Tanaka", role: "Executive Officer, Head of Training", initial: "T" },
     ],
   },
 
@@ -65,11 +67,11 @@ export default {
     eyebrow: "HISTORY",
     title: "History",
     items: [
-      { year: foundingYear(P), event: `${P.legalName.en} founded; started contract system development` },
-      { year: "2003", event: "Expanded core system development for finance and manufacturing" },
-      { year: "2010", event: "Launched 24/7 operations and maintenance services" },
-      { year: "2016", event: "Launched cloud adoption and migration services" },
-      { year: "2024", event: "Evolving into a comprehensive DX company fusing IT, OT and AI" },
+      { year: foundingYear(P), event: `${P.legalName.en} founded; started facility security` },
+      { year: "2003", event: "Started traffic control and crowd control security" },
+      { year: "2010", event: "Started parking lot security" },
+      { year: "2016", event: "Opened a 24-hour emergency response center" },
+      { year: "2024", event: "Expanded the guard training facility" },
     ],
   },
 

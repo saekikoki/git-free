@@ -10,7 +10,7 @@ import P from "../company-profile";
 
 export default {
   siteName: P.siteName,
-  defaultDescription: "高信頼・高性能なITソリューションで企業の未来を支えます。",
+  defaultDescription: "施設・道路・イベントの安全と安心を、24時間365日支える警備会社です。",
   breadcrumbLabel: "現在位置",
   breadcrumbTop: "トップ",
   skipToContent: "本文へ移動",
@@ -28,7 +28,7 @@ export default {
   },
 
   footer: {
-    tagline: "IT×OT×AIの融合で、\n企業の未来を支えるテクノロジーカンパニー。",
+    tagline: "人と街の安全を、\n24時間365日守る警備会社。",
     privacy: "個人情報保護方針",
     terms: "サイトのご利用について",
     sitemap: "サイトマップ",
@@ -42,7 +42,7 @@ export default {
     eyebrow: "NEWS RELEASE",
     heading: "ニュースリリース",
     lead: "当社の最新情報・お知らせをお届けします。",
-    description: `${P.siteName}のニュースリリース一覧です。新サービス・組織・IR・お知らせなどの最新情報をお届けします。`,
+    description: `${P.siteName}のニュースリリース一覧です。新しい警備サービス・組織・採用・お知らせなどの最新情報をお届けします。`,
     empty: "ニュースはまだありません。",
     more: "ニュース一覧を表示する",
     all: "すべて",
@@ -78,8 +78,8 @@ export default {
   columns: {
     eyebrow: "COLUMN",
     heading: "コラム",
-    lead: "システム開発・クラウド・運用の現場から、役立つ知識をお届けします。",
-    description: `${P.siteName}のエンジニアが、システム開発・クラウド移行・運用保守・DXの実践的なノウハウを解説するコラムです。`,
+    lead: "警備の現場から、施設管理や安全対策に役立つ知識をお届けします。",
+    description: `${P.siteName}の警備のプロが、施設警備・交通誘導・イベントの安全対策など、現場で役立つ知識を解説するコラムです。`,
     empty: "コラムはまだありません。",
     more: "コラム一覧を見る",
     searchLabel: "コラムをキーワードで検索",

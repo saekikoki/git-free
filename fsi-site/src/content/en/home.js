@@ -4,35 +4,35 @@
 import P from "../company-profile";
 
 export default {
-  title: `${P.siteName} | Systems, Cloud & IT Operations`,
-  description: `${P.siteName} is an IT solutions company supporting enterprise DX end to end with system development, AWS-centered cloud adoption and 24/7 operations.`,
+  title: `${P.siteName} | Facility, Patrol & Event Security`,
+  description: `${P.siteName} is a security company providing facility, patrol, safety, traffic control, crowd control and parking lot security. Trained guards keep facilities, roads and events safe 24/7.`,
 
   hero: {
-    eyebrow: "IT × OT × AI SOLUTIONS",
-    titleLine1: "Reliable, high-performance",
-    titleAccent: "IT Solutions",
-    lead: "Building the systems that support the future of business.\nThirty years of experience, creating value for the next generation.",
-    primaryButton: "Our business",
+    eyebrow: "SECURITY SERVICES",
+    titleLine1: "Keeping people and cities safe,",
+    titleAccent: "24 hours a day",
+    lead: "From facilities and roads to events and parking lots.\nTrained guards protect the safety and peace of mind of every site.",
+    primaryButton: "Our services",
     secondaryButton: "Contact us",
   },
 
   services: {
-    eyebrow: "OUR BUSINESS",
-    title: "Our Business",
-    sub: "Three solutions that support your business",
+    eyebrow: "SECURITY SERVICES",
+    title: "Our Services",
+    sub: "Six security services that keep every site safe",
   },
 
   achievements: {
     title: "Our Track Record",
-    sub: "Delivering results together with customers across many industries",
+    sub: "Keeping a wide range of sites safe and secure",
     carouselLabel: "Case study slider",
     carouselRole: "carousel",
     prev: "Previous case",
     next: "Next case",
     dot: "Case",
     stats: [
-      { id: "projects", value: "1,200", unit: "+", label: "Projects delivered" },
-      { id: "clients", value: "350", unit: "+", label: "Client companies" },
+      { id: "sites", value: "480", unit: "+", label: "Contracted sites" },
+      { id: "guards", value: "420", unit: "", label: "Security guards" },
       { id: "satisfaction", value: "98", unit: "%", label: "Customer satisfaction" },
       { id: "years", value: "30", unit: " yrs", label: "In business" },
     ],

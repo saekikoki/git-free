@@ -7,7 +7,7 @@ export default {
   title: "サイト内検索",
   description: `${P.siteName}サイト内のページ・ニュース・コラムを検索できます。`,
   eyebrow: "SEARCH",
-  placeholder: "キーワードを入力（例: クラウド、採用）",
+  placeholder: "キーワードを入力（例: 施設警備、採用）",
   label: "サイト内を検索",
   button: "検索",
   hint: "ページの本文・ニュース・コラムから探します。スペースで区切ると、すべてを含む結果に絞り込みます。",

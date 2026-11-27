@@ -144,7 +144,7 @@ aws sts get-caller-identity
 
 ```js
 export default {
-  siteName: "FSI-STYLE CORP",          // ← サイト名
+  siteName: "FSI-STYLE SECURITY",          // ← サイト名
   email: "info@example.com",           // ← 実際のメールアドレス
   phone: "03-0000-0000",               // ← 実際の電話番号
   ...

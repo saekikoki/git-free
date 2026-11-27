@@ -126,6 +126,8 @@
 .newsx-badge--お知らせ { background: #0b3c5d; }
 .newsx-badge--製品 { background: #1a7a8c; }
 .newsx-badge--IR { background: #c0392b; }
+.newsx-badge--サービス { background: #1a7a8c; }
+.newsx-badge--採用 { background: #117a65; }
 
 /* ---- 詳細ページ ---- */
 .newsx-detail-meta {
