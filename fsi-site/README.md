@@ -215,6 +215,9 @@ npm run build:lite  → @edition = src/editions/lite → dist-lite/
 
 ## セットアップ
 
+別のパソコン（Windows + WSL）で初めてビルドするときは、WSL・Git・Node.js の準備から
+[docs/SETUP.md](docs/SETUP.md) にまとめています。準備ができていれば、次だけです。
+
 ```bash
 npm install
 ```
